@@ -59,7 +59,7 @@ export const authorizeSuperAdmin = async (to, from, next) => {
  */
 
 export const getUserData = async () => {
-  const [, data] = await get(`admin/users/info`);
+  const [, data] = await get(`app/users/info`);
   return data;
 }
 
