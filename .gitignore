@@ -9,6 +9,15 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# Mac DS_Store files
+.DS_Store
+
+# IntelliJ files
+.idea
+
+# package-lock
+package-lock.json
+
 # Runtime data
 pids
 *.pid
@@ -69,7 +78,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+src/.env.local
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
