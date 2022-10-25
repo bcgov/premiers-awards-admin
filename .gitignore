@@ -62,6 +62,9 @@ typings/
 # Optional eslint cache
 .eslintcache
 
+# env variables
+.env
+
 # Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/
