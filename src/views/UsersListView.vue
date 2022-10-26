@@ -20,7 +20,9 @@
                 <div class="col-6"><b>Last Name:</b></div>
                 <div class="col-6">{{slotProps.message.message.lastname}}</div>
                 <div class="col-6"><b>Roles:</b></div>
-                <div class="col-6">{{slotProps.message.message.roles}}</div>
+                <div class="col-6">
+                  <div v-for="role in slotProps.message.message.roles">{{lookup('roles', role)}}</div>
+                </div>
               </div>
             </div>
           </div>

@@ -7,12 +7,10 @@
 
 const schemaData = {
   "status": [
-    {value: null, text: 'Please select a nomination status'},
     {value: 'draft', text: 'Draft'},
     {value: 'submitted', text: 'Submitted'}
   ],
   "roles": [
-    {value: null, text: 'Please select a user role'},
     {value: 'inactive', text: 'Inactive'},
     {value: 'nominator', text: 'Nominator'},
     {value: 'registrar', text: 'Registrar'},
