@@ -6,8 +6,6 @@
         <div class="col-6"><h3>{{current.username}}</h3></div>
       </div>
       <div class="grid">
-        <div class="col-6"><b>GUID:</b></div>
-        <div class="col-6">{{current.guid}}</div>
         <div class="col-6"><b>Username (IDIR):</b></div>
         <div class="col-6">{{current.username}}</div>
         <div class="col-6"><b>First Name:</b></div>
