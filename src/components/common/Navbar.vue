@@ -13,7 +13,9 @@
         <div class="col-6"><b>Last Name:</b></div>
         <div class="col-6">{{current.lastname}}</div>
         <div class="col-6"><b>Role:</b></div>
-        <div class="col-6">{{current.role}}</div>
+        <div class="col-6">
+          <div v-for="role in current.roles">{{role}}</div>
+        </div>
       </div>
     </Sidebar>
     <Menubar class="bg-indigo-600 d-flex justify-content-between ui-sticky" :model="items">
@@ -63,12 +65,12 @@ const items = ref([
       {
         label:'List',
         icon:'pi pi-fw pi-users',
-        url: '/users'
+        url: '/app/users'
       },
       {
         label:'Add New',
         icon:'pi pi-fw pi-user-plus',
-        url: '/users/new'
+        url: '/app/users/new'
       }
     ]
   },

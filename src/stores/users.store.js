@@ -7,7 +7,7 @@
  *         firstname: '',
  *         lastname: '',
  *         email: '',
- *         role: ''
+ *         roles: []
  *         }]
  *
  * @param {Array} items
@@ -30,7 +30,7 @@ export const usersDataStore = defineStore({
             firstname: '',
             lastname: '',
             email: '',
-            role: 'inactive'
+            roles: ['inactive']
         },
         loading: false,
         error: null
@@ -49,7 +49,7 @@ export const usersDataStore = defineStore({
                 firstname: '',
                 lastname: '',
                 email: '',
-                role: 'inactive'
+                roles: ['inactive']
             };
         },
         // Get all users
@@ -60,14 +60,6 @@ export const usersDataStore = defineStore({
             this.error = error;
             this.loading = false;
         },
-        // Get user by GUID
-        // async getByID(guid) {
-        //     this.loading = true;
-        //     const [error, result] = await get(`admin/users/view/${guid}`);
-        //     this.selected = result;
-        //     this.error = error;
-        //     this.loading = false;
-        // },
         // Add new user
         async insert() {
             this.loading = true;
@@ -88,22 +80,6 @@ export const usersDataStore = defineStore({
             this.loading = true;
             const {guid=''} = this.selected || {};
             const [error, ] = await get(`admin/users/delete/${guid}`);
-            this.error = error;
-            this.loading = false;
-        },
-        // Activate user
-        async activate() {
-            this.loading = true;
-            const {guid=''} = this.selected || {};
-            const [error, ] = await get(`admin/users/activate/${guid}`);
-            this.error = error;
-            this.loading = false;
-        },
-        // Assign user role
-        async assign() {
-            this.loading = true;
-            const {guid='', role=''} = this.selected || {};
-            const [error, ] = await post(`admin/users/assign/${guid}`, {role: role});
             this.error = error;
             this.loading = false;
         }

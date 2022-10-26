@@ -73,19 +73,20 @@
         </div>
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
-              <Dropdown
-                  :options="roles"
-                  v-model="selected.role"
-                  optionLabel="text"
-                  optionValue="value"
-                  @change.native="v$.role.$touch()"
-                  :class="v$.role.$invalid ? 'p-invalid' : ''"
-                  :disabled="isCurrent || isNew"
-                  style="width:15rem"
-              />
-              <label for="role">Role</label>
+            <MultiSelect
+                v-model="selected.roles"
+                :options="roles"
+                optionLabel="text"
+                optionValue="value"
+                @change.native="v$.roles.$touch()"
+                :disabled="isCurrent || isNew"
+                :class="v$.roles.$invalid ? 'p-invalid' : ''"
+                :showToggleAll="false"
+                style="width:15rem"
+            />
+              <label for="roles">Roles</label>
           </span>
-          <p v-for="error of v$.role.$errors" :key="error.$uid">
+          <p v-for="error of v$.roles.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
           </p>
         </div>
@@ -137,7 +138,7 @@ const validations = {
   firstname: { required },
   lastname: { required },
   email: { required, email },
-  role: { required }
+  roles: { required }
 };
 
 // apply validators

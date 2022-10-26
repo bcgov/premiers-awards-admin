@@ -32,22 +32,22 @@ export const authenticate = async (to, from, next) => {
  */
 
 export const authorizeNominator = async (to, from, next) => {
-  const {role=''} = await getUserData() || {};
-  if (!['nominator', 'administrator', 'super-administrator'].includes(role))
+  const {roles=[]} = await getUserData() || {};
+  if (!['nominator', 'administrator', 'super-administrator'].some(r=> roles.includes(r)))
     return next({name: 'unauthorized'});
   else next();
 }
 
 export const authorizeAdmin = async (to, from, next) => {
-  const {role=''}  = await getUserData() || {};
-  if (!['administrator', 'super-administrator'].includes(role))
+  const {roles=[]} = await getUserData() || {};
+  if (!['administrator', 'super-administrator'].some(r=> roles.includes(r)))
     return next({name: 'unauthorized'});
   else next();
 }
 
 export const authorizeSuperAdmin = async (to, from, next) => {
-  const {role=''}  = await getUserData() || {};
-  if (!['super-administrator'].includes(role))
+  const {roles=[]} = await getUserData() || {};
+  if (!['super-administrator'].some(r=> roles.includes(r)))
     return next({name: 'unauthorized'});
   else next();
 }

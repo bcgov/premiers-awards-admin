@@ -6,7 +6,7 @@
  *         username: '',
  *         firstname: '',
  *         lastname: '',
- *         role: '',
+ *         roles: [],
  *         email: '',
  *
  * @param {Object} current
@@ -22,6 +22,7 @@ export const authDataStore = defineStore({
     id: 'authData',
     state: () => ({
         current: {},
+        loaded: false,
         isAdmin: false,
         isSuperAdmin: false,
         loading: false,
@@ -34,13 +35,16 @@ export const authDataStore = defineStore({
         // Load current logged-in user info
         async currentUserInit() {
             this.loading = true;
-            const [error, user] = await get(`admin/users/info`);
-            if (!error && user.hasOwnProperty('role')) {
-                this.current = user;
-                this.isAdmin = user.role === 'administrator' || user.role === 'super-administrator';
-                this.isSuperAdmin = user.role === 'super-administrator';
+            if (!this.error) {
+                const [error, user] = await get(`admin/users/info`);
+                if (user.hasOwnProperty('roles')) {
+                    this.current = user;
+                    const {roles=[]} = user || {};
+                    this.isAdmin = roles.includes('administrator') || roles.includes('super-administrator');
+                    this.isSuperAdmin = roles.includes('super-administrator');
+                }
+                this.error = error;
             }
-            this.error = error;
             this.loading = false;
         }
     }

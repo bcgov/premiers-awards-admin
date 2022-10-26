@@ -19,8 +19,8 @@
                 <div class="col-6">{{slotProps.message.message.firstname}}</div>
                 <div class="col-6"><b>Last Name:</b></div>
                 <div class="col-6">{{slotProps.message.message.lastname}}</div>
-                <div class="col-6"><b>Role:</b></div>
-                <div class="col-6">{{slotProps.message.message.role}}</div>
+                <div class="col-6"><b>Roles:</b></div>
+                <div class="col-6">{{slotProps.message.message.roles}}</div>
               </div>
             </div>
           </div>
@@ -82,16 +82,16 @@
           </template>
         </Column>
         <Column
-            field="role"
-            header="Role"
+            field="roles"
+            header="Roles"
             :sortable="true"
-            filterField="role"
+            filterField="roles"
             :showFilterMatchModes="false"
             :filterMenuStyle="{'width':'14rem'}"
             style="min-width:14rem"
         >
           <template #body="{data}">
-            {{ lookup('roles', data.role) || '' }}
+            <div v-for="role in data.roles">{{ lookup('roles', role) || '' }}</div>
           </template>
           <template #filter="{filterModel}">
               <MultiSelect
@@ -155,7 +155,7 @@ const v$ = useVuelidate();
 
 // init data table filter
 const filters = ref({
-  role: { value: null, matchMode: FilterMatchMode.IN }
+  roles: { value: null, matchMode: FilterMatchMode.IN }
 });
 
 // get options for user roles
