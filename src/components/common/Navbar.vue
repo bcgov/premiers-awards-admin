@@ -12,7 +12,7 @@
         <div class="col-6">{{current.firstname}}</div>
         <div class="col-6"><b>Last Name:</b></div>
         <div class="col-6">{{current.lastname}}</div>
-        <div class="col-6"><b>Role:</b></div>
+        <div class="col-6"><b>Roles:</b></div>
         <div class="col-6">
           <div v-for="role in current.roles">{{role}}</div>
         </div>
