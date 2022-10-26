@@ -55,7 +55,7 @@ export const usersDataStore = defineStore({
         // Get all users
         async getAll() {
             this.loading = true;
-            const [error, items] = await get(`app/users/view`);
+            const [error, items] = await get(`admin/users/view`);
             this.items = items;
             this.error = error;
             this.loading = false;
@@ -63,7 +63,7 @@ export const usersDataStore = defineStore({
         // Get user by GUID
         // async getByID(guid) {
         //     this.loading = true;
-        //     const [error, result] = await get(`app/users/view/${guid}`);
+        //     const [error, result] = await get(`admin/users/view/${guid}`);
         //     this.selected = result;
         //     this.error = error;
         //     this.loading = false;
@@ -71,7 +71,7 @@ export const usersDataStore = defineStore({
         // Add new user
         async insert() {
             this.loading = true;
-            const [error, ] = await post(`app/users/register`, this.selected);
+            const [error, ] = await post(`admin/users/register`, this.selected);
             this.error = error;
             this.loading = false;
         },
@@ -79,7 +79,7 @@ export const usersDataStore = defineStore({
         async update() {
             const {guid=''} = this.selected || {};
             this.loading = true;
-            const [error, ] = await post(`app/users/update/${guid}`, this.selected);
+            const [error, ] = await post(`admin/users/update/${guid}`, this.selected);
             this.error = error;
             this.loading = false;
         },
@@ -87,7 +87,7 @@ export const usersDataStore = defineStore({
         async remove() {
             this.loading = true;
             const {guid=''} = this.selected || {};
-            const [error, ] = await get(`app/users/delete/${guid}`);
+            const [error, ] = await get(`admin/users/delete/${guid}`);
             this.error = error;
             this.loading = false;
         },
@@ -95,7 +95,7 @@ export const usersDataStore = defineStore({
         async activate() {
             this.loading = true;
             const {guid=''} = this.selected || {};
-            const [error, ] = await get(`app/users/activate/${guid}`);
+            const [error, ] = await get(`admin/users/activate/${guid}`);
             this.error = error;
             this.loading = false;
         },
@@ -103,7 +103,7 @@ export const usersDataStore = defineStore({
         async assign() {
             this.loading = true;
             const {guid='', role=''} = this.selected || {};
-            const [error, ] = await post(`app/users/assign/${guid}`, {role: role});
+            const [error, ] = await post(`admin/users/assign/${guid}`, {role: role});
             this.error = error;
             this.loading = false;
         }

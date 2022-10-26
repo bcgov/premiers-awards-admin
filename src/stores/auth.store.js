@@ -34,7 +34,7 @@ export const authDataStore = defineStore({
         // Load current logged-in user info
         async currentUserInit() {
             this.loading = true;
-            const [error, user] = await get(`app/users/info`);
+            const [error, user] = await get(`admin/users/info`);
             if (!error && user.hasOwnProperty('role')) {
                 this.current = user;
                 this.isAdmin = user.role === 'administrator' || user.role === 'super-administrator';
