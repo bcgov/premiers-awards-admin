@@ -5,13 +5,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="guid"
                   type="text"
                   v-model="selected.guid"
                   @change.native="v$.guid.$touch()"
                   :class="v$.guid.$invalid && isNew ? 'p-invalid' : ''"
                   :disabled="!isNew"
               />
-              <label for="lastname">GUID</label>
+              <label for="guid">GUID</label>
           </span>
           <p v-if="isNew" v-for="error of v$.guid.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -20,13 +21,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="idir"
                   type="text"
                   v-model="selected.username"
                   @change.native="v$.username.$touch()"
                   :class="v$.username.$invalid && isNew ? 'p-invalid' : ''"
                   :disabled="!isNew"
               />
-              <label for="lastname">IDIR</label>
+              <label for="idir">IDIR</label>
           </span>
           <p v-if="isNew" v-for="error of v$.username.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -35,6 +37,7 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="firstname"
                   type="text"
                   v-model="selected.firstname"
                   @change.native="v$.firstname.$touch()"
@@ -48,6 +51,7 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="lastname"
                   type="text"
                   v-model="selected.lastname"
                   @change.native="v$.lastname.$touch()"
@@ -61,6 +65,7 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="email"
                   type="email"
                   v-model="selected.email"
                   @change.native="v$.email.$touch()"
@@ -107,7 +112,7 @@ import {ref} from "vue";
 // properties
 const props = defineProps(['mode']);
 const isNew = props.mode === 'new';
-const heading = isNew ? 'Create New User' : 'Edit User Data';
+const heading = isNew ? 'Register New User' : 'Edit User Data';
 
 // get current user
 const { current } = storeToRefs(authDataStore());
@@ -126,7 +131,7 @@ const notCurrentGUID = (value) => value !== current.value.guid;
 const notCurrentUsername = (value) => value !== current.value.username;
 
 // init validations
-const validations = {
+const createValidations = {
   guid: {
     required,
     notCurrentGUID: helpers.withMessage("Cannot create user with current GUID.", notCurrentGUID)
@@ -141,7 +146,16 @@ const validations = {
   roles: { required }
 };
 
+const editValidations = {
+  guid: { required },
+  username: { required },
+  firstname: { required },
+  lastname: { required },
+  email: { required, email },
+  roles: { required }
+};
+
 // apply validators
-const v$ = useVuelidate(validations, selected);
+const v$ = useVuelidate(isNew ? createValidations : editValidations, selected);
 
 </script>

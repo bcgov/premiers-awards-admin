@@ -7,16 +7,28 @@
 
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/HomeView.vue'
-import NotFound from '@/views/404.vue'
-import Unauthorized from '@/views/401.vue'
+import NotFound from '@/views/404View.vue'
+import Unauthorized from '@/views/401View.vue'
 import UsersRegister from '@/views/UsersRegisterView.vue'
 import UsersList from '@/views/UsersListView.vue'
 import {getMeta} from "@/services/meta.services"
-import {authorizeNominator, authorizeAdmin, authorizeSuperAdmin, authenticate} from "@/services/auth.services"
+import {authorizeAdmin, authenticate} from "@/services/auth.services"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/register",
+      name: "users-register",
+      component: UsersRegister,
+      meta: getMeta('User Registration')
+    },
+    {
+      path: "/users/new",
+      name: "users-register",
+      component: UsersRegister,
+      meta: getMeta('User Registration')
+    },
     {
       path: "/",
       name: "home",
@@ -31,34 +43,6 @@ const router = createRouter({
       meta: getMeta('Manage Users'),
       beforeEnter: authorizeAdmin
     },
-    {
-      path: "/users/new",
-      name: "users-register",
-      component: UsersRegister,
-      meta: getMeta('Nominator Registration'),
-      beforeEnter: authorizeNominator
-    },
-    // {
-    //   path: "/users/edit/:guid",
-    //   name: "admin-user-edit",
-    //   component: EditUser,
-    //   meta: getMeta('Edit User Data'),
-    //   beforeEnter: authorizeAdmin
-    // },
-    // {
-    //   path: "/users/assign/:guid",
-    //   name: "admin-user-assign",
-    //   component: AssignUser,
-    //   meta: getMeta('Assign User Role'),
-    //   beforeEnter: authorizeSuperAdmin
-    // },
-    // {
-    //   path: "/users/delete/:guid",
-    //   name: "admin-user-delete",
-    //   component: DeleteUser,
-    //   meta: getMeta('Delete User'),
-    //   beforeEnter: authorizeAdmin
-    // },
     {
       path: '/401',
       name: 'unauthorized',

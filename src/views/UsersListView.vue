@@ -56,8 +56,8 @@
           <div class="flex justify-content-between">
             <h2 class="m-0">Users</h2>
             <span class="p-buttonset">
-              <Button label="Refresh" icon="pi pi-sync" @click="reset" />
-              <Button label="Add Record" icon="pi pi-plus-circle" @click="add" />
+              <Button label="Refresh" icon="pi pi-sync" @click="reload" />
+              <Button label="Add User" icon="pi pi-user-plus" @click="add" />
           </span>
           </div>
         </template>
