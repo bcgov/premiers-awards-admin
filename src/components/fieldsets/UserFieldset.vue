@@ -81,8 +81,8 @@
             <MultiSelect
                 v-model="selected.roles"
                 :options="roles"
-                optionLabel="text"
-                optionValue="value"
+                optionLabel="label"
+                optionValue="key"
                 @change.native="v$.roles.$touch()"
                 :disabled="isCurrent || isNew"
                 :class="v$.roles.$invalid ? 'p-invalid' : ''"

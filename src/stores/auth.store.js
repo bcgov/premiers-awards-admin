@@ -25,6 +25,7 @@ export const authDataStore = defineStore({
         loaded: false,
         isRegistered: false,
         isActive: false,
+        isNominator: false,
         isAdmin: false,
         isSuperAdmin: false,
         loading: false,
@@ -39,11 +40,13 @@ export const authDataStore = defineStore({
             this.loading = true;
             if (!this.error) {
                 const [error, user] = await get(`admin/users/info`);
-                if (user.hasOwnProperty('roles')) {
+                if (user && user.hasOwnProperty('roles')) {
                     this.current = user;
+                    // set user roles/status
                     const {roles=[]} = user || {};
                     this.isRegistered = roles.length > 0;
                     this.isActive = !roles.includes('inactive');
+                    this.isNominator = roles.includes('nominator');
                     this.isAdmin = roles.includes('administrator') || roles.includes('super-administrator');
                     this.isSuperAdmin = roles.includes('super-administrator');
                 }

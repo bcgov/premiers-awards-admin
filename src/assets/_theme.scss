@@ -32,15 +32,20 @@
     font-family: var(--font-family);
   }
 
-  h1 {
-    font-size: 1.7em;
-    padding: 1rem;
-  }
-  p {
-    padding: 1rem;
+  header {
+    margin-top: 100px;
   }
 
-  th, b {
+  main {
+    z-index: 999;
+    padding: 1.4rem;
+  }
+
+  h1 {
+    font-size: 1.7em;
+  }
+
+  th, b, legend {
     font-family: var(--font-family-bold);
     font-weight: bold;
   }

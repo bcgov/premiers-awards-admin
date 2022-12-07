@@ -36,14 +36,27 @@ export const getUserData = async () => {
 }
 
 /**
- * Authorize user based on role.
+ * Authorize admin users.
  *
  * @src public
  */
 
 export const authorizeAdmin = async (to, from, next) => {
   const {roles=[]} = await getUserData() || {};
-  if (!['administrator', 'super-administrator'].some(r=> roles.includes(r)))
+  if (!['administrator', 'super-administrator'].some(r => roles.includes(r)))
+    return next({name: 'unauthorized'});
+  else next();
+}
+
+/**
+ * Authorize nominator users.
+ *
+ * @src public
+ */
+
+export const authorizeNominator = async (to, from, next) => {
+  const {roles=[]} = await getUserData() || {};
+  if (!['nominator', 'administrator', 'super-administrator'].some(r => roles.includes(r)))
     return next({name: 'unauthorized'});
   else next();
 }

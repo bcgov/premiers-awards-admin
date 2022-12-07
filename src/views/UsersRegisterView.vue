@@ -2,10 +2,12 @@
   <Header header="User Registration" />
   <Placeholder v-if="loading" />
   <div>
-    <IndexFieldset type="users" mode="new" />
-    <div>
-      <Button :disabled="loading || done" label="Cancel" icon="pi pi-times" @click="cancel" class="p-button-text"/>
-      <Button :disabled="loading || done" label="Submit" icon="pi pi-check" @click="submit" autofocus />
+    <UserFieldset mode="new" />
+    <div class="card m-5">
+      <div style="text-align: right">
+          <Button :disabled="loading || done" label="Cancel" icon="pi pi-times" @click="cancel" class="p-button-text"/>
+          <Button :disabled="loading || done" label="Submit" icon="pi pi-check" @click="submit" autofocus />
+      </div>
     </div>
   </div>
 </template>
@@ -14,17 +16,13 @@
 
 import { ref } from "vue";
 import { usersDataStore } from "@/stores/users.store";
-import IndexFieldset from "@/components/fieldsets/IndexFieldset.vue";
-import { useToast } from "primevue/usetoast";
-import messages from "@/services/message.services"
 import {useRouter} from "vue-router";
 import {useVuelidate} from "@vuelidate/core";
 import {storeToRefs} from "pinia";
+import UserFieldset from "@/components/fieldsets/UserFieldset.vue";
 
-// initialize messages
-const toast = useToast();
-// get router
-const router = useRouter();
+// get indexRouter
+const indexRouter = useRouter();
 // validator
 const v$ = useVuelidate();
 // users store
@@ -32,21 +30,6 @@ const store = usersDataStore();
 // initialize references
 const { loading } = storeToRefs(usersDataStore());
 const done = ref(false);
-
-// subscribe to store actions
-store.$onAction(
-    ({name, store, _, after}) => {
-      after(() => {
-        // post message
-        const {text=''} = messages.get(name) || {};
-        if (store.getErrors) toast.add({
-          severity: 'error', summary: 'An Error has Occurred', detail: store.getErrors.text, life: 3000});
-        else if (text) {
-          toast.add({severity: 'success', summary: 'User Registration Successful!', detail: text, life: 3000})
-        }
-      })
-    }
-);
 
 // create new user record
 const submit = async () => {
@@ -58,12 +41,12 @@ const submit = async () => {
   if (store.getErrors) return;
   done.value = true;
   // redirect to users list
-  await router.push({ name: 'users-list' });
+  await indexRouter.push({ name: 'users-list' });
 };
 
 // cancel registration (navigates to users list)
 const cancel = () => {
-  router.push({ name: 'users-list' });
+  indexRouter.push({ name: 'users-list' });
 };
 // test if form is invalid
 const invalid = () => {

@@ -8,7 +8,7 @@
           <div class="card p-4">
             <div class="flex mb-5">
               <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-              <span class="pl-2"> Delete Item</span></div>
+              <span class="pl-2">Delete User</span></div>
             <div class="pl-2 w-80">
               <div class="grid">
                 <div class="col-6"><b>GUID:</b></div>
@@ -38,7 +38,7 @@
           <Button label="Cancel" icon="pi pi-times" @click="reset" class="p-button-text"/>
           <Button :disabled="invalid()" label="Submit" icon="pi pi-check" @click="dialog.callback" autofocus />
         </template>
-        <IndexFieldset type="users" mode="edit" />
+        <UserFieldset mode="edit" />
       </Dialog>
 
       <DataTable
@@ -72,7 +72,6 @@
             {{data.username}}
           </template>
         </Column>
-        <Column headerStyle="width: 3rem"></Column>
         <Column field="firstname" header="First Name" :sortable="true">
           <template #body="{data}">
             {{data.firstname}}
@@ -97,10 +96,10 @@
           </template>
           <template #filter="{filterModel}">
               <MultiSelect
-                  v-model="filterModel.value"
-                  :options="roles.filter(role => !!role.value)"
-                  optionLabel="text"
-                  optionValue="value"
+                  v-model="filterModel.key"
+                  :options="roles"
+                  optionLabel="label"
+                  optionValue="key"
                   placeholder="Any"
                   class="p-column-filter"
                   :showToggleAll="false"
@@ -115,15 +114,14 @@
         </Column>
         <Column bodyStyle="text-align: center; overflow: visible">
           <template #body="{data}">
-          <span class="p-buttonset">
-              <Button label="Edit" icon="pi pi-user-edit" @click="edit(data)" />
+          <div class="p-buttonset" style="text-align: right">
+              <Button icon="pi pi-user-edit" @click="edit(data)" />
               <Button
                   :disabled="data.guid !== 'super-administrator' && data.guid === current.guid"
-                  label="Delete"
                   icon="pi pi-trash"
                   @click="remove(data)"
               />
-          </span>
+          </div>
           </template>
         </Column>
       </DataTable>
@@ -136,24 +134,24 @@
 import {onMounted, reactive, ref} from "vue";
 import { useConfirm } from "primevue/useconfirm";
 import { storeToRefs } from 'pinia';
-import IndexFieldset from "@/components/fieldsets/IndexFieldset.vue";
 import { useRouter } from 'vue-router'
-import { useToast } from "primevue/usetoast";
-import messages from "@/services/message.services"
 import { authDataStore } from "@/stores/auth.store";
 import { usersDataStore } from "@/stores/users.store";
 import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
 import { FilterMatchMode } from "primevue/api";
+import UserFieldset from "@/components/fieldsets/UserFieldset.vue";
+import messages from "@/services/message.services";
+import {useToast} from "primevue/usetoast";
 
 // get current user info
 const { current } = storeToRefs(authDataStore());
 
-// initialize messages
-const toast = useToast();
-
 // validator
 const v$ = useVuelidate();
+
+// initialize messages
+const toast = useToast();
 
 // init data table filter
 const filters = ref({
@@ -168,17 +166,14 @@ const lookup = settings.lookup;
 const { selected, items, loading, error } = storeToRefs(usersDataStore());
 const store = usersDataStore();
 const confirm = useConfirm();
-const router = useRouter();
+const indexRouter = useRouter();
 const dialog = reactive({
   header: '',
   visible: false,
   callback: ()=>{}
 });
 
-// load data on component mount
-onMounted(store.getAll);
-
-// subscribe to store actions
+// subscribe to user store actions
 store.$onAction(
     ({name, store, _, after}) => {
       after(() => {
@@ -193,14 +188,17 @@ store.$onAction(
     }
 );
 
-// update item data
+// load data on component mount
+onMounted(store.getAll);
+
+// update dialog data
 const setDialog = (setting) => {
   dialog.header = setting.header;
   dialog.visible = setting.visible;
   dialog.callback = setting.callback;
 };
 
-// update item data
+// reset dialog data
 const resetDialog = () => {
   dialog.header = '';
   dialog.visible = false;
@@ -210,7 +208,7 @@ const resetDialog = () => {
 // open new item dialog
 const add = () => {
   reset();
-  router.push({name: 'users-register'});
+  indexRouter.push({name: 'users-register'});
 };
 
 // create new item

@@ -2,15 +2,18 @@
   <header>
     <Navbar />
   </header>
-  <Message :closable="false" v-if="notification.message" :severity="notification.severity">
-    {{ notification.message }}
-  </Message>
-  <RouterView />
+  <main>
+    <Toast position="bottom-right" />
+    <Message :closable="false" v-if="notification.message" :severity="notification.severity">
+      {{ notification.message }}
+    </Message>
+    <RouterView />
+  </main>
 </template>
 
 <script setup>
 import Navbar from "@/components/common/Navbar.vue";
-import { onBeforeMount, ref } from "vue";
+import {onBeforeMount, ref} from "vue";
 import { authDataStore } from "@/stores/auth.store";
 import messages from "@/services/message.services";
 import {storeToRefs} from "pinia/dist/pinia";
@@ -21,11 +24,12 @@ const notification = ref({severity: '', message: ''});
 
 // load user data
 onBeforeMount(()=> {
-  const store = authDataStore();
-  // subscribe to store actions
-  store.$onAction(
-      ({name, store, args, after}) => {
-        after((result) => {
+
+  // subscribe to auth store actions
+  const authStore = authDataStore();
+  authStore.$onAction(
+      ({name, store, _, after}) => {
+        after(() => {
           // post message
           const {text=''} = messages.get(name) || {};
           if (store.getErrors) {
@@ -35,13 +39,15 @@ onBeforeMount(()=> {
       }
   );
   // initialize current user
-  store.currentUserInit();
+  authStore.currentUserInit();
+
 });
+
 </script>
 
 <style>
   @import "primevue/resources/primevue.min.css";
-  @import "primevue/resources/themes/md-light-indigo/theme.css";
+  @import "primevue/resources/themes/mdc-light-indigo/theme.css";
   @import "primeicons/primeicons.css";
   @import "/node_modules/primeflex/primeflex.css";
 </style>

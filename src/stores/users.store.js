@@ -55,8 +55,8 @@ export const usersDataStore = defineStore({
         // Get all users
         async getAll() {
             this.loading = true;
-            const [error, items] = await get(`admin/users/view`);
-            this.items = items;
+            const [error, users] = await get(`admin/users/view`);
+            this.items = users;
             this.error = error;
             this.loading = false;
         },

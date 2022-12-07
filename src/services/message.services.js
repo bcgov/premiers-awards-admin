@@ -9,6 +9,11 @@ const messages = {
   insert: { text: 'New record added successfully!', type: 'success' },
   update: { text: 'Record updated successfully!', type: 'success' },
   remove: { text: 'Record deleted successfully!', type: 'success' },
+  download: { text: 'File downloaded successfully!', type: 'success' },
+  uploadAttachment: { text: 'New attachment added successfully!', type: 'success' },
+  updateAttachment: { text: 'Attachment updated successfully!', type: 'success' },
+  removeAttachment: { text: 'Attachment deleted successfully!', type: 'success' },
+  downloadAttachment: { text: 'Attachment downloaded successfully!', type: 'success' },
   invalidToken: { text: 'User token could not be verified.', type: 'error' },
   invalidData: { text: 'Your form data is invalid or incomplete.', type: 'error' },
   serverError: { text: 'Server Error: Your request could not be completed.', type: 'error' },
@@ -25,18 +30,6 @@ export default {
 
   get: function get(key) {
     return messages[key] !== 'undefined' ? messages[key] : null;
-  },
-
-  /**
-   * post message
-   * **/
-
-  post: function post(key, error) {
-    const {text=''} = get(key) || {};
-    if (error) return {severity: 'error', summary: 'An Error has Occurred', detail: error.text, life: 3000};
-    else if (text) {
-      return {severity: 'success', summary: 'Update Successful!', detail: text, life: 3000}
-    }
   }
 
 }
