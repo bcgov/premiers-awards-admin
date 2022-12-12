@@ -15,7 +15,6 @@ import { get } from "@/services/api.services";
 
 export const authenticate = async (to, from, next) => {
   const user = await getUserData() || {};
-  console.log(user)
   // redirect unauthenticated users to 401 page
   if (!user.guid && !user.username && to.name !== 'unauthorized' && to.name !== 'page-not-found')
     return next({path: '/401'});
