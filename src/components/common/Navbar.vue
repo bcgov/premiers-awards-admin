@@ -64,7 +64,7 @@ if (isAdmin) {
   menuItems.push({
     label:'Users',
     icon:'pi pi-fw pi-users',
-    url: 'app/users'
+    url: 'users'
   });
 }
 
@@ -82,7 +82,7 @@ if (isNominator) {
   menuItems.push({
     label:'Nominations',
     icon:'pi pi-fw pi-bookmark',
-    url: 'app/nominations'
+    url: 'nominations'
   });
 }
 
