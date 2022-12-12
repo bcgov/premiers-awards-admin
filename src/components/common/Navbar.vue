@@ -50,7 +50,7 @@ const menuItems = [
       label: isAdmin ? 'Premiers Awards: Admin' : 'Premiers Awards: Nominate',
       icon:'pi pi-fw pi-home',
       class: 'font-bold',
-      url: isAdmin ? '/' : '/nominate'
+      url: isAdmin ? '' : 'nominate'
     },
     {
       label:'About',
@@ -64,7 +64,7 @@ if (isAdmin) {
   menuItems.push({
     label:'Users',
     icon:'pi pi-fw pi-users',
-    url: '/app/users'
+    url: 'app/users'
   });
 }
 
@@ -82,7 +82,7 @@ if (isNominator) {
   menuItems.push({
     label:'Nominations',
     icon:'pi pi-fw pi-bookmark',
-    url: '/app/nominations'
+    url: 'app/nominations'
   });
 }
 
