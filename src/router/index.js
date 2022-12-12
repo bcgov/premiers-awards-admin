@@ -60,13 +60,13 @@ const router = createRouter({
     },
     {
       path: "/users/new",
-      name: "users-register",
+      name: "users-create",
       component: UsersRegister,
       meta: getMeta('User Registration')
     },
     {
       path: "/users/register",
-      name: "user-registration",
+      name: "users-register",
       component: UsersRegister,
       meta: getMeta('Nominator Registration')
     },
