@@ -56,7 +56,7 @@
   <div class="card">
     <div class="flex align-self-end p-3">
       <Button v-if="data.file" label="Update" icon="pi pi-check" @click="update" />
-      <Button label="Close" icon="pi pi-times" @click="cancel" class="p-button-text"/>
+      <Button label="Close" icon="pi pi-times" @click="complete" class="p-button-text"/>
     </div>
   </div>
 </template>
@@ -81,6 +81,7 @@ const confirm = useConfirm();
 const indexRouter = useRouter();
 const route = useRoute();
 const uploadedFiles = ref([]);
+const refresh = ref(false);
 
 // settings
 const maxUploads = 5;
@@ -98,6 +99,12 @@ const load = async () => {
   await nominationsStore.getByID(id);
 }
 
+// complete operation
+const complete = async () => {
+  if (refresh.value) await load();
+  await props.cancel();
+}
+
 // Upload attachment file and attach to nomination
 const upload = async (event) => {
   try {
@@ -110,6 +117,7 @@ const upload = async (event) => {
         size: formatFileSize(file.size),
         label: props.data.label
       });
+      refresh.value = true;
     }
   } catch (e) {
     error.value = e;
@@ -119,7 +127,8 @@ const upload = async (event) => {
 // Update attachment metadata
 const update = async () => {
   await nominationsStore.updateAttachment(props.data);
-  await nominationsStore.getAll();
+  // refresh attachments for nomination
+  await nominationsStore.getAttachments();
 }
 
 </script>

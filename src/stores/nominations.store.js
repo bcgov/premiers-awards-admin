@@ -254,6 +254,16 @@ export const nominationsDataStore = defineStore({
             this.error = error;
             this.downloading = false;
         },
+        async getAttachments() {
+            if (this.selected) {
+                this.loading = true;
+                const {_id=''} = this.selected || {};
+                const [error, attachments] = await get(`nominations/attachments/view/${_id}`);
+                this.selected.attachments = attachments;
+                this.error = error;
+                this.loading = false;
+            }
+        },
         // Upload attachment
         async uploadAttachment (file, label, description) {
             const {_id = ''} = this.selected || {};

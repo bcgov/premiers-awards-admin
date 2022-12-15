@@ -76,9 +76,9 @@
         <NominationPartnership v-if="category==='partnership'" />
         <NominationRegionalImpact v-if="category==='regional-impact'" />
       </div>
-      <Placeholder v-else />
     </div>
   </div>
+  <Placeholder v-else />
 </template>
 
 <script setup>
@@ -224,7 +224,7 @@ onUnmounted(() => {
   left: 8px;
 }
 .nominations-statusbar-fixed {
-  z-index: 9999;
+  z-index: 999;
   position: fixed; /* Set the navbar to fixed position */
   top: 100px; /* Position the navbar at the top of the page */
   right: 10px;

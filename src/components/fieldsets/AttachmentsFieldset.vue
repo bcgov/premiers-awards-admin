@@ -1,33 +1,36 @@
 <template>
-  <div id="attachments-fieldset">
-      <ConfirmDialog group="attachments">
-        <template #message="slotProps">
-          <div class="card p-4">
-            <div class="flex mb-5">
-              <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-              <span class="pl-2">Delete Attachment</span></div>
-              <div class="pl-2 w-80">
-                <div class="grid">
-                  <div class="col-6"><b>Label:</b></div>
-                  <div class="col-6">{{slotProps.message.message.label}}</div>
-                  <div class="col-6"><b>Description:</b></div>
-                  <div class="col-6">{{slotProps.message.message.description}}</div>
-                  <div class="col-6"><b>File Name:</b></div>
-                  <div class="col-6">{{slotProps.message.message.filename}}</div>
-                </div>
-            </div>
+
+  <Dialog
+      :header="dialog.header"
+      v-model:visible="dialog.visible"
+      :breakpoints="{'960px': '80vw', '640px': '90vw'}"
+      :style="{width: '70vw'}"
+      baseZIndex="9999"
+  >
+    <AttachmentFieldset :data="selectedAttachment" :cancel="reset" />
+  </Dialog>
+
+  <ConfirmDialog group="attachments">
+    <template #message="slotProps">
+      <div class="card p-4">
+        <div class="flex mb-5">
+          <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
+          <span class="pl-2">Delete Attachment</span></div>
+        <div class="pl-2 w-80">
+          <div class="grid">
+            <div class="col-6"><b>Label:</b></div>
+            <div class="col-6">{{slotProps.message.message.label}}</div>
+            <div class="col-6"><b>Description:</b></div>
+            <div class="col-6">{{slotProps.message.message.description}}</div>
+            <div class="col-6"><b>File Name:</b></div>
+            <div class="col-6">{{slotProps.message.message.filename}}</div>
           </div>
-        </template>
-      </ConfirmDialog>
+        </div>
+      </div>
+    </template>
+  </ConfirmDialog>
 
-      <Dialog
-          :header="dialog.header"
-          v-model:visible="dialog.visible"
-          :breakpoints="{'960px': '80vw', '640px': '90vw'}"
-          :style="{width: '70vw'}">
-        <AttachmentFieldset :data="selectedAttachment" :cancel="reload" />
-      </Dialog>
-
+  <div id="attachments-fieldset">
     <h3>Attachments</h3>
     <div class="card">
       <div class="p-fluid grid">
