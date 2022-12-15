@@ -75,28 +75,6 @@ const handleResult = (error, result) => {
 }
 
 /**
- * Login user
- *
- * @return users
- */
-
-export const login = async () => {
-  const [error, result] = await asyncWrapper(api.get(`admin/login`));
-  return handleResult(error, result);
-}
-
-/**
- * Login user
- *
- * @return users
- */
-
-export const logout = async () => {
-  const [error, result] = await asyncWrapper(api.get(`admin/logout`));
-  return handleResult(error, result);
-}
-
-/**
  * Get method
  *
  * @return users

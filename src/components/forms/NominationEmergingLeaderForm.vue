@@ -12,11 +12,11 @@
       <li>Supporting innovation, new technology and best practices</li>
     </ul>
     <AcknowledgmentFieldset />
+    <NomineeFieldset />
     <OrganizationFieldset />
-    <NomineesFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
-    <EvaluationFieldset>
+    <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>Briefly describe the conditions under which the employee demonstrates exemplary leadership to provide background and perspective.</p>
@@ -51,7 +51,7 @@
           <li>Measurable benefits to their organization(s) and/or the citizens through process improvements to transform business practices, and/or sustainable revenue generation or savings.</li>
         </ul>
       </template>
-    </EvaluationFieldset>
+    </EvaluationsFieldset>
     <AttachmentsFieldset />
   </div><!-- end nomination form -->
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <Fieldset :disabled="submitted" :legend="legend" :toggleable="true">
+  <Fieldset :legend="legend" :toggleable="true">
     <div class="card">
       <div class="p-fluid grid">
         <div class="field col-12">
@@ -8,6 +8,7 @@
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
                 <InputText
+                    :disabled="submitted"
                     id="firstname"
                     type="text"
                     v-model="contact.firstname"
@@ -23,6 +24,7 @@
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
                 <InputText
+                    :disabled="submitted"
                     id="lastname"
                     type="text"
                     v-model="contact.lastname"
@@ -38,6 +40,7 @@
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
                 <InputText
+                    :disabled="submitted"
                     id="email"
                     type="email"
                     v-model="contact.email"
@@ -53,6 +56,7 @@
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
                 <InputText
+                    :disabled="submitted"
                     id="phone"
                     type="phone"
                     v-model="contact.phone"

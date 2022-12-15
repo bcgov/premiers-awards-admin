@@ -15,11 +15,11 @@
       <li>Commitment to succession management through knowledge transfer, support for continuous learning and mentorship</li>
     </ul>
     <AcknowledgmentFieldset />
+    <NomineeFieldset />
     <OrganizationFieldset />
-    <NomineesFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
-    <EvaluationFieldset>
+    <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>Briefly describe the conditions under which the employee demonstrated their lasting contribution within the BC Public Service and/or the province, including career highlights, to provide background and perspective.</p>
@@ -76,7 +76,7 @@
           <li>Provincial, national or global recognition for the contributions to the development of best practices in their field of expertise</li>
         </ul>
       </template>
-    </EvaluationFieldset>
+    </EvaluationsFieldset>
     <AttachmentsFieldset />
   </div><!-- end nomination form -->
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <Fieldset id="video-locations-fieldset" :disabled="submitted" legend="Filming Locations" :toggleable="true">
+  <Fieldset id="video-locations-fieldset" legend="Filming Locations" :toggleable="true">
     <p>Please identify the location(s) where the nomination video would likely be filmed.
       This may also include possible interviewee locations.</p>
     <div class="card">

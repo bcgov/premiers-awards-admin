@@ -8,6 +8,8 @@
 const messages = {
   insert: { text: 'New record added successfully!', type: 'success' },
   update: { text: 'Record updated successfully!', type: 'success' },
+  submit: { text: 'Nomination submitted successfully!', type: 'success' },
+  unsubmit: { text: 'Nomination unsubmitted successfully!', type: 'success' },
   remove: { text: 'Record deleted successfully!', type: 'success' },
   download: { text: 'File downloaded successfully!', type: 'success' },
   uploadAttachment: { text: 'New attachment added successfully!', type: 'success' },

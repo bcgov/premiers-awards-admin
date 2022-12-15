@@ -7,6 +7,7 @@
 
 const schemaData = {
   maxDrafts: 12,
+  maxAttachments: 5,
   "status": [
     {key: 'draft', label: 'Draft'},
     {key: 'submitted', label: 'Submitted'}
@@ -25,13 +26,11 @@ const schemaData = {
       label: 'Emerging Leader',
       description: 'This award recognizes a BC Public Service employee 40 years and under and at or below the level of director who has made a significant impact in their ministry, division, workgroup or the greater BC Public Service early in their career.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
-        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominee', id: 'nominee'},
         {label: 'Nominators', id: 'nominators'},
         {label: 'Contact Information', id: 'contacts'},
-        {label: 'Nominees', id: 'nominees'},
-        {label: 'Partners', id: 'partners'},
         {label: 'Evaluation Considerations', id: 'evaluation'},
         {label: 'Attachments', id: 'attachments'}
       ],
@@ -48,7 +47,7 @@ const schemaData = {
       label: 'Evidence-Based Design',
       description: 'This award recognizes groups, teams or organizations in the BC Public Service whose work is outstanding in the area of evidence-based or evidence-informed policy or program development, and the process by which the policy or program was designed. This category showcases excellence in policy or program development for internal government or citizen-facing initiatives.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
         {label: 'Nomination Title', id: 'title'},
         {label: 'Nominators', id: 'nominators'},
@@ -71,7 +70,7 @@ const schemaData = {
       label: 'Innovation',
       description: 'This award recognizes groups, teams or organizations in the BC Public Service who have developed and transformed new ideas into tangible initiatives, programs or projects. By applying a user-centric or citizen-centric approach, innovations streamline business processes, leverage technology or pursue creative solutions to fulfill organizational mandates.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
         {label: 'Nomination Title', id: 'title'},
         {label: 'Nominators', id: 'nominators'},
@@ -94,9 +93,9 @@ const schemaData = {
       label: 'Leadership',
       description: 'This award recognizes a BC Public Service employee who demonstrates the highest levels of integrity and exemplary leadership abilities either leading a team or organization, or a substantial project, process or initiative.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
-        {label: 'Nominees', id: 'nominees'},
+        {label: 'Nominee', id: 'nominee'},
         {label: 'Nominators', id: 'nominators'},
         {label: 'Contact Information', id: 'contacts'},
         {label: 'Evaluation Considerations', id: 'evaluation'},
@@ -115,13 +114,11 @@ const schemaData = {
       label: 'Legacy',
       description: 'This award recognizes individuals who have made exceptional and lasting contributions to the BC Public Service and/or the province during a public service career of at least 15 years. The contributions may cover a nominee’s entire career or portions of it, provided the contribution has a lasting and ongoing positive impact.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
-        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominee', id: 'nominee'},
         {label: 'Nominators', id: 'nominators'},
         {label: 'Contact Information', id: 'contacts'},
-        {label: 'Nominees', id: 'nominees'},
-        {label: 'Partners', id: 'partners'},
         {label: 'Evaluation Considerations', id: 'evaluation'},
         {label: 'Attachments', id: 'attachments'}
       ],
@@ -139,7 +136,7 @@ const schemaData = {
       label: 'Organizational Excellence',
       description: 'This award recognizes one or more BC Public Service organizations that have delivered a program, service or initiative resulting in substantial benefits to their organization(s), the public service or citizens.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
         {label: 'Nomination Title', id: 'title'},
         {label: 'Nominators', id: 'nominators'},
@@ -162,7 +159,7 @@ const schemaData = {
       label: 'Partnership',
       description: 'This award recognizes joint ventures or multi-party initiatives between BC Public Service organizations and organizations in the broader public sector, other levels of government, Indigenous communities or in the private or non-profit sectors.',
       sections: [
-        {label: 'Acknowledgment', id: 'overview'},
+        {label: 'Acknowledgment', id: 'acknowledgment'},
         {label: 'Organization', id: 'organization'},
         {label: 'Nomination Title', id: 'title'},
         {label: 'Nominators', id: 'nominators'},

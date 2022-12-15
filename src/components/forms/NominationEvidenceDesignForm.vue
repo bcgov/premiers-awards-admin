@@ -18,7 +18,7 @@
     <ContactsFieldset />
     <NomineesFieldset />
     <PartnersFieldset />
-    <EvaluationFieldset>
+    <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>Briefly describe why the policy or program was developed to provide background and perspective.</p>
@@ -53,7 +53,7 @@
           <li>Quantitative or measurable improvement to programs or services for citizens</li>
           <li>Applying and/or developing best practices to remove barriers that may have prevented the successful outcome of the policy or program.</li></ul>
       </template>
-    </EvaluationFieldset>
+    </EvaluationsFieldset>
     <AttachmentsFieldset />
   </div><!-- end nomination form -->
 </template>

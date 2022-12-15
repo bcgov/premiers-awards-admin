@@ -15,11 +15,11 @@
       <li>Experimental or innovative mindset whereby openness to change, taking calculated risks and challenging the status quo to try something new resulted in a measurable outcome</li>
     </ul>
     <AcknowledgmentFieldset />
+    <NomineeFieldset />
     <OrganizationFieldset />
-    <NomineesFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
-    <EvaluationFieldset>
+    <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>Briefly describe the conditions under which the employee demonstrates exemplary leadership to provide background and perspective.</p>
@@ -72,7 +72,7 @@
           <li>Improved organizational performance as indicated by Work Environment Survey scores</li>
         </ul>
       </template>
-    </EvaluationFieldset>
+    </EvaluationsFieldset>
     <AttachmentsFieldset />
   </div><!-- end nomination form -->
 </template>

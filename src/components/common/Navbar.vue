@@ -5,7 +5,7 @@
         <img alt="logo" :src="logoSrc" height="60" class="mr-2">
       </template>
       <template #end>
-        <Button label="Profile" icon="pi pi-user" @click="toggleProfile" />
+        <Button class="mr-4" label="Profile" icon="pi pi-user" @click="toggleProfile" />
       </template>
     </Menubar>
   </div>
@@ -50,7 +50,7 @@ const menuItems = [
       label: isAdmin ? 'Premiers Awards: Admin' : 'Premiers Awards: Nominate',
       icon:'pi pi-fw pi-home',
       class: 'font-bold',
-      url: isAdmin ? '' : 'nominate'
+      url: isAdmin ? import.meta.env['BASE_URL'] : import.meta.env['BASE_URL'] + 'nominate'
     },
     {
       label:'About',

@@ -18,11 +18,6 @@
             </div>
           </div>
         </div>
-        <div class="field col-9">
-          <!--          <Message :closable="false" v-if="selected.partners.length >= maxPartners" severity="warn">-->
-          <!--            You have reached the maximum of 12 partners.-->
-          <!--          </Message>-->
-        </div>
         <div class="field col-3">
           <Button
               :disabled="selected.submitted"
@@ -30,6 +25,11 @@
               icon="pi pi-plus"
               @click="add"
           />
+        </div>
+        <div class="field col-9">
+          <!--          <Message :closable="false" v-if="selected.partners.length >= maxPartners" severity="warn">-->
+          <!--            You have reached the maximum of 12 partners.-->
+          <!--          </Message>-->
         </div>
       </div>
     </div>

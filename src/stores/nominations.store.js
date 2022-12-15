@@ -16,6 +16,7 @@ import settings from '@/services/settings.services.js';
 
 // get current word count limits
 const maxWordCounts = settings.get('wordCounts');
+const maxAttachments = settings.get('maxAttachments');
 
 const getWordCounts = (state) => {
         if (!state.selected) return {};
@@ -45,6 +46,7 @@ export const nominationsDataStore = defineStore({
         items: [],
         selected: null,
         loading: false,
+        downloading: false,
         error: null,
         attachmentError: null,
     }),
@@ -55,6 +57,9 @@ export const nominationsDataStore = defineStore({
         submitted: (state) => {
             return state.selected && state.selected.submitted;
         },
+        validateAttachments: (state) => {
+            return state.selected.attachments.length >= maxAttachments
+        },
         validate: (state) => {
             if (!state.selected) return [];
             const validations = {};
@@ -64,13 +69,19 @@ export const nominationsDataStore = defineStore({
             // Nomination Acknowledgement
             validations.acknowledgment = !!state.selected.acknowledgment;
 
+            // Nomination Organization
+            validations.organization = !!state.selected.organization;
+
             // Nomination Title
             validations.title = !!state.selected.title;
 
             // Single Nominee
             // - ensure first and last names
-            validations.nominee = state.selected.nominee.firstname !== '' &&
-                state.selected.nominee.lastname !== '';
+            validations.nominee = state.selected.nominee
+                && state.selected.nominee.hasOwnProperty('firstname')
+                && state.selected.nominee.hasOwnProperty('lastname')
+                && state.selected.nominee.firstname !== ''
+                && state.selected.nominee.lastname !== '';
 
             // Partners
             // - ensure nominee count is above zero
@@ -89,7 +100,8 @@ export const nominationsDataStore = defineStore({
 
             // Attachments
             // - ensure files exists
-            validations.attachments = (state.selected.attachments || []).length > 0
+            validations.attachments = (state.selected.attachments || []).length === 0
+                || (state.selected.attachments || []).length > 0
                 && state.selected.attachments.filter(attachment => !attachment.file).length === 0;
 
             return nomination.sections.map(section => {
@@ -137,7 +149,7 @@ export const nominationsDataStore = defineStore({
                     }
                 },
                 nominators: [],
-                acknowledgment: 'not_accepted',
+                acknowledgment: false,
                 evaluation: {
                     summary: '',
                     context: '',
@@ -192,6 +204,7 @@ export const nominationsDataStore = defineStore({
         async create(category) {
             this.loading = true;
             const [error, item] = await get(`nominations/create/${category}`);
+            this.selected = item ;
             this.error = error;
             this.loading = false;
             return item;
@@ -208,7 +221,7 @@ export const nominationsDataStore = defineStore({
         async remove() {
             this.loading = true;
             const {_id=''} = this.selected || {};
-            const [error, ] = await get(`nominations/delete/${_id}`);
+            const [error, ] = await post(`nominations/delete/${_id}`, {});
             this.error = error;
             this.loading = false;
         },
@@ -216,7 +229,8 @@ export const nominationsDataStore = defineStore({
         async submit() {
             this.loading = true;
             const {_id=''} = this.selected || {};
-            const [error, ] = await get(`nominations/submit/${_id}`);
+            const [error, ] = await post(`nominations/submit/${_id}`, {});
+            this.selected.submitted = true;
             this.error = error;
             this.loading = false;
         },
@@ -228,20 +242,17 @@ export const nominationsDataStore = defineStore({
             this.error = error;
             this.loading = false;
         },
-        // Export nominations to file
-        async export(ids, format) {
-            this.loading = true;
-            const [error, ] = await post(`nominations/export/${format}`, {ids: ids});
+        // Download zipped nomination package(s)
+        async download(data, format) {
+            this.downloading = true;
+            // create query using IDs from nomination array
+            const ids = encodeURIComponent(JSON.stringify(data.map( nomination => {
+                const {_id=''} = nomination || {};
+                return _id;
+            })));
+            const [error, ] = await download(`nominations/export/${format}?ids=${ids}`, 'package.zip');
             this.error = error;
-            this.loading = false;
-        },
-        // Download nomination as file
-        async download() {
-            this.loading = true;
-            const {_id=''} = this.selected || {};
-            const [error, ] = await get(`nominations/download/${_id}`);
-            this.error = error;
-            this.loading = false;
+            this.downloading = false;
         },
         // Upload attachment
         async uploadAttachment (file, label, description) {

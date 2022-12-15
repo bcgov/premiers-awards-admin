@@ -29,6 +29,29 @@
         </template>
       </ConfirmDialog>
 
+      <ConfirmDialog group="downloads">
+        <template #message="slotProps">
+          <div class="card p-4">
+            <div class="flex mb-5">
+              <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
+              <span class="pl-2">Confirm {{ slotProps.message.header }}</span>
+            </div>
+            <div class="pl-2 w-80">
+              <div v-for="nomination in selectedNominations">
+                <div class="grid">
+                  <div v-if="nomination.seq" class="col-2">
+                    {{nomination.seq}}
+                  </div>
+                  <div class="col-10">
+                    {{lookup('categories', nomination.category)}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </ConfirmDialog>
+
       <Dialog
           header="View Nomination"
           v-model:visible="dialog.visible"
@@ -44,10 +67,10 @@
           :value="items"
           :paginator="false"
           class="p-datatable-nominations"
-          dataKey="id"
+          dataKey="_id"
           :rowHover="true"
           v-model:filters="filters"
-          :globalFilterFields="['role.value']"
+          v-model:selection="selectedNominations"
           filterDisplay="menu"
           :loading="loading"
           responsiveLayout="scroll"
@@ -55,8 +78,23 @@
         <template #header>
           <div class="flex justify-content-between">
             <h2 class="m-0">Nominations</h2>
+            <span v-if="downloading">
+              <ProgressSpinner
+                  style="width:50px;height:50px"
+                  strokeWidth="8"
+                  fill="var(--surface-ground)"
+                  animationDuration=".5s"
+                  aria-label="Downloading"
+              />
+              Downloading...</span>
             <span class="p-buttonset">
               <Button label="Refresh" icon="pi pi-sync" @click="reload" />
+              <Button
+                  :disabled="!Array.isArray(selectedNominations) || selectedNominations.length === 0"
+                  label="Download"
+                  icon="pi pi-download"
+                  @click="downloadBulk"
+              />
               <Button label="Nominate" icon="pi pi-bookmark" @click="add" />
           </span>
           </div>
@@ -67,6 +105,12 @@
         <template #loading>
           Loading user data...
         </template>
+        <Column selectionMode="multiple"></Column>
+        <Column
+            field="seq"
+            header="Seq"
+        >
+        </Column>
         <Column
             field="submitted"
             header="Status"
@@ -81,23 +125,23 @@
             field="category"
             header="Category"
             :sortable="true"
-            filterField="categories"
             :showFilterMatchModes="false"
             :filterMenuStyle="{'width':'14rem'}"
-            style="min-width:10rem"
+            style="min-width:12rem"
         >
           <template #body="{data}">
             {{ lookup('categories', data.category) }}
           </template>
-          <template #filter="{filterModel}">
+          <template #filter="{filterModel, filterCallback}">
             <MultiSelect
                 v-model="filterModel.value"
                 :options="cats"
-                optionLabel="text"
-                optionValue="value"
+                optionLabel="label"
+                optionValue="key"
                 placeholder="Any"
                 class="p-column-filter"
                 :showToggleAll="false"
+                @change=filterCallback()
             />
           </template>
         </Column>
@@ -105,7 +149,6 @@
             field="organization"
             header="Organization"
             :sortable="true"
-            filterField="organizations"
             :showFilterMatchModes="false"
             :filterMenuStyle="{'width':'14rem'}"
             style="min-width:12rem"
@@ -113,22 +156,17 @@
           <template #body="{data}">
             {{ lookup('organizations', data.organization) }}
           </template>
-          <template #filter="{filterModel}">
+          <template #filter="{filterModel, filterCallback}">
             <MultiSelect
                 v-model="filterModel.value"
                 :options="orgs"
-                optionLabel="text"
-                optionValue="value"
+                optionLabel="label"
+                optionValue="key"
                 placeholder="Any"
                 class="p-column-filter"
                 :showToggleAll="false"
+                @change=filterCallback()
             />
-          </template>
-          <template #filterclear="{filterCallback}">
-            <Button type="button" icon="pi pi-times" @click="filterCallback()" class="p-button-secondary"></Button>
-          </template>
-          <template #filterapply="{filterCallback}">
-            <Button type="button" icon="pi pi-check" @click="filterCallback()" class="p-button-success"></Button>
           </template>
         </Column>
         <Column field="owner" header="Owner" :sortable="true">
@@ -165,7 +203,7 @@
                   :disabled="!data.submitted"
                   v-tooltip.top="'Download Nomination'"
                   icon="pi pi-download"
-                  @click="download(data, 'pdf')"
+                  @click="download(data)"
               />
               <Button
                   :disabled="data.submitted"
@@ -197,7 +235,7 @@ import { authDataStore } from "@/stores/auth.store";
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
-import { FilterMatchMode } from "primevue/api";
+import {FilterMatchMode} from "primevue/api";
 import messages from "@/services/message.services";
 import {useToast} from "primevue/usetoast";
 import NominationView from "@/views/NominationView.vue";
@@ -211,10 +249,8 @@ const v$ = useVuelidate();
 // initialize messages
 const toast = useToast();
 
-// init data table filter
-const filters = ref({
-  roles: { value: null, matchMode: FilterMatchMode.IN }
-});
+// initialize selected nominations
+const selectedNominations = ref();
 
 // get local options
 const orgs = settings.get('organizations') || [];
@@ -223,7 +259,7 @@ const statuses = settings.get('status') || [];
 const lookup = settings.lookup;
 
 // initialize references
-const { selected, items, loading, error } = storeToRefs(nominationsDataStore());
+const { selected, items, loading, downloading, error } = storeToRefs(nominationsDataStore());
 const store = nominationsDataStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
@@ -264,6 +300,12 @@ const reload = async () => {
 // - administrators load all nominations
 onMounted(reload);
 
+// apply custom data filters
+const filters = ref({
+  'category': {value: null, matchMode: FilterMatchMode.IN},
+  'organization': {value: null, matchMode: FilterMatchMode.IN},
+});
+
 // subscribe to user store actions
 store.$onAction(
     ({name, store, _, after}) => {
@@ -301,12 +343,6 @@ const edit = (data) => {
   navigate('edit-nomination', {category: category, id: _id})
 };
 
-// edit item dialog
-const download = async (data, format) => {
-  const { _id=null } = data || {};
-  await store.export([_id], format);
-};
-
 // unsubmit item dialog
 const unsubmit = async (data) => {
   selected.value = data;
@@ -340,6 +376,25 @@ const remove = (data) => {
     },
     reject: reset,
     onHide: reset
+  });
+};
+
+// download single package
+const download = async (data) => {
+  const { _id=null } = data || {};
+  await store.download([{_id: _id}], 'zip');
+};
+
+// download nomination packages
+const downloadBulk = async () => {
+  confirm.require({
+    group: 'downloads',
+    header: 'Download Nomination Packages',
+    icon: 'pi pi-info-circle',
+    acceptClass: 'p-button-warn',
+    accept: async () => {
+      await store.download(selectedNominations.value, 'zip');
+    }
   });
 };
 

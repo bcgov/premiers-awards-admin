@@ -1,9 +1,11 @@
 <template>
-  <Message v-if="selected.attachments.length >= maxUploads" severity="warn">
+  <Message v-if="uploadedFiles.length + selected.attachments.length >= maxUploads" severity="warn">
     You have reached the maximum number of attachments allowed.
   </Message>
   <Fieldset v-else legend="Nomination Attachment">
     <div class="card">
+      <p>You can upload up to
+        {{maxUploads - (uploadedFiles.length + selected.attachments.length)}} additional attachment(s)</p>
       <div class="p-fluid grid">
         <div v-if="!data.file" class="field col-12">
           <FileUpload
@@ -16,7 +18,12 @@
               @uploader="upload($event)"
           >
             <template #header>
-              <ProgressBar :value="totalSizePercent" :showValue="false" :class="['md:w-20rem h-1rem w-full md:ml-auto', {'exceeded-progress-bar': (totalSizePercent > 100)}]"><span class="white-space-nowrap">{{ totalSize }}B / 1Mb</span></ProgressBar>
+              <ProgressBar
+                  :value="totalSizePercent"
+                  :showValue="false"
+                  :class="['md:w-20rem h-1rem w-full md:ml-auto', {'exceeded-progress-bar': (totalSizePercent > 100)}]">
+                <span class="white-space-nowrap">{{ totalSize }}B / 1Mb</span>
+              </ProgressBar>
             </template>
             <template #empty>
               <p>Drag and drop file here to upload.</p>
@@ -69,7 +76,7 @@ const props = defineProps(['data', 'cancel']);
 
 // initialize references
 const { selected, items, loading, error, submitted } = storeToRefs(nominationsDataStore());
-const store = nominationsDataStore();
+const nominationsStore = nominationsDataStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const route = useRoute();
@@ -79,22 +86,31 @@ const uploadedFiles = ref([]);
 const maxUploads = 5;
 const maxFileSize = 1000000;
 const acceptedFileTypes = 'application/pdf';
+const maxAttachments = uploadedFiles.value.length + selected.value.attachments.length >= maxUploads
 
 const toast = useToast();
 const totalSize = ref(0);
 const totalSizePercent = ref(0);
 
+// load selected nomination
+const load = async () => {
+  const {id=null} = route.params || {};
+  await nominationsStore.getByID(id);
+}
+
 // Upload attachment file and attach to nomination
 const upload = async (event) => {
   try {
     const file = event.files[0];
-    await store.uploadAttachment(file, props.data.label, props.data.description);
+    await nominationsStore.uploadAttachment(file, props.data.label, props.data.description);
     // add file to completed uploads list
-    if (!error.value) uploadedFiles.value.push({
-      name: file.name,
-      size: formatFileSize(file.size),
-      label: props.data.label
-    });
+    if (!error.value) {
+      uploadedFiles.value.push({
+        name: file.name,
+        size: formatFileSize(file.size),
+        label: props.data.label
+      });
+    }
   } catch (e) {
     error.value = e;
   }
@@ -102,8 +118,8 @@ const upload = async (event) => {
 
 // Update attachment metadata
 const update = async () => {
-  await store.updateAttachment(props.data);
-  await store.getAll();
+  await nominationsStore.updateAttachment(props.data);
+  await nominationsStore.getAll();
 }
 
 </script>

@@ -17,7 +17,7 @@
     <ContactsFieldset />
     <NomineesFieldset />
     <PartnersFieldset />
-    <EvaluationFieldset>
+    <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>Briefly describe why the new approach to the program, service or initiative was undertaken to provide background and perspective.</p>
@@ -55,7 +55,7 @@
           <li>Operational efficiencies as demonstrated by financial or other key performance indicators</li>
         </ul>
       </template>
-    </EvaluationFieldset>
+    </EvaluationsFieldset>
     <AttachmentsFieldset />
   </div><!-- end nomination form -->
 </template>

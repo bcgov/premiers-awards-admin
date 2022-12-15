@@ -44,16 +44,16 @@
           >
             <template #header>
               <div class="grid">
-                <div class="col-9">
-                  <p><strong>Only Adobe PDF (Portable Document Format) documents are accepted.</strong></p>
-                </div>
                 <div class="col-3">
                   <Button
-                      :disabled="selected.attachments.length >= 5 || selected.submitted"
-                      label="Attach File"
-                      icon="pi pi-plus"
-                      @click="add"
+                    :disabled="selected.attachments.length >= 5 || selected.submitted"
+                    label="Attach File"
+                    icon="pi pi-plus"
+                    @click="add"
                   />
+                </div>
+                <div class="col-9">
+                  <p><strong>Only Adobe PDF (Portable Document Format) documents are accepted.</strong></p>
                 </div>
               </div>
             </template>

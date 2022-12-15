@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, ref} from "vue";
+import {onBeforeMount} from "vue";
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {useRoute, useRouter} from "vue-router";
 import {storeToRefs} from "pinia";

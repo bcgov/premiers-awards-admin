@@ -9,9 +9,20 @@
       </div>
     </template>
   </ConfirmDialog>
+
   <div v-if="!loading" class="p-fluid grid">
     <div class="field col-3">
       <div class="nominations-menubar-fixed">
+          <SplitButton
+              :disabled="loading || selected.submitted"
+              label="Save"
+              @click="update"
+              :model="[
+                  {label: 'Save Draft',icon: 'pi pi-save',command: update},
+                  {label: 'Submit Nomination',icon: 'pi pi-upload',command: submit, disabled: (nominationsStore.validate || []).filter(item => !item.valid).length > 0}
+                ]"
+              class="p-button-success">
+          </SplitButton>
         <Menu :model="(nominationsStore.validate || []).map(item => {return {
           label: item.label,
           icon: item.valid ? 'pi pi-check' : 'pi pi-times',
@@ -19,22 +30,7 @@
               indexRouter.push(`#${item.id}-fieldset`)
           }
         }})" />
-        <div v-if="selected.submitted"><InlineMessage severity="info">Submitted</InlineMessage></div>
-        <div v-if="v$.$invalid"><InlineMessage severity="warn">Form Incomplete</InlineMessage></div>
-        <div v-else><InlineMessage severity="success">Ready to Submit!</InlineMessage></div>
-<!--        <div v-for="error of v$.$errors" :key="error.$uid">-->
-<!--          <InlineMessage>{{ error.$message }}</InlineMessage>-->
-<!--        </div>-->
-        <SplitButton
-            :disabled="loading || selected.submitted"
-            label="Save"
-            @click="update"
-            :model="[
-                {label: 'Save Draft',icon: 'pi pi-save',command: update},
-                {label: 'Submit Nomination',icon: 'pi pi-upload',command: submit}
-              ]"
-            class="p-button-success">
-        </SplitButton>
+
         <div class="p-buttonset mt-5">
           <Button class="p-button-text" label="Cancel" icon="pi pi-times" @click="cancel" />
           <Button class="p-button-text" label="Delete" icon="pi pi-trash" @click="remove" />
@@ -42,6 +38,25 @@
       </div>
     </div>
     <div class="field col-9">
+      <div class="nominations-statusbar-fixed">
+        <div class="p-fluid grid">
+          <div class="field col-6">
+            <InlineMessage :severity="wordCounts.total > wordCounts.max.total ? 'error' : 'info'">
+              Word Count: {{wordCounts.total}}
+            </InlineMessage>
+          </div>
+          <div class="field col-6">
+            <div v-if="selected.submitted"><InlineMessage severity="success">Submitted</InlineMessage></div>
+            <div v-else-if="(nominationsStore.validate || []).filter(item => !item.valid).length === 0">
+              <InlineMessage severity="success">Ready to Submit!</InlineMessage>
+            </div>
+            <div v-else>
+              <InlineMessage severity="warn">Form Incomplete</InlineMessage>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Header :header="nomination.label" :lead="`Premier's Awards ${nomination.label} Nomination Form`" />
       <Message :closable="false" v-if="error" :severity="error.type">{{ error.text }}</Message>
       <div v-else-if="!loading">
@@ -57,7 +72,7 @@
         <NominationEvidenceDesign v-if="category==='evidence-based-design'" />
         <NominationLeadership v-if="category==='leadership'" />
         <NominationLegacy v-if="category==='legacy'" />
-        <NominationOrgLeadership v-if="category==='organization-excellence'" />
+        <NominationOrgLeadership v-if="category==='organizational-excellence'" />
         <NominationPartnership v-if="category==='partnership'" />
         <NominationRegionalImpact v-if="category==='regional-impact'" />
       </div>
@@ -86,7 +101,7 @@ import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
 
 const nominationsStore = nominationsDataStore();
-const { selected, items, loading, error } = storeToRefs(nominationsDataStore());
+const { selected, items, loading, error, wordCounts } = storeToRefs(nominationsDataStore());
 const route = useRoute();
 const indexRouter = useRouter();
 const toast = useToast();
@@ -106,11 +121,14 @@ const dialog = reactive({
   callback: ()=>{}
 });
 
+// load selected nomination
+const load = async () => {
+    const {id=null} = route.params || {};
+    await nominationsStore.getByID(id);
+}
+
 // load init data
-onBeforeMount(async() => {
-  const {id=null} = route.params || {};
-  await nominationsStore.getByID(id);
-});
+onBeforeMount(load);
 
 // cancel nomination submission
 const cancel = () => {
@@ -118,7 +136,10 @@ const cancel = () => {
 };
 
 // save nomination data
-const update = nominationsStore.update;
+const update = async () => {
+  await nominationsStore.update();
+  await load();
+};
 
 // submit nomination as final
 const submit = async () => {
@@ -127,7 +148,9 @@ const submit = async () => {
   if (!valid) return;
 
   // submit nomination
+  await nominationsStore.update();
   await nominationsStore.submit();
+  await load();
 };
 
 // delete confirmation dialog
@@ -191,12 +214,22 @@ onUnmounted(() => {
   color: rgba(0, 0, 0, 0.87) !important;
 }
 .nominations-menubar-fixed {
-  overflow: hidden;
+  overflow-y: scroll;
+  height: 80vh;
   position: fixed; /* Set the navbar to fixed position */
   top: 120px; /* Position the navbar at the top of the page */
-  max-width: 260px;
+  max-width: 270px;
   margin: auto;
-  padding: 0;
+  padding: 5px;
   left: 8px;
+}
+.nominations-statusbar-fixed {
+  z-index: 9999;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 100px; /* Position the navbar at the top of the page */
+  right: 10px;
+  margin: auto;
+  width: 40%;
+  padding: 0;
 }
 </style>

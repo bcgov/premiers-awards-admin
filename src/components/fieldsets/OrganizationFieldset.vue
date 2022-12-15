@@ -9,9 +9,10 @@
               :options="orgs"
               v-model="selected.organization"
               @select="v$.organization.$touch()"
+              :class="v$.organization.$invalid ? 'p-invalid' : ''"
               optionLabel="label"
               optionValue="key"
-              placeHolder="Select an organization"
+              placeholder="Select an organization"
           />
           <p v-for="error of v$.organization.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>

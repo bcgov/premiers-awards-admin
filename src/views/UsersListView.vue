@@ -51,7 +51,7 @@
           :globalFilterFields="['role.value']"
           filterDisplay="menu"
           :loading="loading"
-          responsiveLayout="scroll">
+          responsiveLayout="stack">
         <template #header>
           <div class="flex justify-content-between">
             <h2 class="m-0">Users</h2>
@@ -86,7 +86,6 @@
             field="roles"
             header="Roles"
             :sortable="true"
-            filterField="roles"
             :showFilterMatchModes="false"
             :filterMenuStyle="{'width':'14rem'}"
             style="min-width:14rem"
@@ -94,22 +93,17 @@
           <template #body="{data}">
             <div v-for="role in data.roles">{{ lookup('roles', role) || '' }}</div>
           </template>
-          <template #filter="{filterModel}">
+          <template #filter="{filterModel, filterCallback}">
               <MultiSelect
-                  v-model="filterModel.key"
+                  v-model="filterModel.value"
                   :options="roles"
                   optionLabel="label"
                   optionValue="key"
                   placeholder="Any"
                   class="p-column-filter"
                   :showToggleAll="false"
+                  @change=filterCallback()
               />
-          </template>
-          <template #filterclear="{filterCallback}">
-            <Button type="button" icon="pi pi-times" @click="filterCallback()" class="p-button-secondary"></Button>
-          </template>
-          <template #filterapply="{filterCallback}">
-            <Button type="button" icon="pi pi-check" @click="filterCallback()" class="p-button-success"></Button>
           </template>
         </Column>
         <Column bodyStyle="text-align: center; overflow: visible">
@@ -139,7 +133,7 @@ import { authDataStore } from "@/stores/auth.store";
 import { usersDataStore } from "@/stores/users.store";
 import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
-import { FilterMatchMode } from "primevue/api";
+import { FilterService, FilterOperator } from "primevue/api";
 import UserFieldset from "@/components/fieldsets/UserFieldset.vue";
 import messages from "@/services/message.services";
 import {useToast} from "primevue/usetoast";
@@ -153,10 +147,30 @@ const v$ = useVuelidate();
 // initialize messages
 const toast = useToast();
 
-// init data table filter
-const filters = ref({
-  roles: { value: null, matchMode: FilterMatchMode.IN }
+// define roles filter key
+const rolesFilter = ref('someInArray');
+
+onMounted(() => {
+  // load data on component mount
+  store.getAll()
+  // init custom data table filter
+  FilterService.register('someInArray', (values, filter) => {
+    return filter === undefined
+        || filter === null
+        || filter.length === 0
+        || values === undefined
+        || values === null
+        || filter.some(r=> values.includes(r))
+  });
 });
+
+// apply custom data filters
+const filters = ref({
+  'roles': {value: null, matchMode: rolesFilter.value},
+});
+const matchModeOptions = ref([
+  {label: 'In Array', value: rolesFilter.value},
+]);
 
 // get options for user roles
 const roles = settings.get('roles') || [];
@@ -187,9 +201,6 @@ store.$onAction(
       })
     }
 );
-
-// load data on component mount
-onMounted(store.getAll);
 
 // update dialog data
 const setDialog = (setting) => {
