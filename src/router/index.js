@@ -62,7 +62,8 @@ const router = createRouter({
       path: "/users/new",
       name: "users-create",
       component: UsersRegister,
-      meta: getMeta('User Registration')
+      meta: getMeta('User Registration'),
+      beforeEnter: authorizeAdmin
     },
     {
       path: "/users/register",
@@ -77,13 +78,6 @@ const router = createRouter({
       meta: getMeta('Manage Nominations'),
       beforeEnter: authorizeAdmin
     },
-    // {
-    //   path: "/nominations/view/:id",
-    //   name: "nomination-view",
-    //   component: ViewNomination,
-    //   meta: getMeta('View Nomination'),
-    //   beforeEnter: authorizeNominator
-    // },
     {
       path: "/nominations/create/:category",
       name: "create-nomination",

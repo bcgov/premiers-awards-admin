@@ -5,7 +5,7 @@
       v-model:visible="dialog.visible"
       :breakpoints="{'960px': '80vw', '640px': '90vw'}"
       :style="{width: '70vw'}"
-      baseZIndex="9999"
+      :baseZIndex="9999"
   >
     <AttachmentFieldset :data="selectedAttachment" :cancel="reset" />
   </Dialog>

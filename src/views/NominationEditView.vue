@@ -14,7 +14,7 @@
     <div class="field col-3">
       <div class="nominations-menubar-fixed">
         <Button
-            class="p-button-warning mb-2"
+            class="p-button-info mb-2"
             :disabled="loading || selected.submitted"
             label="Save Draft"
             icon="pi pi-save"

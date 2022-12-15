@@ -86,7 +86,7 @@ export const nominationsDataStore = defineStore({
             // Partners
             // - ensure nominee count is above zero
             // - ensure all partners have organizations
-            validations.partners = state.selected.nominees > 0 &&
+            validations.partners = state.selected.partners > 0 &&
                 state.selected.partners.filter(partner => {
                     return !partner.organization
                 }).length === 0;
