@@ -48,7 +48,11 @@
               <p>{{slotProps.data.description}}</p>
             </template>
             <template #footer>
-              <Button label="Nominate" icon="pi pi-bookmark" @click="()=>{navigate(slotProps.data.key)}" />
+              <Button
+                  :disabled="items.length > settings.get('maxDrafts')"
+                  label="Nominate"
+                  icon="pi pi-bookmark"
+                  @click="()=>{navigate(slotProps.data.key)}" />
             </template>
           </Card>
         </div>
@@ -80,6 +84,7 @@ const navigate = (category) => {
 }
 
 onMounted(async() => {
+  // load only nominations for GUID
   await store.getByGUID(current.value.guid || '');
 })
 </script>
