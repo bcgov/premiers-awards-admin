@@ -17,14 +17,14 @@
               :customUpload="true"
               @uploader="upload($event)"
           >
-            <template #header>
-              <ProgressBar
-                  :value="totalSizePercent"
-                  :showValue="false"
-                  :class="['md:w-20rem h-1rem w-full md:ml-auto', {'exceeded-progress-bar': (totalSizePercent > 100)}]">
-                <span class="white-space-nowrap">{{ totalSize }}B / 1Mb</span>
-              </ProgressBar>
-            </template>
+<!--            <template #header>-->
+<!--              <ProgressBar-->
+<!--                  :value="totalSizePercent"-->
+<!--                  :showValue="false"-->
+<!--                  :class="['md:w-20rem h-1rem w-full md:ml-auto', {'exceeded-progress-bar': (totalSizePercent > 100)}]">-->
+<!--                <span class="white-space-nowrap">{{ totalSize }}B / 1Mb</span>-->
+<!--              </ProgressBar>-->
+<!--            </template>-->
             <template #empty>
               <p>Drag and drop file here to upload.</p>
             </template>
