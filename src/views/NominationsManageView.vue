@@ -96,7 +96,7 @@
                   @click="downloadBulk"
               />
               <Button label="Nominate" icon="pi pi-bookmark" @click="add" />
-          </span>
+            </span>
           </div>
         </template>
         <template #empty>

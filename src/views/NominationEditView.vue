@@ -13,16 +13,13 @@
   <div v-if="!loading" class="p-fluid grid">
     <div class="field col-3">
       <div class="nominations-menubar-fixed">
-          <SplitButton
-              :disabled="loading || selected.submitted"
-              label="Save"
-              @click="update"
-              :model="[
-                  {label: 'Save Draft',icon: 'pi pi-save',command: update},
-                  {label: 'Submit Nomination',icon: 'pi pi-upload',command: submit, disabled: (nominationsStore.validate || []).filter(item => !item.valid).length > 0}
-                ]"
-              class="p-button-success">
-          </SplitButton>
+        <Button
+            class="p-button-warning mb-2"
+            :disabled="loading || selected.submitted"
+            label="Save Draft"
+            icon="pi pi-save"
+            @click="update"
+        />
         <Menu :model="(nominationsStore.validate || []).map(item => {return {
           label: item.label,
           icon: item.valid ? 'pi pi-check' : 'pi pi-times',
@@ -48,7 +45,15 @@
           <div class="field col-6">
             <div v-if="selected.submitted"><InlineMessage severity="success">Submitted</InlineMessage></div>
             <div v-else-if="(nominationsStore.validate || []).filter(item => !item.valid).length === 0">
-              <InlineMessage severity="success">Ready to Submit!</InlineMessage>
+              <Button
+                  class="p-button-success"
+                  :disabled = "loading
+                || selected.submitted
+                || (nominationsStore.validate || []).filter(item => !item.valid).length > 0"
+                  :label="selected.submitted ? 'Submitted' : 'Click to Submit'"
+                  icon="pi pi-upload"
+                  @click="submit"
+              />
             </div>
             <div v-else>
               <InlineMessage severity="warn">Form Incomplete</InlineMessage>

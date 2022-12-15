@@ -150,7 +150,7 @@ const edit = (data) => {
 };
 
 // open add attachment dialog
-const add = () => {
+const add = async () => {
   selectedAttachment.value = {
     label: '',
     description: '',
