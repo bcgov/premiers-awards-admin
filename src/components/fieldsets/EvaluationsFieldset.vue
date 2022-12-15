@@ -72,7 +72,7 @@
           </InlineMessage>
         </Fieldset>
 
-      <Fieldset v-if="!!this.$slots.complexity_oveview" :disabled="submitted" legend="Complexity" :togglable="true">
+      <Fieldset v-if="hasEvaluation('complexity')" :disabled="submitted" legend="Complexity" :togglable="true">
         <slot name="complexity_overview"></slot>
         <Editor
             v-model="selected.evaluation.complexity"
@@ -100,7 +100,7 @@
         </InlineMessage>
       </Fieldset>
 
-      <Fieldset v-if="!!this.$slots.approach_overview" :disabled="submitted" legend="Approach">
+      <Fieldset v-if="hasEvaluation('approach')" :disabled="submitted" legend="Approach">
         <slot name="approach_overview"></slot>
         <Editor
             v-model="selected.evaluation.approach"
@@ -128,7 +128,7 @@
         </InlineMessage>
       </Fieldset>
 
-      <Fieldset v-if="!!this.$slots.valuing_people_overview" :disabled="submitted" legend="Valuing People">
+      <Fieldset v-if="hasEvaluation('valuing_people')" :disabled="submitted" legend="Valuing People">
         <slot name="valuing_people_overview"></slot>
         <Editor
             v-model="selected.evaluation.valuing_people"
@@ -156,7 +156,7 @@
         </InlineMessage>
       </Fieldset>
 
-      <Fieldset v-if="!!this.$slots.commitment_overview" :disabled="submitted" legend="Commitment">
+      <Fieldset v-if="hasEvaluation('commitment')" :disabled="submitted" legend="Commitment">
         <slot name="commitment_overview"></slot>
         <Editor
             v-model="selected.evaluation.commitment"
@@ -184,7 +184,7 @@
         </InlineMessage>
       </Fieldset>
 
-      <Fieldset v-if="!!this.$slots.contribution_overview" :disabled="submitted" legend="Contribution">
+      <Fieldset v-if="hasEvaluation('contribution')" :disabled="submitted" legend="Contribution">
         <slot name="contribution_overview"></slot>
         <Editor
             v-model="selected.evaluation.contribution"
@@ -212,7 +212,7 @@
         </InlineMessage>
       </Fieldset>
 
-      <Fieldset v-if="!!this.$slots.impact_overview" :disabled="submitted"  legend="Impact">
+      <Fieldset v-if="hasEvaluation('impact')" :disabled="submitted"  legend="Impact">
         <slot name="impact_overview"></slot>
         <Editor
             v-model="selected.evaluation.impact"
@@ -251,12 +251,21 @@ import {authDataStore} from "@/stores/auth.store";
 import {useVuelidate} from "@vuelidate/core";
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {helpers} from "@vuelidate/validators";
+import settings from "@/services/settings.services";
 
 // get current user
 const { current,  } = storeToRefs(authDataStore());
 
 // load nominations state
 const { selected, submitted, error, wordCounts } = storeToRefs(nominationsDataStore());
+
+// get nomination settings
+const nomination = settings.lookupCategory(selected.value.category);
+
+// check if nomination includes evaluation section
+const hasEvaluation = (section) => {
+  return (nomination.evaluation || []).includes(section);
+}
 
 // apply validators
 const v$ = useVuelidate({
