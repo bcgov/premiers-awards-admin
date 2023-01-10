@@ -16,6 +16,7 @@ const messages = {
   updateAttachment: { text: 'Attachment updated successfully!', type: 'success' },
   removeAttachment: { text: 'Attachment deleted successfully!', type: 'success' },
   downloadAttachment: { text: 'Attachment downloaded successfully!', type: 'success' },
+  register: { text: 'User could not be registered.', type: 'error' },
   invalidToken: { text: 'User token could not be verified.', type: 'error' },
   invalidData: { text: 'Your form data is invalid or incomplete.', type: 'error' },
   serverError: { text: 'Server Error: Your request could not be completed.', type: 'error' },

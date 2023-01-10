@@ -57,7 +57,7 @@
             <h2 class="m-0">Users</h2>
             <span class="p-buttonset">
               <Button label="Refresh" icon="pi pi-sync" @click="reload" />
-              <Button label="Add User" icon="pi pi-user-plus" @click="add" />
+              <Button :disabled="!isSuperAdmin" label="Add User" icon="pi pi-user-plus" @click="add" />
           </span>
           </div>
         </template>
@@ -133,13 +133,13 @@ import { authDataStore } from "@/stores/auth.store";
 import { usersDataStore } from "@/stores/users.store";
 import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
-import { FilterService, FilterOperator } from "primevue/api";
+import { FilterService } from "primevue/api";
 import UserFieldset from "@/components/fieldsets/UserFieldset.vue";
 import messages from "@/services/message.services";
 import {useToast} from "primevue/usetoast";
 
 // get current user info
-const { current } = storeToRefs(authDataStore());
+const { current, isSuperAdmin } = storeToRefs(authDataStore());
 
 // validator
 const v$ = useVuelidate();

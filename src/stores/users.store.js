@@ -60,8 +60,37 @@ export const usersDataStore = defineStore({
             this.error = error;
             this.loading = false;
         },
+        // Load current user data into store
+        async getCurrent() {
+            this.loading = true;
+            if (!this.error) {
+                const [error, user] = await get(`admin/users/info`);
+                if (user && user.hasOwnProperty('roles')) {
+                    this.current = user;
+                    // set user roles/status
+                    const {guid='', username='', firstname='', lastname='', email='', roles=['inactive']} = user || {};
+                    this.selected = {
+                        guid: guid,
+                        username: username,
+                        firstname: firstname,
+                        lastname: lastname,
+                        email: email,
+                        roles: roles.length > 0 ? roles : ['inactive']
+                    };
+                }
+                this.error = error;
+            }
+            this.loading = false;
+        },
         // Add new user
         async insert() {
+            this.loading = true;
+            const [error, ] = await post(`admin/users/register`, this.selected);
+            this.error = error;
+            this.loading = false;
+        },
+        // Add new user
+        async register() {
             this.loading = true;
             const [error, ] = await post(`admin/users/register`, this.selected);
             this.error = error;

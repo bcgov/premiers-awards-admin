@@ -10,6 +10,7 @@ import NominatorDashboard from '@/views/NominatorDashboardView.vue';
 import AdminDashboard from '@/views/AdminDashboardView.vue';
 import NotFound from '@/views/404View.vue';
 import Unauthorized from '@/views/401View.vue';
+import UsersCreate from '@/views/UsersCreateView.vue';
 import UsersRegister from '@/views/UsersRegisterView.vue';
 import UsersList from '@/views/UsersManageView.vue';
 import NominationsManage from '@/views/NominationsManageView.vue';
@@ -61,15 +62,15 @@ const router = createRouter({
     {
       path: "/users/new",
       name: "users-create",
-      component: UsersRegister,
-      meta: getMeta('User Registration'),
+      component: UsersCreate,
+      meta: getMeta('Create New User'),
       beforeEnter: authorizeAdmin
     },
     {
       path: "/users/register",
       name: "users-register",
       component: UsersRegister,
-      meta: getMeta('Nominator Registration'),
+      meta: getMeta('User Registration'),
       beforeEnter: isLoggedIn
     },
     {

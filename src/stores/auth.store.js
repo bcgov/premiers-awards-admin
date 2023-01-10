@@ -40,11 +40,13 @@ export const authDataStore = defineStore({
             this.loading = true;
             if (!this.error) {
                 const [error, user] = await get(`admin/users/info`);
+                // check if user was authenticated through SiteMinder
                 if (user && user.hasOwnProperty('roles')) {
                     this.current = user;
                     // set user roles/status
-                    const {roles=[]} = user || {};
-                    this.isRegistered = roles.length > 0;
+                    const {_id="", roles=[]} = user || {};
+                    // user is registered if a user ID is already assigned
+                    this.isRegistered = !!_id;
                     this.isActive = !roles.includes('inactive');
                     this.isNominator = roles.includes('nominator');
                     this.isAdmin = roles.includes('administrator') || roles.includes('super-administrator');

@@ -72,7 +72,7 @@ import {storeToRefs} from "pinia";
 
 // initialize references
 const { selected, items, loading, error } = storeToRefs(nominationsDataStore());
-const { current } = storeToRefs(authDataStore());
+const { current, isRegistered } = storeToRefs(authDataStore());
 const indexRouter = useRouter();
 const auth = authDataStore();
 const store = nominationsDataStore();

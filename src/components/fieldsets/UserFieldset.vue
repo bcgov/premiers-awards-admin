@@ -10,7 +10,7 @@
                   v-model="selected.guid"
                   @change.native="v$.guid.$touch()"
                   :class="v$.guid.$invalid && isNew ? 'p-invalid' : ''"
-                  :disabled="!isNew"
+                  :disabled="!isSuperAdmin || disable"
               />
               <label for="guid">GUID</label>
           </span>
@@ -26,7 +26,7 @@
                   v-model="selected.username"
                   @change.native="v$.username.$touch()"
                   :class="v$.username.$invalid && isNew ? 'p-invalid' : ''"
-                  :disabled="!isNew"
+                  :disabled="!isSuperAdmin || disable"
               />
               <label for="idir">IDIR</label>
           </span>
@@ -41,6 +41,7 @@
                   type="text"
                   v-model="selected.firstname"
                   @change.native="v$.firstname.$touch()"
+                  :disabled="disable"
               />
               <label for="firstname">First Name</label>
           </span>
@@ -55,6 +56,7 @@
                   type="text"
                   v-model="selected.lastname"
                   @change.native="v$.lastname.$touch()"
+                  :disabled="disable"
               />
               <label for="lastname">Last Name</label>
           </span>
@@ -69,6 +71,7 @@
                   type="email"
                   v-model="selected.email"
                   @change.native="v$.email.$touch()"
+                  :disabled="disable"
               />
               <label for="email">Email</label>
           </span>
@@ -84,7 +87,7 @@
                 optionLabel="label"
                 optionValue="key"
                 @change.native="v$.roles.$touch()"
-                :disabled="isCurrent || isNew"
+                :disabled="isCurrent || isNew || disable"
                 :class="v$.roles.$invalid ? 'p-invalid' : ''"
                 :showToggleAll="false"
                 style="width:15rem"
@@ -105,17 +108,17 @@ import { usersDataStore } from "@/stores/users.store";
 import settings from "@/services/settings.services";
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
-import {email, required, helpers} from "@vuelidate/validators";
+import { email, required } from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {ref} from "vue";
 
 // properties
-const props = defineProps(['mode']);
+const props = defineProps(['mode', 'disable']);
 const isNew = props.mode === 'new';
 const heading = isNew ? 'Register New User' : 'Edit User Data';
 
 // get current user
-const { current } = storeToRefs(authDataStore());
+const { current, isSuperAdmin } = storeToRefs(authDataStore());
 
 // load users state
 const { selected, error } = storeToRefs(usersDataStore());
@@ -126,20 +129,16 @@ const isCurrent = ref(selected.value.guid === current.value.guid);
 // get options for user roles
 const roles = settings.get('roles') || [];
 
-// custom validators
-const notCurrentGUID = (value) => value !== current.value.guid;
-const notCurrentUsername = (value) => value !== current.value.username;
+// // custom validators
+// const notCurrentGUID = (value) => value !== current.value.guid;
+// const notCurrentUsername = (value) => value !== current.value.username;
+//     notCurrentGUID: helpers.withMessage("Cannot create user with current GUID.", notCurrentGUID)
+//     notCurrentUsername: helpers.withMessage("Cannot create user with current username.", notCurrentUsername)
 
 // init validations
 const createValidations = {
-  guid: {
-    required,
-    notCurrentGUID: helpers.withMessage("Cannot create user with current GUID.", notCurrentGUID)
-  },
-  username: {
-    required,
-    notCurrentUsername: helpers.withMessage("Cannot create user with current username.", notCurrentUsername)
-  },
+  guid: { required },
+  username: { required },
   firstname: { required },
   lastname: { required },
   email: { required, email },
