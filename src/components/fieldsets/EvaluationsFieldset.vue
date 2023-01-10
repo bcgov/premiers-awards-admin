@@ -29,8 +29,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
             </template>
           </Editor>
@@ -58,8 +56,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
             </template>
           </Editor>
@@ -87,8 +83,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
           </template>
         </Editor>
@@ -115,8 +109,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
           </template>
         </Editor>
@@ -143,8 +135,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
           </template>
         </Editor>
@@ -171,8 +161,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
           </template>
         </Editor>
@@ -199,8 +187,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
           </template>
         </Editor>
@@ -227,8 +213,6 @@
                     <button class="ql-blockquote"></button>
                     <button class="ql-list" value="ordered"></button>
                     <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
                   </span>
           </template>
         </Editor>

@@ -86,7 +86,7 @@
     </div>
     <div class="col-12 md:col-3"><b>Video Locations</b></div>
     <div class="col-12 md:col-9">
-      <div v-for="location in selected.contacts.video.locations">
+      <div class="mb-2" v-for="location in selected.contacts.video.locations">
         {{location.address}}, {{location.city}}
       </div>
     </div>
@@ -106,17 +106,17 @@
         <template #loading>
           Loading nominators...
         </template>
-        <Column field="label" header="Full Name" :sortable="true">
+        <Column field="lastname" header="Full Name" :sortable="true">
           <template #body="{data}">
             {{ data.firstname}} {{ data.lastname}}
           </template>
         </Column>
-        <Column field="file" header="Title" :sortable="true">
+        <Column field="title" header="Title" :sortable="true">
           <template #body="{data}">
             {{ data.title}}
           </template>
         </Column>
-        <Column field="file" header="Email" :sortable="true">
+        <Column field="email" header="Email" :sortable="true">
           <template #body="{data}">
             {{ data.email}}
           </template>
@@ -129,33 +129,21 @@
     <div class="col-12">
       <div class="grid">
         <div class="col-12 md:col-2"><b>Summary</b></div>
-        <div class="col-12 md:col-10">{{selected.evaluation.summary}}</div>
+        <div class="col-12 md:col-10" v-html="selected.evaluation.summary" />
         <div class="col-12 md:col-2"><b>Context</b></div>
-        <div class="col-12 md:col-10">{{selected.evaluation.summary}}</div>
+        <div class="col-12 md:col-10" v-html="selected.evaluation.context" />
         <div v-if="hasEvaluation('complexity')" class="col-12 md:col-2"><b>Complexity</b></div>
-        <div v-if="hasEvaluation('complexity')" class="col-12 md:col-10">
-          {{selected.evaluation.complexity}}
-        </div>
+        <div v-if="hasEvaluation('complexity')" v-html="selected.evaluation.complexity" class="col-12 md:col-10" />
         <div v-if="hasEvaluation('approach')" class="col-12 md:col-2"><b>Approach</b></div>
-        <div v-if="hasEvaluation('approach')" class="col-12 md:col-10">
-          {{selected.evaluation.approach}}
-        </div>
+        <div v-if="hasEvaluation('approach')" v-html="selected.evaluation.approach" class="col-12 md:col-10" />
         <div v-if="hasEvaluation('valuing_people')" class="col-12 md:col-2"><b>Valuing People</b></div>
-        <div v-if="hasEvaluation('valuing_people')" class="col-12 md:col-10">
-          {{selected.evaluation.valuing_people}}
-        </div>
+        <div v-if="hasEvaluation('valuing_people')" v-html="selected.evaluation.valuing_people" class="col-12 md:col-10" />
         <div v-if="hasEvaluation('commitment')" class="col-12 md:col-2"><b>Commitment</b></div>
-        <div v-if="hasEvaluation('commitment')" class="col-12 md:col-10">
-          {{selected.evaluation.commitment}}
-        </div>
+        <div v-if="hasEvaluation('commitment')" v-html="selected.evaluation.commitment" class="col-12 md:col-10" />
         <div v-if="hasEvaluation('contribution')" class="col-12 md:col-2"><b>Contribution</b></div>
-        <div v-if="hasEvaluation('contribution')" class="col-12 md:col-10">
-          {{selected.evaluation.contribution}}
-        </div>
+        <div v-if="hasEvaluation('contribution')" v-html="selected.evaluation.contribution" class="col-12 md:col-10" />
         <div v-if="hasEvaluation('impact')" class="col-12 md:col-2"><b>Impact</b></div>
-        <div v-if="hasEvaluation('impact')" class="col-12 md:col-10">
-          {{selected.evaluation.impact}}
-        </div>
+        <div v-if="hasEvaluation('impact')" v-html="selected.evaluation.impact" class="col-12 md:col-10" />
       </div>
     </div>
     <div class="col-12"><h3>Attachments</h3></div>
@@ -178,7 +166,7 @@
             <div>{{ data.description || '(No Description)' }}</div>
           </template>
         </Column>
-        <Column field="file" header="File" :sortable="true">
+        <Column field="originalname" header="File">
           <template #body="{data}">
             {{ data.file ? `${data.file.originalname} (${ formatFileSize(data.file.size) })` : '(No File)' }}
           </template>

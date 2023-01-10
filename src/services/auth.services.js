@@ -61,4 +61,20 @@ export const authorizeNominator = async (to, from, next) => {
   else next();
 }
 
+/**
+ * Check if user is logged in and redirect.
+ *
+ * @src public
+ */
+
+export const isLoggedIn = async (to, from, next) => {
+  const {roles=[]} = await getUserData() || {};
+  console.log(roles)
+  if (['administrator', 'super-administrator'].some(r => roles.includes(r)))
+    return next({name: 'admin-dashboard'});
+  else if (['nominator'].some(r => roles.includes(r)))
+    return next({name: 'nominator-dashboard'});
+  else next();
+}
+
 

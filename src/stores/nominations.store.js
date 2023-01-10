@@ -250,7 +250,10 @@ export const nominationsDataStore = defineStore({
                 const {_id=''} = nomination || {};
                 return _id;
             })));
-            const [error, ] = await download(`nominations/export/${format}?ids=${ids}`, 'package.zip');
+            const currentDate = new Date();
+            const timestamp = currentDate.getTime();
+            const filename = `package_${timestamp}.zip`
+            const [error, ] = await download(`nominations/export/${format}?ids=${ids}`, filename);
             this.error = error;
             this.downloading = false;
         },

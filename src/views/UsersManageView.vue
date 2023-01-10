@@ -219,7 +219,7 @@ const resetDialog = () => {
 // open new item dialog
 const add = () => {
   reset();
-  indexRouter.push({name: 'users-register'});
+  indexRouter.push({name: 'users-create'});
 };
 
 // create new item

@@ -37,7 +37,7 @@
               <span class="pl-2">Confirm {{ slotProps.message.header }}</span>
             </div>
             <div class="pl-2 w-80">
-              <div v-for="nomination in selectedNominations">
+              <div v-for="nomination in selectedNominations.filter(n => n.submitted)">
                 <div class="grid">
                   <div v-if="nomination.seq" class="col-2">
                     {{nomination.seq}}
@@ -73,7 +73,7 @@
           v-model:selection="selectedNominations"
           filterDisplay="menu"
           :loading="loading"
-          responsiveLayout="scroll"
+          responsiveLayout="stack"
       >
         <template #header>
           <div class="flex justify-content-between">
@@ -87,16 +87,22 @@
                   aria-label="Downloading"
               />
               Downloading...</span>
-            <span class="p-buttonset">
-              <Button label="Refresh" icon="pi pi-sync" @click="reload" />
-              <Button
-                  :disabled="!Array.isArray(selectedNominations) || selectedNominations.length === 0"
-                  label="Download"
-                  icon="pi pi-download"
-                  @click="downloadBulk"
-              />
-              <Button label="Nominate" icon="pi pi-bookmark" @click="add" />
-            </span>
+            <div>
+              <span class="p-buttonset">
+                <Button label="Refresh" icon="pi pi-sync" @click="reload" />
+                <Button
+                    :disabled="!Array.isArray(selectedNominations) || selectedNominations.length === 0"
+                    label="Download"
+                    icon="pi pi-download"
+                    @click="downloadBulk"
+                />
+                <Button label="Nominate" icon="pi pi-bookmark" @click="add" />
+              </span>
+              <span class="p-input-icon-left ml-2">
+                <i class="pi pi-search" />
+                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+              </span>
+            </div>
           </div>
         </template>
         <template #empty>
@@ -106,19 +112,30 @@
           Loading user data...
         </template>
         <Column selectionMode="multiple"></Column>
-        <Column
-            field="seq"
-            header="Seq"
-        >
+        <Column field="seq" header="Seq">
         </Column>
         <Column
             field="submitted"
             header="Status"
             :sortable="true"
+            :showFilterMatchModes="false"
+            :filterMenuStyle="{'width':'14rem'}"
         >
           <template #body="{data}">
             <Tag v-if="data.submitted" severity="success" icon="pi pi-lock" rounded>Submitted</Tag>
             <Tag v-else severity="warning" icon="pi pi-unlock" rounded>Draft</Tag>
+          </template>
+          <template #filter="{filterModel, filterCallback}">
+            <MultiSelect
+                v-model="filterModel.value"
+                :options="statuses"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Any"
+                class="p-column-filter"
+                :showToggleAll="false"
+                @change=filterCallback()
+            />
           </template>
         </Column>
         <Column
@@ -143,6 +160,16 @@
                 :showToggleAll="false"
                 @change=filterCallback()
             />
+          </template>
+        </Column>
+        <Column field="title" header="Title/Nominee" :sortable="true">
+          <template #body="{data}">
+            {{data.title
+              ? data.title
+              : data.nominee && data.nominee.hasOwnProperty('firstname') && data.nominee.hasOwnProperty('lastname')
+                  ? `${data.nominee.firstname} ${data.nominee.lastname}`
+                  : '-'
+            }}
           </template>
         </Column>
         <Column
@@ -260,6 +287,7 @@ const lookup = settings.lookup;
 
 // initialize references
 const { selected, items, loading, downloading, error } = storeToRefs(nominationsDataStore());
+
 const store = nominationsDataStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
@@ -302,6 +330,8 @@ onMounted(reload);
 
 // apply custom data filters
 const filters = ref({
+  'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+  'submitted': {value: null, matchMode: FilterMatchMode.IN},
   'category': {value: null, matchMode: FilterMatchMode.IN},
   'organization': {value: null, matchMode: FilterMatchMode.IN},
 });
@@ -387,13 +417,14 @@ const download = async (data) => {
 
 // download nomination packages
 const downloadBulk = async () => {
+  const filteredNominations = selectedNominations.value.filter(n => n.submitted);
   confirm.require({
     group: 'downloads',
     header: 'Download Nomination Packages',
     icon: 'pi pi-info-circle',
     acceptClass: 'p-button-warn',
     accept: async () => {
-      await store.download(selectedNominations.value, 'zip');
+      await store.download(filteredNominations, 'zip');
     }
   });
 };

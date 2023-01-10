@@ -9,8 +9,8 @@ const schemaData = {
   maxDrafts: 12,
   maxAttachments: 5,
   "status": [
-    {key: 'draft', label: 'Draft'},
-    {key: 'submitted', label: 'Submitted'}
+    {key: 'draft', label: 'Draft', value: false},
+    {key: 'submitted', label: 'Submitted', value: true}
   ],
   "roles": [
     {key: 'inactive', label: 'Inactive'},

@@ -11,12 +11,12 @@ import AdminDashboard from '@/views/AdminDashboardView.vue';
 import NotFound from '@/views/404View.vue';
 import Unauthorized from '@/views/401View.vue';
 import UsersRegister from '@/views/UsersRegisterView.vue';
-import UsersList from '@/views/UsersListView.vue';
+import UsersList from '@/views/UsersManageView.vue';
 import NominationsManage from '@/views/NominationsManageView.vue';
 import NominationCreate from '@/views/NominationCreateView.vue';
 import NominationEdit from '@/views/NominationEditView.vue'
 import {getMeta} from "@/services/meta.services";
-import {authorizeAdmin, authorizeNominator, authenticate} from "@/services/auth.services";
+import {authorizeAdmin, authorizeNominator, authenticate, isLoggedIn} from "@/services/auth.services";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,7 +69,8 @@ const router = createRouter({
       path: "/users/register",
       name: "users-register",
       component: UsersRegister,
-      meta: getMeta('Nominator Registration')
+      meta: getMeta('Nominator Registration'),
+      beforeEnter: isLoggedIn
     },
     {
       path: "/nominations",
