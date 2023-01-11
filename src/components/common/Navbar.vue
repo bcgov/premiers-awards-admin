@@ -81,21 +81,21 @@ onBeforeMount(async() => {
     });
   }
 
+  // add nominator menu items
+  if (isNominator.value || isAdmin.value) {
+    menu.value.push({
+      label:'Nominations',
+      icon:'pi pi-fw pi-bookmark',
+      url: import.meta.env['BASE_URL'] + 'nominations'
+    });
+  }
+
   // add super-admin menu items
   if (isSuperAdmin.value) {
     menu.value.push({
       label: 'Settings',
       icon: 'pi pi-fw pi-cog',
       url: '#'
-    });
-  }
-
-  // add nominator menu items
-  if (isNominator.value) {
-    menu.value.push({
-      label:'Nominations',
-      icon:'pi pi-fw pi-bookmark',
-      url: import.meta.env['BASE_URL'] + 'nominations'
     });
   }
 });

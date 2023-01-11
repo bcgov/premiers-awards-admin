@@ -60,16 +60,19 @@ function asyncWrapper(promise, finallyFunc) {
  */
 
 const handleResult = (error, result) => {
-
   const {data=[]} = result || {}
   if (error && error.response) {
+    // extract specific error message (if exists)
+    const {data=''} = error.response || {};
+    const {message=''} = data || {};
+    const {msg=''} = message || {};
     if (error.response.status === 403 || error.response.status === 401) {
-      return [messageHandler.get('notAuthorized'), null];
+      return msg ? [{ text: msg, type: 'error' }, null] : [messageHandler.get('notAuthorized'), null];
     }
     else if (error.response.status === 422) {
-      return [messageHandler.get('invalidData'), null];
+      return msg ? [{ text: msg, type: 'error' }, null] : [messageHandler.get('invalidData'), null];
     }
-    else return [messageHandler.get('serverError'), null];
+    else return msg ? [{ text: msg, type: 'error' }, null] : [messageHandler.get('serverError'), null];
   }
   return [error, data];
 }

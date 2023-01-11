@@ -165,7 +165,6 @@ const add = async () => {
 
 // delete confirmation dialog
 const remove = (data) => {
-  console.log(data)
   const {_id='', file=null, label='', description=''} = data || {};
   confirm.require({
     group: 'attachments',
