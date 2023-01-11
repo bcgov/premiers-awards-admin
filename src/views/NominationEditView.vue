@@ -10,7 +10,9 @@
     </template>
   </ConfirmDialog>
 
-  <div v-if="!loading" class="p-fluid grid">
+  <Message v-if="error" :severity="error.type" :closable="false">{{ error.text }}</Message>
+
+  <div v-if="!loading && selected" class="p-fluid grid">
     <div class="field col-3">
       <div class="nominations-menubar-fixed">
         <Button

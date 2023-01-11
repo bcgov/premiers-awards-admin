@@ -78,7 +78,7 @@ const router = createRouter({
       name: "list-nominations",
       component: NominationsManage,
       meta: getMeta('Manage Nominations'),
-      beforeEnter: authorizeAdmin
+      beforeEnter: authorizeNominator
     },
     {
       path: "/nominations/create/:category",

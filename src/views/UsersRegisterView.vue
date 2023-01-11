@@ -2,7 +2,7 @@
   <Header header="User Registration" />
   <Placeholder v-if="loading" />
   <div>
-    <Message v-if="isRegistered" severity="info">
+    <Message v-if="isRegistered" severity="info" :closable="false">
       Your registration is currently under review. An administrator must approve your registration to allow
       access to the site. Please check back regularly for updates.
     </Message>

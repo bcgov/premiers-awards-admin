@@ -1,6 +1,6 @@
 <template>
   <div class="navbar-fixed">
-    <Menubar :model="items">
+    <Menubar :model="menu">
       <template #start>
         <img alt="logo" :src="logoSrc" height="60" class="mr-2">
       </template>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import {onMounted, onUnmounted, ref} from 'vue';
+import {onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
 import logoSrc from '@/assets/BCID_H_rgb_pos.png';
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
@@ -40,50 +40,23 @@ const { current, error, isAdmin, isSuperAdmin, isNominator } = storeToRefs(authD
 
 // toggle profile sidebar
 const isProfileVisible = ref(false);
+const menu = ref([
+  {
+    label: isAdmin ? 'Premiers Awards: Admin' : 'Premiers Awards: Nominate',
+    icon:'pi pi-fw pi-home',
+    class: 'font-bold',
+    url: isAdmin ? import.meta.env['BASE_URL'] : import.meta.env['BASE_URL'] + 'nominate'
+  },
+  {
+    label:'About',
+    icon:'pi pi-fw pi-external-link',
+    url: 'https://premiersawards.gww.gov.bc.ca'
+  },
+]);
+
+// show/hide user profile
 const toggleProfile = () => {
   isProfileVisible.value = !isProfileVisible.value;
-}
-
-// init menu items
-const menuItems = [
-    {
-      label: isAdmin ? 'Premiers Awards: Admin' : 'Premiers Awards: Nominate',
-      icon:'pi pi-fw pi-home',
-      class: 'font-bold',
-      url: isAdmin ? import.meta.env['BASE_URL'] : import.meta.env['BASE_URL'] + 'nominate'
-    },
-    {
-      label:'About',
-      icon:'pi pi-fw pi-external-link',
-      url: 'https://premiersawards.gww.gov.bc.ca'
-    }
-];
-
-// add admin menu items
-if (isAdmin) {
-  menuItems.push({
-    label:'Users',
-    icon:'pi pi-fw pi-users',
-    url: import.meta.env['BASE_URL'] + 'users'
-  });
-}
-
-// add super-admin menu items
-if (isSuperAdmin) {
-  menuItems.push({
-    label: 'Settings',
-    icon: 'pi pi-fw pi-cog',
-    url: '#'
-  });
-}
-
-// add nominator menu items
-if (isNominator) {
-  menuItems.push({
-    label:'Nominations',
-    icon:'pi pi-fw pi-bookmark',
-    url: import.meta.env['BASE_URL'] + 'nominations'
-  });
 }
 
 // handle menu scroll effects
@@ -93,15 +66,47 @@ const onScroll = () => {
       ?  'navbar-fixed'
       : '';
 }
+
+onBeforeMount(async() => {
+  // initialize user
+  const authStore = authDataStore();
+  await authStore.currentUserInit();
+
+  // add admin menu items
+  if (isAdmin.value) {
+    menu.value.push({
+      label:'Users',
+      icon:'pi pi-fw pi-users',
+      url: import.meta.env['BASE_URL'] + 'users'
+    });
+  }
+
+  // add super-admin menu items
+  if (isSuperAdmin.value) {
+    menu.value.push({
+      label: 'Settings',
+      icon: 'pi pi-fw pi-cog',
+      url: '#'
+    });
+  }
+
+  // add nominator menu items
+  if (isNominator.value) {
+    menu.value.push({
+      label:'Nominations',
+      icon:'pi pi-fw pi-bookmark',
+      url: import.meta.env['BASE_URL'] + 'nominations'
+    });
+  }
+});
+
 onMounted(() => {
   window.addEventListener("scroll", onScroll);
 });
+
 onUnmounted(() => {
   window.removeEventListener("scroll", onScroll)
 });
-
-// set filtered menu items
-const items = ref(menuItems);
 
 </script>
 <style>

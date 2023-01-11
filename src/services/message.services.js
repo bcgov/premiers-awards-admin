@@ -20,7 +20,7 @@ const messages = {
   invalidToken: { text: 'User token could not be verified.', type: 'error' },
   invalidData: { text: 'Your form data is invalid or incomplete.', type: 'error' },
   serverError: { text: 'Server Error: Your request could not be completed.', type: 'error' },
-  notAuthorized: { text: 'You are not authorized to access this screen.', type: 'error' },
+  notAuthorized: { text: 'You are not authorized to access this page.', type: 'error' },
   notAuthenticated: { text: 'User is not authenticated.', type: 'error' },
   loginError: { text: 'Login Error: Your user credentials are not valid.', type: 'error' }
 };
