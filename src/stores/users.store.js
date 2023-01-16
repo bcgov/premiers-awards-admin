@@ -7,7 +7,7 @@
  *         firstname: '',
  *         lastname: '',
  *         email: '',
- *         role: ''
+ *         roles: []
  *         }]
  *
  * @param {Array} items
@@ -30,7 +30,7 @@ export const usersDataStore = defineStore({
             firstname: '',
             lastname: '',
             email: '',
-            role: 'inactive'
+            roles: ['inactive']
         },
         loading: false,
         error: null
@@ -49,27 +49,48 @@ export const usersDataStore = defineStore({
                 firstname: '',
                 lastname: '',
                 email: '',
-                role: 'inactive'
+                roles: ['inactive']
             };
         },
         // Get all users
         async getAll() {
             this.loading = true;
-            const [error, items] = await get(`admin/users/view`);
-            this.items = items;
+            const [error, users] = await get(`admin/users/view`);
+            this.items = users;
             this.error = error;
             this.loading = false;
         },
-        // Get user by GUID
-        // async getByID(guid) {
-        //     this.loading = true;
-        //     const [error, result] = await get(`admin/users/view/${guid}`);
-        //     this.selected = result;
-        //     this.error = error;
-        //     this.loading = false;
-        // },
+        // Load current user data into store
+        async getCurrent() {
+            this.loading = true;
+            if (!this.error) {
+                const [error, user] = await get(`admin/users/info`);
+                if (user && user.hasOwnProperty('roles')) {
+                    this.current = user;
+                    // set user roles/status
+                    const {guid='', username='', firstname='', lastname='', email='', roles=['inactive']} = user || {};
+                    this.selected = {
+                        guid: guid,
+                        username: username,
+                        firstname: firstname,
+                        lastname: lastname,
+                        email: email,
+                        roles: roles.length > 0 ? roles : ['inactive']
+                    };
+                }
+                this.error = error;
+            }
+            this.loading = false;
+        },
         // Add new user
         async insert() {
+            this.loading = true;
+            const [error, ] = await post(`admin/users/register`, this.selected);
+            this.error = error;
+            this.loading = false;
+        },
+        // Add new user
+        async register() {
             this.loading = true;
             const [error, ] = await post(`admin/users/register`, this.selected);
             this.error = error;
@@ -88,22 +109,6 @@ export const usersDataStore = defineStore({
             this.loading = true;
             const {guid=''} = this.selected || {};
             const [error, ] = await get(`admin/users/delete/${guid}`);
-            this.error = error;
-            this.loading = false;
-        },
-        // Activate user
-        async activate() {
-            this.loading = true;
-            const {guid=''} = this.selected || {};
-            const [error, ] = await get(`admin/users/activate/${guid}`);
-            this.error = error;
-            this.loading = false;
-        },
-        // Assign user role
-        async assign() {
-            this.loading = true;
-            const {guid='', role=''} = this.selected || {};
-            const [error, ] = await post(`admin/users/assign/${guid}`, {role: role});
             this.error = error;
             this.loading = false;
         }

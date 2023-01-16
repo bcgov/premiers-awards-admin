@@ -7,6 +7,7 @@
 
 import axios from "axios";
 import messageHandler from "./message.services";
+import {saveAs} from "file-saver";
 
 const api = axios.create({
   baseURL: import.meta.env.PA_APPS_API_URL,
@@ -59,40 +60,21 @@ function asyncWrapper(promise, finallyFunc) {
  */
 
 const handleResult = (error, result) => {
-
   const {data=[]} = result || {}
   if (error && error.response) {
+    // extract specific error message (if exists)
+    const {data=''} = error.response || {};
+    const {message=''} = data || {};
+    const {msg=''} = message || {};
     if (error.response.status === 403 || error.response.status === 401) {
-      return [messageHandler.get('notAuthorized'), null];
+      return msg ? [{ text: msg, type: 'error' }, null] : [messageHandler.get('notAuthorized'), null];
     }
     else if (error.response.status === 422) {
-      return [messageHandler.get('invalidData'), null];
+      return msg ? [{ text: msg, type: 'error' }, null] : [messageHandler.get('invalidData'), null];
     }
-    else return [messageHandler.get('serverError'), null];
+    else return msg ? [{ text: msg, type: 'error' }, null] : [messageHandler.get('serverError'), null];
   }
   return [error, data];
-}
-
-/**
- * Login user
- *
- * @return users
- */
-
-export const login = async () => {
-  const [error, result] = await asyncWrapper(api.get(`admin/login`));
-  return handleResult(error, result);
-}
-
-/**
- * Login user
- *
- * @return users
- */
-
-export const logout = async () => {
-  const [error, result] = await asyncWrapper(api.get(`admin/logout`));
-  return handleResult(error, result);
 }
 
 /**
@@ -115,4 +97,40 @@ export const get = async (route) => {
 export const post = async (route, data) => {
   const [error, result] = await asyncWrapper(api.post(route, data));
   return handleResult(error, result);
+}
+
+/**
+ * Upload method
+ *
+ * @return response
+ */
+
+export const upload = async (route, formData) => {
+
+  const apiUpload = axios.create({
+    baseURL: import.meta.env.PA_APPS_API_URL,
+    withCredentials: true,
+  });
+
+  const [error, result] = await asyncWrapper(apiUpload.post(route, formData));
+  return handleResult(error, result);
+}
+
+/**
+ * Download method
+ *
+ * @return response
+ */
+
+export const download = async (route, filename) => {
+  return axios.get(route, {
+        responseType: 'blob',
+        baseURL: import.meta.env.PA_APPS_API_URL,
+        withCredentials: true
+      })
+      .then(res => {
+        saveAs(res.data, filename);
+        return handleResult(null, res);
+      })
+      .catch (handleResult);
 }

@@ -5,13 +5,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="guid"
                   type="text"
                   v-model="selected.guid"
                   @change.native="v$.guid.$touch()"
                   :class="v$.guid.$invalid && isNew ? 'p-invalid' : ''"
-                  :disabled="!isNew"
+                  :disabled="!isSuperAdmin || disable"
               />
-              <label for="lastname">GUID</label>
+              <label for="guid">GUID</label>
           </span>
           <p v-if="isNew" v-for="error of v$.guid.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -20,13 +21,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="idir"
                   type="text"
                   v-model="selected.username"
                   @change.native="v$.username.$touch()"
                   :class="v$.username.$invalid && isNew ? 'p-invalid' : ''"
-                  :disabled="!isNew"
+                  :disabled="!isSuperAdmin || disable"
               />
-              <label for="lastname">IDIR</label>
+              <label for="idir">IDIR</label>
           </span>
           <p v-if="isNew" v-for="error of v$.username.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -35,9 +37,11 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="firstname"
                   type="text"
                   v-model="selected.firstname"
                   @change.native="v$.firstname.$touch()"
+                  :disabled="disable"
               />
               <label for="firstname">First Name</label>
           </span>
@@ -48,9 +52,11 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="lastname"
                   type="text"
                   v-model="selected.lastname"
                   @change.native="v$.lastname.$touch()"
+                  :disabled="disable"
               />
               <label for="lastname">Last Name</label>
           </span>
@@ -61,9 +67,11 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
+                  id="email"
                   type="email"
                   v-model="selected.email"
                   @change.native="v$.email.$touch()"
+                  :disabled="disable"
               />
               <label for="email">Email</label>
           </span>
@@ -73,19 +81,20 @@
         </div>
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
-              <Dropdown
-                  :options="roles"
-                  v-model="selected.role"
-                  optionLabel="text"
-                  optionValue="value"
-                  @change.native="v$.role.$touch()"
-                  :class="v$.role.$invalid ? 'p-invalid' : ''"
-                  :disabled="isCurrent || isNew"
-                  style="width:15rem"
-              />
-              <label for="role">Role</label>
+            <MultiSelect
+                v-model="selected.roles"
+                :options="roles"
+                optionLabel="label"
+                optionValue="key"
+                @change.native="v$.roles.$touch()"
+                :disabled="isCurrent || isNew || disable"
+                :class="v$.roles.$invalid ? 'p-invalid' : ''"
+                :showToggleAll="false"
+                style="width:15rem"
+            />
+              <label for="roles">Roles</label>
           </span>
-          <p v-for="error of v$.role.$errors" :key="error.$uid">
+          <p v-for="error of v$.roles.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
           </p>
         </div>
@@ -99,17 +108,17 @@ import { usersDataStore } from "@/stores/users.store";
 import settings from "@/services/settings.services";
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
-import {email, required, helpers} from "@vuelidate/validators";
+import { email, required } from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {ref} from "vue";
 
 // properties
-const props = defineProps(['mode']);
+const props = defineProps(['mode', 'disable']);
 const isNew = props.mode === 'new';
-const heading = isNew ? 'Create New User' : 'Edit User Data';
+const heading = isNew ? 'Register New User' : 'Edit User Data';
 
 // get current user
-const { current } = storeToRefs(authDataStore());
+const { current, isSuperAdmin } = storeToRefs(authDataStore());
 
 // load users state
 const { selected, error } = storeToRefs(usersDataStore());
@@ -120,27 +129,32 @@ const isCurrent = ref(selected.value.guid === current.value.guid);
 // get options for user roles
 const roles = settings.get('roles') || [];
 
-// custom validators
-const notCurrentGUID = (value) => value !== current.value.guid;
-const notCurrentUsername = (value) => value !== current.value.username;
+// // custom validators
+// const notCurrentGUID = (value) => value !== current.value.guid;
+// const notCurrentUsername = (value) => value !== current.value.username;
+//     notCurrentGUID: helpers.withMessage("Cannot create user with current GUID.", notCurrentGUID)
+//     notCurrentUsername: helpers.withMessage("Cannot create user with current username.", notCurrentUsername)
 
 // init validations
-const validations = {
-  guid: {
-    required,
-    notCurrentGUID: helpers.withMessage("Cannot create user with current GUID.", notCurrentGUID)
-  },
-  username: {
-    required,
-    notCurrentUsername: helpers.withMessage("Cannot create user with current username.", notCurrentUsername)
-  },
+const createValidations = {
+  guid: { required },
+  username: { required },
   firstname: { required },
   lastname: { required },
   email: { required, email },
-  role: { required }
+  roles: { required }
+};
+
+const editValidations = {
+  guid: { required },
+  username: { required },
+  firstname: { required },
+  lastname: { required },
+  email: { required, email },
+  roles: { required }
 };
 
 // apply validators
-const v$ = useVuelidate(validations, selected);
+const v$ = useVuelidate(isNew ? createValidations : editValidations, selected);
 
 </script>

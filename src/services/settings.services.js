@@ -1,30 +1,40 @@
 /*!
- * Form services/utilities (Vue)
- * File: forms.services.js
+ * Global settings (Vue)
+ * File: settings.services.js
  * Copyright(c) 2022 BC Gov
  * MIT Licensed
  */
 
 const schemaData = {
+  maxDrafts: 12,
+  maxAttachments: 5,
   "status": [
-    {value: null, text: 'Please select a nomination status'},
-    {value: 'draft', text: 'Draft'},
-    {value: 'submitted', text: 'Submitted'}
+    {key: 'draft', label: 'Draft', value: false},
+    {key: 'submitted', label: 'Submitted', value: true}
   ],
   "roles": [
-    {value: null, text: 'Please select a user role'},
-    {value: 'inactive', text: 'Inactive'},
-    {value: 'nominator', text: 'Nominator'},
-    {value: 'registrar', text: 'Registrar'},
-    {value: 'administrator', text: 'Administrator'},
-    {value: 'super-administrator', text: 'Super-Administrator'}
+    {key: 'inactive', label: 'Inactive'},
+    {key: 'nominator', label: 'Nominator'},
+    {key: 'registrar', label: 'Registrar'},
+    {key: 'administrator', label: 'Administrator'},
+    {key: 'super-administrator', label: 'Super-Administrator'}
   ],
   "categories": [
     {
-      value: 'emerging-leader',
+      key: 'emerging-leader',
       type:'individual',
-      text: 'Emerging Leader',
-      sections:[
+      label: 'Emerging Leader',
+      description: 'This award recognizes a BC Public Service employee 40 years and under and at or below the level of director who has made a significant impact in their ministry, division, workgroup or the greater BC Public Service early in their career.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nominee', id: 'nominee'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'valuing_people',
@@ -32,10 +42,22 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'evidence-based-design',
+      key: 'evidence-based-design',
       type:'organization',
-      text: 'Evidence-Based Design',
-      sections:[
+      label: 'Evidence-Based Design',
+      description: 'This award recognizes groups, teams or organizations in the BC Public Service whose work is outstanding in the area of evidence-based or evidence-informed policy or program development, and the process by which the policy or program was designed. This category showcases excellence in policy or program development for internal government or citizen-facing initiatives.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Nominees', id: 'nominees'},
+        {label: 'Partners', id: 'partners'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'complexity',
@@ -43,10 +65,22 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'innovation',
+      key: 'innovation',
       type: 'organization',
-      text: 'Innovation',
-      sections:[
+      label: 'Innovation',
+      description: 'This award recognizes groups, teams or organizations in the BC Public Service who have developed and transformed new ideas into tangible initiatives, programs or projects. By applying a user-centric or citizen-centric approach, innovations streamline business processes, leverage technology or pursue creative solutions to fulfill organizational mandates.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Nominees', id: 'nominees'},
+        {label: 'Partners', id: 'partners'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'complexity',
@@ -54,10 +88,20 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'leadership',
+      key: 'leadership',
       type: 'individual',
-      text: 'Leadership',
-      sections:[
+      label: 'Leadership',
+      description: 'This award recognizes a BC Public Service employee who demonstrates the highest levels of integrity and exemplary leadership abilities either leading a team or organization, or a substantial project, process or initiative.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nominee', id: 'nominee'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'valuing_people',
@@ -65,10 +109,20 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'legacy',
+      key: 'legacy',
       type: 'individual',
-      text: 'Legacy',
-      sections:[
+      label: 'Legacy',
+      description: 'This award recognizes individuals who have made exceptional and lasting contributions to the BC Public Service and/or the province during a public service career of at least 15 years. The contributions may cover a nominee’s entire career or portions of it, provided the contribution has a lasting and ongoing positive impact.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nominee', id: 'nominee'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'complexity',
@@ -77,10 +131,22 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'organizational-excellence',
+      key: 'organizational-excellence',
       type: 'organization',
-      text: 'Organizational Excellence',
-      sections:[
+      label: 'Organizational Excellence',
+      description: 'This award recognizes one or more BC Public Service organizations that have delivered a program, service or initiative resulting in substantial benefits to their organization(s), the public service or citizens.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Nominees', id: 'nominees'},
+        {label: 'Partners', id: 'partners'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'complexity',
@@ -88,10 +154,22 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'partnership',
+      key: 'partnership',
       type: 'organization',
-      text: 'Partnership',
-      sections:[
+      label: 'Partnership',
+      description: 'This award recognizes joint ventures or multi-party initiatives between BC Public Service organizations and organizations in the broader public sector, other levels of government, Indigenous communities or in the private or non-profit sectors.',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Nominees', id: 'nominees'},
+        {label: 'Partners', id: 'partners'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'complexity',
@@ -99,10 +177,22 @@ const schemaData = {
         'impact',
       ]},
     {
-      value: 'regional-impact',
+      key: 'regional-impact',
       type: 'organization',
-      text: 'Regional Impact',
-      sections:[
+      label: 'Regional Impact',
+      description: 'This award recognizes groups, teams or organizations within the BC Public Service who have developed and delivered programs, projects and initiatives benefiting citizens in a specific location (town, city, municipality or region).',
+      sections: [
+        {label: 'Acknowledgment', id: 'acknowledgment'},
+        {label: 'Organization', id: 'organization'},
+        {label: 'Nomination Title', id: 'title'},
+        {label: 'Nominators', id: 'nominators'},
+        {label: 'Contact Information', id: 'contacts'},
+        {label: 'Nominees', id: 'nominees'},
+        {label: 'Partners', id: 'partners'},
+        {label: 'Evaluation Considerations', id: 'evaluation'},
+        {label: 'Attachments', id: 'attachments'}
+      ],
+      evaluation:[
         'summary',
         'context',
         'complexity',
@@ -111,68 +201,80 @@ const schemaData = {
       ]},
   ],
   "evaluationSections": [
-    {value: 'summary', text: 'Summary'},
-    {value: 'context', text: 'Context'},
-    {value: 'complexity', text: 'Complexity'},
-    {value: 'approach', text: 'Approach'},
-    {value: 'valuing_people', text: 'Valuing People'},
-    {value: 'commitment', text: 'Commitment to the Organization'},
-    {value: 'contribution', text: 'Contribution to BC Public Service Excellence'},
-    {value: 'impact', text: 'Impact'}
+    {key: 'summary', label: 'Summary'},
+    {key: 'context', label: 'Context'},
+    {key: 'complexity', label: 'Complexity'},
+    {key: 'approach', label: 'Approach'},
+    {key: 'valuing_people', label: 'Valuing People'},
+    {key: 'commitment', label: 'Commitment to the Organization'},
+    {key: 'contribution', label: 'Contribution to BC Public Service Excellence'},
+    {key: 'impact', label: 'Impact'}
   ],
   "organizations": [
-    {value: null, text: 'Please select an eligible Ministry or organization'},
-    {value: 'org-1', text: 'Advanced Education and Skills Training'},
-    {value: 'org-2', text: 'Agriculture, Food and Fisheries'},
-    {value: 'org-3', text: 'Attorney General & Housing'},
-    {value: 'org-4', text: 'Children and Family Development'},
-    {value: 'org-5', text: 'Citizens’ Services'},
-    {value: 'org-6', text: 'Education'},
-    {value: 'org-7', text: 'Emergency Management BC'},
-    {value: 'org-8', text: 'Energy, Mines and Low Carbon Innovation'},
-    {value: 'org-9', text: 'Environment and Climate Change Strategy'},
-    {value: 'org-10', text: 'Environment Assessment Office'},
-    {value: 'org-11', text: 'Finance'},
-    {value: 'org-12', text: 'Forests, Lands, Natural Resource Operations and Rural Development'},
-    {value: 'org-13', text: 'Health'},
-    {value: 'org-14', text: 'Indigenous Relations and Reconciliation'},
-    {value: 'org-15', text: 'Jobs, Economic Recovery and Innovation'},
-    {value: 'org-16', text: 'Labour'},
-    {value: 'org-17', text: 'Mental Health & Addictions'},
-    {value: 'org-18', text: 'Municipal Affairs'},
-    {value: 'org-19', text: 'Public Safety & Solicitor General'},
-    {value: 'org-20', text: 'Social Development & Poverty Reduction'},
-    {value: 'org-21', text: 'Tourism, Arts, Culture and Sport'},
-    {value: 'org-22', text: 'Transportation & Infrastructure'},
-    {value: 'org-23', text: 'BC Public Service Agency'},
-    {value: 'org-24', text: 'Government Communications and Public Engagement'},
-    {value: 'org-25', text: 'Office of the Premier'}
+    {key: 'org-1', label: 'Advanced Education and Skills Training'},
+    {key: 'org-2', label: 'Agriculture, Food and Fisheries'},
+    {key: 'org-3', label: 'Attorney General & Housing'},
+    {key: 'org-4', label: 'Children and Family Development'},
+    {key: 'org-5', label: 'Citizens’ Services'},
+    {key: 'org-6', label: 'Education'},
+    {key: 'org-7', label: 'Emergency Management BC'},
+    {key: 'org-8', label: 'Energy, Mines and Low Carbon Innovation'},
+    {key: 'org-9', label: 'Environment and Climate Change Strategy'},
+    {key: 'org-10', label: 'Environment Assessment Office'},
+    {key: 'org-11', label: 'Finance'},
+    {key: 'org-12', label: 'Forests, Lands, Natural Resource Operations and Rural Development'},
+    {key: 'org-13', label: 'Health'},
+    {key: 'org-14', label: 'Indigenous Relations and Reconciliation'},
+    {key: 'org-15', label: 'Jobs, Economic Recovery and Innovation'},
+    {key: 'org-16', label: 'Labour'},
+    {key: 'org-17', label: 'Mental Health & Addictions'},
+    {key: 'org-18', label: 'Municipal Affairs'},
+    {key: 'org-19', label: 'Public Safety & Solicitor General'},
+    {key: 'org-20', label: 'Social Development & Poverty Reduction'},
+    {key: 'org-21', label: 'Tourism, Arts, Culture and Sport'},
+    {key: 'org-22', label: 'Transportation & Infrastructure'},
+    {key: 'org-23', label: 'BC Public Service Agency'},
+    {key: 'org-24', label: 'Government Communications and Public Engagement'},
+    {key: 'org-25', label: 'Office of the Premier'}
   ],
   "mimeTypes": [
-    {value: null, text: 'Please select a mime type'},
-    {value: 'application/pdf', text: 'PDF'},
-    {value: 'application/doc', text: 'MS Word'},
-  ]
+    {key: 'application/pdf', label: 'PDF'},
+    {key: 'application/doc', label: 'MS Word'},
+  ],
+  wordCounts: {
+    total: 1650,
+    summary: 150,
+    context: 250
+  },
 };
 
 export default {
 
   /**
-   * get enumerated data by key
+   * get enumerated data by category type
    * **/
 
-  get: function get(key) {
-    return schemaData[key] !== 'undefined' ? schemaData[key] : null;
+  get: function get(type) {
+    return schemaData[type] !== 'undefined' ? schemaData[type] : [];
   },
 
   /**
    * get enumerated data by key
    * **/
 
-  lookup: function lookup(key, value) {
-    if (typeof schemaData[key] === 'undefined') return null;
-    const found = schemaData[key].filter(item => item.value === value);
-    return found.length > 0 ? found[0].text : null;
+  lookup: function lookup(type, key) {
+    if (typeof schemaData[type] === 'undefined') return null;
+    const found = schemaData[type].filter(item => item.key === key);
+    return found.length > 0 ? found[0].label : null;
+  },
+
+  /**
+   * get category data by key
+   * **/
+
+  lookupCategory: function lookup(key) {
+    const found = schemaData.categories.filter(item => item.key === key);
+    return found.length > 0 ? found[0] : null;
   },
 
   /**
@@ -180,7 +282,7 @@ export default {
    * **/
 
   lookupType: function lookupType(category) {
-    const found = schemaData.categories.filter(item => item.value === category);
+    const found = schemaData.categories.filter(item => item.key === category);
     return found.length > 0 ? found[0].type : null;
   },
 
@@ -189,9 +291,9 @@ export default {
    * **/
 
   checkSection: function checkSection(section, category) {
-    return schemaData['categories'].filter(cat => {
-      return cat.value === category && cat.sections.includes(section);
-    }).length > 0;
+    const metadata = this.lookupCategory(category);
+    if (!metadata) return null;
+    return metadata.sections.filter(sec => sec.id === section).length > 0;
   }
 
 }

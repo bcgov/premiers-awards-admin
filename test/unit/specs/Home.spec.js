@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Home from ''
 
-describe('HomeView.vue', () => {
+describe('NominatorDashboardView.vue', () => {
   it('should render correct contents', () => {
     const Constructor = Vue.extend(Home)
     const vm = new Constructor().$mount()

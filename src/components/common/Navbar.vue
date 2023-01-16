@@ -1,5 +1,14 @@
 <template>
-  <div>
+  <div class="navbar-fixed">
+    <Menubar :model="menu">
+      <template #start>
+        <img alt="logo" :src="logoSrc" height="60" class="mr-2">
+      </template>
+      <template #end>
+        <Button class="mr-4" label="Profile" icon="pi pi-user" @click="toggleProfile" />
+      </template>
+    </Menubar>
+  </div>
     <Sidebar v-model:visible="isProfileVisible">
       <div class="flex mb-4">
         <Avatar icon="pi pi-user" class="mr-2" size="xlarge" />
@@ -12,93 +21,105 @@
         <div class="col-6">{{current.firstname}}</div>
         <div class="col-6"><b>Last Name:</b></div>
         <div class="col-6">{{current.lastname}}</div>
-        <div class="col-6"><b>Role:</b></div>
-        <div class="col-6">{{current.role}}</div>
+        <div class="col-6"><b>Roles:</b></div>
+        <div class="col-6">
+          <div v-for="role in current.roles">{{role}}</div>
+        </div>
       </div>
     </Sidebar>
-    <Menubar class="bg-indigo-600 d-flex justify-content-between ui-sticky" :model="items">
-      <template #start>
-        <img alt="logo" :src="logoSrc" height="60" class="mr-2">
-      </template>
-      <template #end>
-        <Button class="bg-indigo-900" label="Profile" icon="pi pi-user" @click="toggleProfile" />
-      </template>
-    </Menubar>
-    <Toast />
-  </div>
 </template>
 
 <script setup>
-import {ref} from 'vue';
-import logoSrc from '@/assets/wiw-white-text.svg';
+import {onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
+import logoSrc from '@/assets/BCID_H_rgb_pos.png';
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
 
 // get current user
-const { current, error  } = storeToRefs(authDataStore());
+const { current, error, isAdmin, isSuperAdmin, isNominator } = storeToRefs(authDataStore());
 
 // toggle profile sidebar
 const isProfileVisible = ref(false);
-const toggleProfile = () => {
-  isProfileVisible.value = !isProfileVisible.value;
-}
-
-const items = ref([
+const menu = ref([
   {
-    label:'Premiers Awards: Admin',
+    label: isAdmin ? 'Premiers Awards: Admin' : 'Premiers Awards: Nominate',
     icon:'pi pi-fw pi-home',
     class: 'font-bold',
-    url: '/'
+    url: isAdmin ? import.meta.env['BASE_URL'] : import.meta.env['BASE_URL'] + 'nominate'
   },
   {
     label:'About',
     icon:'pi pi-fw pi-external-link',
     url: 'https://premiersawards.gww.gov.bc.ca'
   },
-  {
-    label:'Users',
-    icon:'pi pi-fw pi-users',
-    class: 'text-white',
-    items:[
-      {
-        label:'List',
-        icon:'pi pi-fw pi-users',
-        url: '/users'
-      },
-      {
-        label:'Add New',
-        icon:'pi pi-fw pi-user-plus',
-        url: '/users/new'
-      }
-    ]
-  },
-  {
-    label: 'Settings',
-    icon: 'pi pi-fw pi-cog',
+]);
+
+// show/hide user profile
+const toggleProfile = () => {
+  isProfileVisible.value = !isProfileVisible.value;
+}
+
+// handle menu scroll effects
+const menuClass = ref('');
+const onScroll = () => {
+  menuClass.value = window.top.scrollY > 120
+      ?  'navbar-fixed'
+      : '';
+}
+
+onBeforeMount(async() => {
+  // initialize user
+  const authStore = authDataStore();
+  await authStore.currentUserInit();
+
+  // add admin menu items
+  if (isAdmin.value) {
+    menu.value.push({
+      label:'Users',
+      icon:'pi pi-fw pi-users',
+      url: import.meta.env['BASE_URL'] + 'users'
+    });
   }
-])
+
+  // add nominator menu items
+  if (isNominator.value || isAdmin.value) {
+    menu.value.push({
+      label:'Nominations',
+      icon:'pi pi-fw pi-bookmark',
+      url: import.meta.env['BASE_URL'] + 'nominations'
+    });
+  }
+
+  // add super-admin menu items
+  if (isSuperAdmin.value) {
+    menu.value.push({
+      label: 'Settings',
+      icon: 'pi pi-fw pi-cog',
+      url: '#'
+    });
+  }
+});
+
+onMounted(() => {
+  window.addEventListener("scroll", onScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", onScroll)
+});
+
 </script>
 <style>
-.p-submenu-list {
-  background-color: #42519f !important;
-  color: white !important;
+.p-menubar {
+  background-color: #DDD !important;
 }
-.p-menuitem-text, .p-menuitem-icon, .p-submenu-icon, .p-menubar-root-list {
-  background-color: #42519f !important;
-  color: white !important;
+.navbar-fixed {
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  z-index: 1100;
+  width: 100%;
+  height: auto;
 }
-/*.ui-sticky {*/
-/*  position: sticky !important;*/
-/*  position: -webkit-sticky;*/
-/*  z-index: 10000;*/
-/*  top: 0;*/
-/*}*/
-/*@media (max-width: 960px) {*/
-/*  .ui-sticky {*/
-/*    position: sticky !important;*/
-/*    position: -webkit-sticky;*/
-/*    z-index: 10000;*/
-/*    top: 0;*/
-/*  }*/
-/*}*/
+
 </style>

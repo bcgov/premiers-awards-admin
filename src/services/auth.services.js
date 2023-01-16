@@ -5,8 +5,7 @@
  * MIT Licensed
  */
 
-import {get} from "@/services/api.services";
-
+import { get } from "@/services/api.services";
 
 /**
  * Authenticate user on all router calls.
@@ -19,36 +18,9 @@ export const authenticate = async (to, from, next) => {
   // redirect unauthenticated users to 401 page
   if (!user.guid && !user.username && to.name !== 'unauthorized' && to.name !== 'page-not-found')
     return next({path: '/401'});
-  // redirect authenticated users to front page (if on unauthorized page)
+  // redirect authenticated users to registration page (if on unauthorized page)
   else if (user.guid && user.username && to.name === 'unauthorized')
-    return next({path: '/'});
-  else next();
-}
-
-/**
- * Authorize user based on role.
- *
- * @src public
- */
-
-export const authorizeNominator = async (to, from, next) => {
-  const {role=''} = await getUserData() || {};
-  if (!['nominator', 'administrator', 'super-administrator'].includes(role))
-    return next({name: 'unauthorized'});
-  else next();
-}
-
-export const authorizeAdmin = async (to, from, next) => {
-  const {role=''}  = await getUserData() || {};
-  if (!['administrator', 'super-administrator'].includes(role))
-    return next({name: 'unauthorized'});
-  else next();
-}
-
-export const authorizeSuperAdmin = async (to, from, next) => {
-  const {role=''}  = await getUserData() || {};
-  if (!['super-administrator'].includes(role))
-    return next({name: 'unauthorized'});
+    return next({name: 'users-register'});
   else next();
 }
 
@@ -61,6 +33,48 @@ export const authorizeSuperAdmin = async (to, from, next) => {
 export const getUserData = async () => {
   const [, data] = await get(`admin/users/info`);
   return data;
+}
+
+/**
+ * Authorize admin users.
+ *
+ * @src public
+ */
+
+export const authorizeAdmin = async (to, from, next) => {
+  const {roles=[]} = await getUserData() || {};
+  if (!['administrator', 'super-administrator'].some(r => roles.includes(r)))
+    return next({name: 'unauthorized'});
+  else next();
+}
+
+/**
+ * Authorize nominator users.
+ *
+ * @src public
+ */
+
+export const authorizeNominator = async (to, from, next) => {
+  const {roles=[]} = await getUserData() || {};
+  if (!['nominator', 'administrator', 'super-administrator'].some(r => roles.includes(r)))
+    return next({name: 'unauthorized'});
+  else next();
+}
+
+/**
+ * Check if user is logged in and redirect.
+ *
+ * @src public
+ */
+
+export const isLoggedIn = async (to, from, next) => {
+  const {roles=[]} = await getUserData() || {};
+  console.log(roles)
+  if (['administrator', 'super-administrator'].some(r => roles.includes(r)))
+    return next({name: 'admin-dashboard'});
+  else if (['nominator'].some(r => roles.includes(r)))
+    return next({name: 'nominator-dashboard'});
+  else next();
 }
 
 

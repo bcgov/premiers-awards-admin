@@ -30,18 +30,32 @@
 
   html, .p-component {
     font-family: var(--font-family);
+    font-size: 11pt;
+  }
+
+  header {
+    margin-top: 100px;
+  }
+
+  main {
+    z-index: 999;
+    padding: 1rem;
   }
 
   h1 {
-    font-size: 1.7em;
-    padding: 1rem;
-  }
-  p {
-    padding: 1rem;
+    font-size: 1.3em;
   }
 
-  th, b {
+  th, b, legend {
     font-family: var(--font-family-bold);
     font-weight: bold;
+  }
+
+  .p-tag {
+    font-size: 0.8rem;
+  }
+
+  .p-dialog-mask {
+    z-index: 9999;
   }
   

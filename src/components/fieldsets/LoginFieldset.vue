@@ -50,7 +50,7 @@
 
 <script>
 
-import {genID, validateEmail} from '@/services/validation.services'
+import {genID, validateEmail} from '@/../../../../premiers-awards-nominations/src/services/validation.services'
 
 const id = genID();
 

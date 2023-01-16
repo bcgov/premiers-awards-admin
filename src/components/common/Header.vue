@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{props.header}}</h1>
-    <p>{{props.lead}}</p>
+    <h4>{{props.lead}}</h4>
     <Divider />
   </div>
 </template>

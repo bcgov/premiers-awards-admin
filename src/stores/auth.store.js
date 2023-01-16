@@ -6,7 +6,7 @@
  *         username: '',
  *         firstname: '',
  *         lastname: '',
- *         role: '',
+ *         roles: [],
  *         email: '',
  *
  * @param {Object} current
@@ -22,6 +22,10 @@ export const authDataStore = defineStore({
     id: 'authData',
     state: () => ({
         current: {},
+        loaded: false,
+        isRegistered: false,
+        isActive: false,
+        isNominator: false,
         isAdmin: false,
         isSuperAdmin: false,
         loading: false,
@@ -34,13 +38,22 @@ export const authDataStore = defineStore({
         // Load current logged-in user info
         async currentUserInit() {
             this.loading = true;
-            const [error, user] = await get(`admin/users/info`);
-            if (!error && user.hasOwnProperty('role')) {
-                this.current = user;
-                this.isAdmin = user.role === 'administrator' || user.role === 'super-administrator';
-                this.isSuperAdmin = user.role === 'super-administrator';
+            if (!this.error) {
+                const [error, user] = await get(`admin/users/info`);
+                // check if user was authenticated through SiteMinder
+                if (user && user.hasOwnProperty('roles')) {
+                    this.current = user;
+                    // set user roles/status
+                    const {_id="", roles=[]} = user || {};
+                    // user is registered if a user ID is already assigned
+                    this.isRegistered = !!_id;
+                    this.isActive = !roles.includes('inactive');
+                    this.isNominator = roles.includes('nominator');
+                    this.isAdmin = roles.includes('administrator') || roles.includes('super-administrator');
+                    this.isSuperAdmin = roles.includes('super-administrator');
+                }
+                this.error = error;
             }
-            this.error = error;
             this.loading = false;
         }
     }

@@ -8,7 +8,7 @@
           <div class="card p-4">
             <div class="flex mb-5">
               <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-              <span class="pl-2"> Delete Item</span></div>
+              <span class="pl-2">Delete User</span></div>
             <div class="pl-2 w-80">
               <div class="grid">
                 <div class="col-6"><b>GUID:</b></div>
@@ -19,8 +19,10 @@
                 <div class="col-6">{{slotProps.message.message.firstname}}</div>
                 <div class="col-6"><b>Last Name:</b></div>
                 <div class="col-6">{{slotProps.message.message.lastname}}</div>
-                <div class="col-6"><b>Role:</b></div>
-                <div class="col-6">{{slotProps.message.message.role}}</div>
+                <div class="col-6"><b>Roles:</b></div>
+                <div class="col-6">
+                  <div v-for="role in slotProps.message.message.roles">{{lookup('roles', role)}}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -36,7 +38,7 @@
           <Button label="Cancel" icon="pi pi-times" @click="reset" class="p-button-text"/>
           <Button :disabled="invalid()" label="Submit" icon="pi pi-check" @click="dialog.callback" autofocus />
         </template>
-        <IndexFieldset type="users" mode="edit" />
+        <UserFieldset mode="edit" />
       </Dialog>
 
       <DataTable
@@ -49,13 +51,13 @@
           :globalFilterFields="['role.value']"
           filterDisplay="menu"
           :loading="loading"
-          responsiveLayout="scroll">
+          responsiveLayout="stack">
         <template #header>
           <div class="flex justify-content-between">
             <h2 class="m-0">Users</h2>
             <span class="p-buttonset">
-              <Button label="Refresh" icon="pi pi-sync" @click="reset" />
-              <Button label="Add Record" icon="pi pi-plus-circle" @click="add" />
+              <Button label="Refresh" icon="pi pi-sync" @click="reload" />
+              <Button :disabled="!isSuperAdmin" label="Add User" icon="pi pi-user-plus" @click="add" />
           </span>
           </div>
         </template>
@@ -70,7 +72,6 @@
             {{data.username}}
           </template>
         </Column>
-        <Column headerStyle="width: 3rem"></Column>
         <Column field="firstname" header="First Name" :sortable="true">
           <template #body="{data}">
             {{data.firstname}}
@@ -82,46 +83,39 @@
           </template>
         </Column>
         <Column
-            field="role"
-            header="Role"
+            field="roles"
+            header="Roles"
             :sortable="true"
-            filterField="role"
             :showFilterMatchModes="false"
             :filterMenuStyle="{'width':'14rem'}"
             style="min-width:14rem"
         >
           <template #body="{data}">
-            {{ lookup('roles', data.role) || '' }}
+            <div v-for="role in data.roles">{{ lookup('roles', role) || '' }}</div>
           </template>
-          <template #filter="{filterModel}">
+          <template #filter="{filterModel, filterCallback}">
               <MultiSelect
                   v-model="filterModel.value"
-                  :options="roles.filter(role => !!role.value)"
-                  optionLabel="text"
-                  optionValue="value"
+                  :options="roles"
+                  optionLabel="label"
+                  optionValue="key"
                   placeholder="Any"
                   class="p-column-filter"
                   :showToggleAll="false"
+                  @change=filterCallback()
               />
-          </template>
-          <template #filterclear="{filterCallback}">
-            <Button type="button" icon="pi pi-times" @click="filterCallback()" class="p-button-secondary"></Button>
-          </template>
-          <template #filterapply="{filterCallback}">
-            <Button type="button" icon="pi pi-check" @click="filterCallback()" class="p-button-success"></Button>
           </template>
         </Column>
         <Column bodyStyle="text-align: center; overflow: visible">
           <template #body="{data}">
-          <span class="p-buttonset">
-              <Button label="Edit" icon="pi pi-user-edit" @click="edit(data)" />
+          <div class="p-buttonset" style="text-align: right">
+              <Button icon="pi pi-user-edit" @click="edit(data)" />
               <Button
                   :disabled="data.guid !== 'super-administrator' && data.guid === current.guid"
-                  label="Delete"
                   icon="pi pi-trash"
                   @click="remove(data)"
               />
-          </span>
+          </div>
           </template>
         </Column>
       </DataTable>
@@ -134,29 +128,49 @@
 import {onMounted, reactive, ref} from "vue";
 import { useConfirm } from "primevue/useconfirm";
 import { storeToRefs } from 'pinia';
-import IndexFieldset from "@/components/fieldsets/IndexFieldset.vue";
 import { useRouter } from 'vue-router'
-import { useToast } from "primevue/usetoast";
-import messages from "@/services/message.services"
 import { authDataStore } from "@/stores/auth.store";
 import { usersDataStore } from "@/stores/users.store";
 import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
-import { FilterMatchMode } from "primevue/api";
+import { FilterService } from "primevue/api";
+import UserFieldset from "@/components/fieldsets/UserFieldset.vue";
+import messages from "@/services/message.services";
+import {useToast} from "primevue/usetoast";
 
 // get current user info
-const { current } = storeToRefs(authDataStore());
-
-// initialize messages
-const toast = useToast();
+const { current, isSuperAdmin } = storeToRefs(authDataStore());
 
 // validator
 const v$ = useVuelidate();
 
-// init data table filter
-const filters = ref({
-  role: { value: null, matchMode: FilterMatchMode.IN }
+// initialize messages
+const toast = useToast();
+
+// define roles filter key
+const rolesFilter = ref('someInArray');
+
+onMounted(() => {
+  // load data on component mount
+  store.getAll()
+  // init custom data table filter
+  FilterService.register('someInArray', (values, filter) => {
+    return filter === undefined
+        || filter === null
+        || filter.length === 0
+        || values === undefined
+        || values === null
+        || filter.some(r=> values.includes(r))
+  });
 });
+
+// apply custom data filters
+const filters = ref({
+  'roles': {value: null, matchMode: rolesFilter.value},
+});
+const matchModeOptions = ref([
+  {label: 'In Array', value: rolesFilter.value},
+]);
 
 // get options for user roles
 const roles = settings.get('roles') || [];
@@ -166,17 +180,14 @@ const lookup = settings.lookup;
 const { selected, items, loading, error } = storeToRefs(usersDataStore());
 const store = usersDataStore();
 const confirm = useConfirm();
-const router = useRouter();
+const indexRouter = useRouter();
 const dialog = reactive({
   header: '',
   visible: false,
   callback: ()=>{}
 });
 
-// load data on component mount
-onMounted(store.getAll);
-
-// subscribe to store actions
+// subscribe to user store actions
 store.$onAction(
     ({name, store, _, after}) => {
       after(() => {
@@ -191,14 +202,14 @@ store.$onAction(
     }
 );
 
-// update item data
+// update dialog data
 const setDialog = (setting) => {
   dialog.header = setting.header;
   dialog.visible = setting.visible;
   dialog.callback = setting.callback;
 };
 
-// update item data
+// reset dialog data
 const resetDialog = () => {
   dialog.header = '';
   dialog.visible = false;
@@ -208,7 +219,7 @@ const resetDialog = () => {
 // open new item dialog
 const add = () => {
   reset();
-  router.push({name: 'users-register'});
+  indexRouter.push({name: 'users-create'});
 };
 
 // create new item

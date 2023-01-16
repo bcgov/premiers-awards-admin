@@ -23,7 +23,7 @@ export default {
         this.message = 'Successfully logged out!'
         // redirect to homepage
         if (this.$route.name !== 'home') {
-          await this.$router.push({name: 'home'})
+          await this.$indexRouter.push({name: 'home'})
         }
       } catch (err) {
         console.error(err);
