@@ -6,6 +6,7 @@
       :breakpoints="{'960px': '80vw', '640px': '90vw'}"
       :style="{width: '70vw'}"
       :baseZIndex="9999"
+      :after-hide="update"
   >
     <AttachmentFieldset :data="selectedAttachment" :cancel="reset" />
   </Dialog>
@@ -47,16 +48,16 @@
           >
             <template #header>
               <div class="grid">
-                <div class="col-3">
+                <div class=" md:col-9 col-12">
+                  <p><strong>Only Adobe PDF (Portable Document Format) documents are accepted.</strong></p>
+                </div>
+                <div class="md:col-3 col-12">
                   <Button
                     :disabled="selected.attachments.length >= 5 || selected.submitted"
                     label="Attach File"
                     icon="pi pi-plus"
                     @click="add"
                   />
-                </div>
-                <div class="col-9">
-                  <p><strong>Only Adobe PDF (Portable Document Format) documents are accepted.</strong></p>
                 </div>
               </div>
             </template>
@@ -105,7 +106,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { storeToRefs } from 'pinia';
 import {useRoute, useRouter} from 'vue-router'
 import {useVuelidate} from "@vuelidate/core";
-import {formatFileSize} from "@/services/util.services";
+import {formatFileSize, scrollToAnchor} from "@/services/util.services";
 import {nominationsDataStore} from "@/stores/nominations.store";
 
 // validator
@@ -201,6 +202,7 @@ const download = async (attachment) => {
 const reset = () => {
   // store.reset();
   resetDialog();
+  scrollToAnchor();
 };
 
 // cancel item update

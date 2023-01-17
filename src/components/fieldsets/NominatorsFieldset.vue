@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-        <div class="field col-3">
+        <div class="field md:col-6 col-12">
           <Button
               :disabled="selected.submitted"
               label="Add Nominator"

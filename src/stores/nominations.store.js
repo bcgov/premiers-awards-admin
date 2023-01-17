@@ -46,6 +46,7 @@ export const nominationsDataStore = defineStore({
         items: [],
         selected: null,
         loading: false,
+        saving: false,
         downloading: false,
         error: null,
         attachmentError: null,
@@ -82,6 +83,36 @@ export const nominationsDataStore = defineStore({
                 && state.selected.nominee.hasOwnProperty('lastname')
                 && state.selected.nominee.firstname !== ''
                 && state.selected.nominee.lastname !== '';
+
+            // Contact information
+            validations.primary_contact = state.selected.contacts.primary
+                && state.selected.contacts.primary.hasOwnProperty('firstname')
+                && state.selected.contacts.primary.hasOwnProperty('lastname')
+                && state.selected.contacts.primary.hasOwnProperty('email')
+                && state.selected.contacts.primary.firstname !== ''
+                && state.selected.contacts.primary.lastname !== ''
+                && state.selected.contacts.primary.email !== '';
+
+            validations.video_contact = state.selected.contacts.video
+                && state.selected.contacts.video.hasOwnProperty('firstname')
+                && state.selected.contacts.video.hasOwnProperty('lastname')
+                && state.selected.contacts.video.hasOwnProperty('email')
+                && state.selected.contacts.video.firstname !== ''
+                && state.selected.contacts.video.lastname !== ''
+                && state.selected.contacts.video.email !== '';
+
+            // Video location information
+            validations.locations = (state.selected.contacts.video.locations || []).filter(location =>
+                location.hasOwnProperty('address')
+                && location.hasOwnProperty('city')
+                && location.address === ''
+                && location.city === ''
+            ).length === 0;
+
+            // Aggregate contact information
+            validations.contacts = validations.locations
+                && validations.primary_contact
+                && validations.video_contact
 
             // Partners
             // - ensure nominee count is above zero
@@ -212,10 +243,10 @@ export const nominationsDataStore = defineStore({
         // Update nomination data
         async update() {
             const {_id=''} = this.selected || {};
-            this.loading = true;
+            this.saving = true;
             const [error, ] = await post(`nominations/update/${_id}`, this.selected);
             this.error = error;
-            this.loading = false;
+            this.saving = false;
         },
         // Delete nomination
         async remove() {

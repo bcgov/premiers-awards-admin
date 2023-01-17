@@ -1,12 +1,15 @@
 <template>
-  <Message v-if="uploadedFiles.length + selected.attachments.length >= maxUploads" severity="warn">
-    You have reached the maximum number of attachments allowed.
-  </Message>
-  <Fieldset v-else legend="Nomination Attachment">
+  <Fieldset legend="Nomination Attachment">
     <div class="card">
-      <p>You can upload up to
-        {{maxUploads - (uploadedFiles.length + selected.attachments.length)}} additional attachment(s)</p>
-      <div class="p-fluid grid">
+      <Message v-if="uploadedFiles.length + selected.attachments.length >= maxUploads" severity="warn">
+        You have reached the maximum number of attachments allowed.
+      </Message>
+      <div v-else class="p-fluid grid">
+        <div class="field col-12">
+          <p>You can upload up to
+            {{maxUploads - (uploadedFiles.length + selected.attachments.length)}} additional attachment(s)</p>
+          <p>Ensure you fill out the title and description before uploading.</p>
+        </div>
         <div v-if="!data.file" class="field col-12">
           <FileUpload
               :disabled="submitted"
@@ -15,6 +18,7 @@
               :accept="acceptedFileTypes"
               :maxFileSize="maxFileSize"
               :customUpload="true"
+              :previewWidth="0"
               @uploader="upload($event)"
           >
 <!--            <template #header>-->
@@ -30,18 +34,6 @@
             </template>
           </FileUpload>
         </div>
-        <div class="field col-12 md:col-6">
-          <span class="p-float-label">
-            <InputText :disabled="submitted" id="label" type="text" v-model="data.label" />
-            <label for="label">Label</label>
-          </span>
-        </div>
-        <div class="field col-12 md:col-6">
-            <span class="p-float-label">
-              <InputText :disabled="submitted" id="description" type="text" v-model="data.description" />
-              <label for="label">Description</label>
-            </span>
-        </div>
       </div>
     </div>
     <div v-if="uploadedFiles.length > 0">
@@ -51,6 +43,20 @@
         <Column field="name" header="Filename" />
         <Column field="size" header="File size"></Column>
       </DataTable>
+    </div>
+    <div v-else class="p-fluid grid">
+      <div class="field col-12 md:col-6">
+            <span class="p-float-label">
+              <InputText :disabled="submitted" id="label" type="text" v-model="data.label" />
+              <label for="label">Label</label>
+            </span>
+      </div>
+      <div class="field col-12 md:col-6">
+              <span class="p-float-label">
+                <InputText :disabled="submitted" id="description" type="text" v-model="data.description" />
+                <label for="label">Description</label>
+              </span>
+      </div>
     </div>
   </Fieldset>
   <div class="card">
@@ -69,7 +75,7 @@ import {storeToRefs} from 'pinia';
 import {useRoute, useRouter} from 'vue-router'
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {useToast} from "primevue/usetoast";
-import {formatFileSize} from "@/services/util.services";
+import {formatFileSize, scrollToAnchor} from "@/services/util.services";
 
 // define props
 const props = defineProps(['data', 'cancel']);
@@ -129,6 +135,7 @@ const update = async () => {
   await nominationsStore.updateAttachment(props.data);
   // refresh attachments for nomination
   await nominationsStore.getAttachments();
+  scrollToAnchor();
 }
 
 </script>

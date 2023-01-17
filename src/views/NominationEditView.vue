@@ -13,38 +13,57 @@
   <Message v-if="error" :severity="error.type" :closable="false">{{ error.text }}</Message>
 
   <div v-if="!loading && selected" class="p-fluid grid">
-    <div class="field col-3">
+    <div class="col-3">
       <div class="nominations-menubar-fixed">
-        <Button
-            class="p-button-info mb-2"
-            :disabled="loading || selected.submitted"
-            label="Save Draft"
-            icon="pi pi-save"
-            @click="update"
-        />
-        <Menu :model="(nominationsStore.validate || []).map(item => {return {
-          label: item.label,
-          icon: item.valid ? 'pi pi-check' : 'pi pi-times',
-          command: () => {
-              indexRouter.push(`#${item.id}-fieldset`)
-          }
-        }})" />
-
-        <div class="p-buttonset mt-5">
-          <Button class="p-button-text" label="Cancel" icon="pi pi-times" @click="cancel" />
-          <Button class="p-button-text" label="Delete" icon="pi pi-trash" @click="remove" />
+        <div v-if="!loading && selected" class="p-fluid grid">
+          <div class="col-12">
+            <Button
+                class="p-button-success m-0"
+                :disabled="loading || selected.submitted"
+                :icon="saving ? 'pi pi-spin pi-spinner' : 'pi pi-save'"
+                @click="update"
+                :label="isMobile() ? '' : 'Save Draft'"
+            />
+          </div>
+          <div class="col-12">
+            <Button
+                class="p-button-info"
+                icon="pi pi-check"
+                v-if="isMobile()"
+                type="button"
+                :label="isMobile() ? '' : 'Checklist'"
+                @click="toggle"
+                aria-haspopup="true"
+                aria-controls="overlay_menu"
+            />
+            <Menu ref="menu" :popup="isMobile()" :model="(nominationsStore.validate || []).map(item => {return {
+                  label: item.label,
+                  icon: item.valid ? 'pi pi-check' : 'pi pi-times',
+                  command: () => {
+                      indexRouter.push(`#${item.id}-fieldset`)
+                  }
+                }})" />
+          </div>
+          <div class="col-12">
+            <Button
+                :label="isMobile() ? '' : 'Delete'"
+                icon="pi pi-trash"
+                class="p-button-danger m-0"
+                @click="remove"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div class="field col-9">
+    <div class="field md:col-9 col-12">
       <div class="nominations-statusbar-fixed">
         <div class="p-fluid grid">
-          <div class="field col-6">
+          <div class="sm:col-6 col-6 m-0 p-0">
             <InlineMessage :severity="wordCounts.total > wordCounts.max.total ? 'error' : 'info'">
               Word Count: {{wordCounts.total}}
             </InlineMessage>
           </div>
-          <div class="field col-6">
+          <div class="sm:col-6 col-6 m-0 p-0">
             <div v-if="selected.submitted"><InlineMessage severity="success">Submitted</InlineMessage></div>
             <div v-else-if="(nominationsStore.validate || []).filter(item => !item.valid).length === 0">
               <Button
@@ -108,11 +127,13 @@ import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
 
 const nominationsStore = nominationsDataStore();
-const { selected, items, loading, error, wordCounts } = storeToRefs(nominationsDataStore());
+const { selected, items, loading, saving, error, wordCounts } = storeToRefs(nominationsDataStore());
 const route = useRoute();
 const indexRouter = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
+const menu = ref();
+const screenWidth = ref(window.innerWidth);
 
 // get requested parameters
 const {category=''} = route.params || {};
@@ -128,6 +149,11 @@ const dialog = reactive({
   callback: ()=>{}
 });
 
+// toggle menu
+const toggle = (event) => {
+  menu.value.toggle(event);
+};
+
 // load selected nomination
 const load = async () => {
     const {id=null} = route.params || {};
@@ -138,6 +164,7 @@ const load = async () => {
 onBeforeMount(load);
 
 // cancel nomination submission
+// - navigates to nominations list page
 const cancel = () => {
   indexRouter.push({ name: 'list-nominations' });
 };
@@ -145,7 +172,6 @@ const cancel = () => {
 // save nomination data
 const update = async () => {
   await nominationsStore.update();
-  await load();
 };
 
 // submit nomination as final
@@ -175,6 +201,10 @@ const remove = () => {
     onHide: resetDialog
   });
 };
+
+const isMobile = () => {
+  return screenWidth.value < 768
+}
 
 // update item data
 const resetDialog = () => {
@@ -207,8 +237,18 @@ const onScroll = () => {
       ?  'nominations-menubar-fixed'
       : 'nominations-menubar';
 }
+
+// handle screen size changes
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+}
+
 onMounted(() => {
-  window.addEventListener("scroll", onScroll)
+  window.addEventListener("scroll", onScroll);
+  window.addEventListener("resize", () => {
+    updateScreenWidth();
+  });
+
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", onScroll)
@@ -222,13 +262,14 @@ onUnmounted(() => {
 }
 .nominations-menubar-fixed {
   overflow-y: scroll;
+  overflow-x: hidden;
   height: 80vh;
   position: fixed; /* Set the navbar to fixed position */
   top: 120px; /* Position the navbar at the top of the page */
-  max-width: 270px;
+  width: 220px;
   margin: auto;
   padding: 5px;
-  left: 8px;
+  left: 5px;
 }
 .nominations-statusbar-fixed {
   z-index: 999;
@@ -239,4 +280,28 @@ onUnmounted(() => {
   width: 40%;
   padding: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .nominations-statusbar-fixed {
+    overflow: visible;
+    width: 100%;
+    top: 90px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nominations-menubar-fixed {
+    overflow: visible;
+    z-index: 1000;
+    height: auto;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 120px; /* Position the navbar at the top of the page */
+    max-width: none;
+    width: 30px;
+    margin: auto;
+    left: 5px;
+    opacity: 0.85;
+  }
+}
+
 </style>

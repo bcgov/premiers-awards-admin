@@ -49,6 +49,7 @@ import Divider from "primevue/divider";
 import Editor from "primevue/editor";
 import Checkbox from "primevue/checkbox";
 import ToggleButton from "primevue/togglebutton";
+import Toolbar from "primevue/toolbar";
 import FileUpload from "primevue/fileupload";
 
 // import custom components
@@ -99,6 +100,7 @@ app.component('Avatar', Avatar);
 app.component('Divider', Divider);
 app.component('Menu', Menu);
 app.component('ScrollPanel', ScrollPanel);
+app.component('Toolbar', Toolbar);
 
 // register form components
 app.component('Fieldset', Fieldset);
