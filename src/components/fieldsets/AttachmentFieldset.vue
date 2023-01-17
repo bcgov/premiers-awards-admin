@@ -1,4 +1,25 @@
 <template>
+
+  <ConfirmDialog group="attachment">
+    <template #message="slotProps">
+      <div class="card p-4">
+        <div class="flex mb-5">
+          <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
+          <span class="pl-2">Delete Attachment</span></div>
+        <div class="pl-2 w-80">
+          <div class="grid">
+            <div class="col-6"><b>Label:</b></div>
+            <div class="col-6">{{slotProps.message.message.label}}</div>
+            <div class="col-6"><b>Description:</b></div>
+            <div class="col-6">{{slotProps.message.message.description}}</div>
+            <div class="col-6"><b>File Name:</b></div>
+            <div class="col-6">{{slotProps.message.message.filename}}</div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </ConfirmDialog>
+
   <Fieldset legend="Nomination Attachment">
     <div class="card">
       <Message v-if="uploadedFiles.length + selected.attachments.length >= maxUploads" severity="warn">
@@ -42,6 +63,15 @@
         <Column field="label" header="Label"></Column>
         <Column field="name" header="Filename" />
         <Column field="size" header="File size"></Column>
+        <Column header="">
+          <template #body="{data}">
+              <Button
+                  v-tooltip.top="'Delete Attachment'"
+                  icon="pi pi-trash"
+                  @click="remove(data)"
+              />
+          </template>
+        </Column>
       </DataTable>
     </div>
     <div v-else class="p-fluid grid">
@@ -69,7 +99,7 @@
 
 <script setup>
 
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {useConfirm} from "primevue/useconfirm";
 import {storeToRefs} from 'pinia';
 import {useRoute, useRouter} from 'vue-router'
@@ -83,6 +113,7 @@ const props = defineProps(['data', 'cancel']);
 // initialize references
 const { selected, items, loading, error, submitted } = storeToRefs(nominationsDataStore());
 const nominationsStore = nominationsDataStore();
+const selectedAttachment = ref(null);
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const route = useRoute();
@@ -98,6 +129,27 @@ const maxAttachments = uploadedFiles.value.length + selected.value.attachments.l
 const toast = useToast();
 const totalSize = ref(0);
 const totalSizePercent = ref(0);
+
+const dialog = reactive({
+  header: '',
+  visible: false,
+  callback: ()=>{}
+});
+
+// update item data
+const setDialog = (setting) => {
+  dialog.header = setting.header;
+  dialog.visible = setting.visible;
+  dialog.callback = setting.callback;
+};
+
+// update item data
+const resetDialog = () => {
+  dialog.header = '';
+  dialog.visible = false;
+  dialog.callback = ()=>{};
+  selectedAttachment.value = null;
+};
 
 // load selected nomination
 const load = async () => {
@@ -115,10 +167,12 @@ const complete = async () => {
 const upload = async (event) => {
   try {
     const file = event.files[0];
-    await nominationsStore.uploadAttachment(file, props.data.label, props.data.description);
+    const response = await nominationsStore.uploadAttachment(file, props.data.label, props.data.description);
+    const {_id=''} = response || {};
     // add file to completed uploads list
     if (!error.value) {
       uploadedFiles.value.push({
+        _id: _id,
         name: file.name,
         size: formatFileSize(file.size),
         label: props.data.label
@@ -137,5 +191,12 @@ const update = async () => {
   await nominationsStore.getAttachments();
   scrollToAnchor();
 }
+
+// delete confirmation dialog
+const remove = async (data) => {
+  const {_id=''} = data || {};
+  await nominationsStore.removeAttachment(_id);
+  uploadedFiles.value = uploadedFiles.value.filter(file => file.hasOwnProperty('_id') && file._id !== _id);
+};
 
 </script>

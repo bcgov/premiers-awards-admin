@@ -57,13 +57,13 @@
     </div>
     <div class="field md:col-9 col-12">
       <div class="nominations-statusbar-fixed">
-        <div class="p-fluid grid">
-          <div class="sm:col-6 col-6 m-0 p-0">
+        <div class="p-fluid grid p-1">
+          <div class="col-6 m-0">
             <InlineMessage :severity="wordCounts.total > wordCounts.max.total ? 'error' : 'info'">
               Word Count: {{wordCounts.total}}
             </InlineMessage>
           </div>
-          <div class="sm:col-6 col-6 m-0 p-0">
+          <div class="col-6 m-0">
             <div v-if="selected.submitted"><InlineMessage severity="success">Submitted</InlineMessage></div>
             <div v-else-if="(nominationsStore.validate || []).filter(item => !item.valid).length === 0">
               <Button

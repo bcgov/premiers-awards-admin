@@ -307,8 +307,9 @@ export const nominationsDataStore = defineStore({
             formData.append(`nomination`, _id);
             formData.append(`label`, label || '');
             formData.append(`description`, description || '');
-            const [error,] = await upload(`/nominations/attachments/upload/${_id}`, formData);
+            const [error, result] = await upload(`/nominations/attachments/upload/${_id}`, formData);
             this.error = error;
+            return result;
         },
         // Update attachment metadata
         async updateAttachment (data) {

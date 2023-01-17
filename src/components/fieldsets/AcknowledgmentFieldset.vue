@@ -15,7 +15,7 @@
                   :disabled="submitted"
                   v-model="selected.acknowledgment"
                   onLabel="Yes, they have been informed"
-                  offLabel="Not confirmed"
+                  offLabel="Click to Confirm"
                   onIcon="pi pi-check"
                   offIcon="pi pi-times"
                   @input="v$.acknowledgment.$touch()"
