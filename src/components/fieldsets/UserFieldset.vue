@@ -91,7 +91,7 @@
                 :disabled="isCurrent || isNew || disable"
                 :class="v$.roles.$invalid ? 'p-invalid' : ''"
                 :showToggleAll="false"
-                style="width:15rem"
+                style="width:15rem; z-index: 9999;"
             />
               <label for="roles">Roles</label>
           </span>
