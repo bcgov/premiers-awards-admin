@@ -36,7 +36,10 @@
                 aria-haspopup="true"
                 aria-controls="overlay_menu"
             />
-            <Menu ref="menu" :popup="isMobile()" :model="(nominationsStore.validate || []).map(item => {return {
+            <Menu
+                ref="menu"
+                :popup="isMobile()"
+                :model="(nominationsStore.validate || []).map(item => {return {
                   label: item.label,
                   icon: item.valid ? 'pi pi-check' : 'pi pi-times',
                   command: () => {
@@ -46,6 +49,7 @@
           </div>
           <div class="col-12">
             <Button
+                :disabled="loading || selected.submitted"
                 :label="isMobile() ? '' : 'Delete'"
                 icon="pi pi-trash"
                 class="p-button-danger m-0"
