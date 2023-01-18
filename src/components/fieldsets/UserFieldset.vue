@@ -159,7 +159,7 @@ const v$ = useVuelidate(isNew ? createValidations : editValidations, selected);
 
 </script>
 <style>
-  .p-overlay-open {
-    z-index: 2000;
+  .p-multiselect-panel {
+    z-index: 2000 !important;
   }
 </style>
