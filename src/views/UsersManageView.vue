@@ -194,9 +194,9 @@ store.$onAction(
         // post message
         const {text=''} = messages.get(name) || {};
         if (store.getErrors) toast.add({
-          severity: 'error', summary: 'An Error has Occurred', detail: store.getErrors.text, life: 3000});
+          severity: 'error', summary: 'An Error has Occurred', detail: store.getErrors.text, life: 5000});
         else if (text) {
-          toast.add({severity: 'success', summary: 'Update Successful!', detail: text, life: 3000})
+          toast.add({severity: 'success', summary: 'Update Successful!', detail: text, life: 5000})
         }
       })
     }
