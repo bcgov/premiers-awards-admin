@@ -82,7 +82,6 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
             <MultiSelect
-                appendTo="self"
                 v-model="selected.roles"
                 :options="roles"
                 optionLabel="label"
@@ -159,3 +158,8 @@ const editValidations = {
 const v$ = useVuelidate(isNew ? createValidations : editValidations, selected);
 
 </script>
+<style>
+  .p-overlay-open {
+    z-index: 2000;
+  }
+</style>
