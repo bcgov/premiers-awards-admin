@@ -82,7 +82,7 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
             <MultiSelect
-                appendTo="body"
+                appendTo="self"
                 v-model="selected.roles"
                 :options="roles"
                 optionLabel="label"
@@ -91,7 +91,7 @@
                 :disabled="isCurrent || isNew || disable"
                 :class="v$.roles.$invalid ? 'p-invalid' : ''"
                 :showToggleAll="false"
-                style="width:15rem; z-index: 9999;"
+                style="width:15rem;"
             />
               <label for="roles">Roles</label>
           </span>
