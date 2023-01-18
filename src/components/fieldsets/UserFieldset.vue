@@ -82,6 +82,7 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
             <MultiSelect
+                appendTo="body"
                 v-model="selected.roles"
                 :options="roles"
                 optionLabel="label"
