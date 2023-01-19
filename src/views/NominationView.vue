@@ -25,10 +25,13 @@
       {{selected.title}}
     </div>
     <div class="col-12 md:col-3">
-      <b>Organization</b>
+      <b>Organizations</b>
     </div>
     <div class="col-12 md:col-9">
-      {{settings.lookup('organizations', selected.organization)}}
+      <div v-for="organization in selected.organizations" class="grid">
+        <div class="col-12 mb-2">{{settings.lookup('organizations', organization)}}</div>
+      </div>
+
     </div>
     <div v-if="hasSection('nominee')"  class="col-12 md:col-3">
       <b>Nominee</b>

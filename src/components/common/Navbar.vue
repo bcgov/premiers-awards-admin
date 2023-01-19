@@ -14,7 +14,8 @@
         <Avatar icon="pi pi-user" class="mr-2" size="xlarge" />
         <div class="col-6"><h3>{{current.username}}</h3></div>
       </div>
-      <div class="grid">
+      <div v-if="!isRegistered">You are not currently registered.</div>
+      <div v-else class="grid">
         <div class="col-6"><b>Username (IDIR):</b></div>
         <div class="col-6">{{current.username}}</div>
         <div class="col-6"><b>First Name:</b></div>
@@ -36,7 +37,7 @@ import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
 
 // get current user
-const { current, error, isAdmin, isSuperAdmin, isNominator } = storeToRefs(authDataStore());
+const { current, error, isAdmin, isRegistered, isSuperAdmin, isNominator } = storeToRefs(authDataStore());
 
 // toggle profile sidebar
 const isProfileVisible = ref(false);

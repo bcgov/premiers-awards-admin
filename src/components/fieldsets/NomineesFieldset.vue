@@ -52,8 +52,6 @@ const { current } = storeToRefs(authDataStore());
 const { selected, submitted, error } = storeToRefs(nominationsDataStore());
 
 // apply validators
-const v$ = useVuelidate({
-  nominees: {required}
-}, selected);
+const v$ = useVuelidate({nominees: {required}}, selected.value);
 
 </script>

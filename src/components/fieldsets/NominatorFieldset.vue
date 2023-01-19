@@ -91,7 +91,7 @@ const { selected, submitted, error } = storeToRefs(nominationsDataStore());
 const v$ = useVuelidate({
   firstname: {required},
   lastname: {required},
-  title: {},
+  title: {required},
   email: {required, email}
 }, props.nominator);
 

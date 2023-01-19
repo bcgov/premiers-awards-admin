@@ -11,7 +11,7 @@
       <li>Improving government-to-business or government-to-citizen program or service delivery</li>
     </ul>
     <AcknowledgmentFieldset />
-    <OrganizationFieldset />
+    <OrganizationsFieldset />
     <NominationTitleFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />

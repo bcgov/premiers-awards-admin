@@ -13,6 +13,7 @@ import { defineStore } from 'pinia';
 import {download, get, post, upload} from '@/services/api.services'
 import {getWordCount} from "@/services/util.services";
 import settings from '@/services/settings.services.js';
+import {validateNomination} from "@/services/validation.services";
 
 // get current word count limits
 const maxWordCounts = settings.get('wordCounts');
@@ -63,85 +64,8 @@ export const nominationsDataStore = defineStore({
         },
         validate: (state) => {
             if (!state.selected) return [];
-            const validations = {};
             const wordCounts = getWordCounts(state);
-            const nomination = settings.lookupCategory(state.selected.category);
-
-            // Nomination Acknowledgement
-            validations.acknowledgment = !!state.selected.acknowledgment;
-
-            // Nomination Organization
-            validations.organization = !!state.selected.organization;
-
-            // Nomination Title
-            validations.title = !!state.selected.title;
-
-            // Single Nominee
-            // - ensure first and last names
-            validations.nominee = state.selected.nominee
-                && state.selected.nominee.hasOwnProperty('firstname')
-                && state.selected.nominee.hasOwnProperty('lastname')
-                && state.selected.nominee.firstname !== ''
-                && state.selected.nominee.lastname !== '';
-
-            // Contact information
-            validations.primary_contact = state.selected.contacts.primary
-                && state.selected.contacts.primary.hasOwnProperty('firstname')
-                && state.selected.contacts.primary.hasOwnProperty('lastname')
-                && state.selected.contacts.primary.hasOwnProperty('email')
-                && state.selected.contacts.primary.firstname !== ''
-                && state.selected.contacts.primary.lastname !== ''
-                && state.selected.contacts.primary.email !== '';
-
-            validations.video_contact = state.selected.contacts.video
-                && state.selected.contacts.video.hasOwnProperty('firstname')
-                && state.selected.contacts.video.hasOwnProperty('lastname')
-                && state.selected.contacts.video.hasOwnProperty('email')
-                && state.selected.contacts.video.firstname !== ''
-                && state.selected.contacts.video.lastname !== ''
-                && state.selected.contacts.video.email !== '';
-
-            // Video location information
-            validations.locations = (state.selected.contacts.video.locations || []).filter(location =>
-                location.hasOwnProperty('address')
-                && location.hasOwnProperty('city')
-                && location.address === ''
-                && location.city === ''
-            ).length === 0;
-
-            // Aggregate contact information
-            validations.contacts = validations.locations
-                && validations.primary_contact
-                && validations.video_contact
-
-            // Partners
-            // - ensure nominee count is above zero
-            // - ensure all partners have organizations
-            validations.partners = state.selected.partners.length > 0 &&
-                state.selected.partners.filter(partner => {
-                    return !partner.organization
-                }).length === 0;
-
-            // Evaluation
-            // - compare section/total word counts to limits
-            validations.evaluation = wordCounts.total > 0
-                && wordCounts.total <= wordCounts.max.total
-                && wordCounts.summary <= wordCounts.max.summary
-                && wordCounts.context <= wordCounts.max.context;
-
-            // Attachments
-            // - ensure files exists
-            validations.attachments = (state.selected.attachments || []).length === 0
-                || (state.selected.attachments || []).length > 0
-                && state.selected.attachments.filter(attachment => !attachment.file).length === 0;
-
-            return nomination.sections.map(section => {
-                return {
-                    id: section.id,
-                    label: section.label,
-                    valid: !validations.hasOwnProperty(section.id) || validations[section.id]
-                }
-            });
+            return validateNomination(state.selected, wordCounts);
         }
     },
     actions: {
@@ -156,7 +80,7 @@ export const nominationsDataStore = defineStore({
                 owner: null,
                 submitted: false,
                 filePath: '',
-                organization: '',
+                organizations: [],
                 title: '',
                 nominee: {
                     firstname: '',

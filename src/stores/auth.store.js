@@ -40,6 +40,7 @@ export const authDataStore = defineStore({
             this.loading = true;
             if (!this.error) {
                 const [error, user] = await get(`admin/users/info`);
+
                 // check if user was authenticated through SiteMinder
                 if (user && user.hasOwnProperty('roles')) {
                     this.current = user;

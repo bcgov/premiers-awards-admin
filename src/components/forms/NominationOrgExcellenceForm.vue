@@ -11,7 +11,7 @@
       <li>Measurable benefits to either their organization(s) and/or the citizens of British Columbia through process improvements to transform business practices, and/or support sustainable revenue generation or savings</li>
     </ul>
     <AcknowledgmentFieldset />
-    <OrganizationFieldset />
+    <OrganizationsFieldset />
     <NominationTitleFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
