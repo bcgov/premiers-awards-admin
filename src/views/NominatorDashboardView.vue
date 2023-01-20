@@ -4,7 +4,7 @@
       lead="This provincial recognition is awarded to the most outstanding projects, teams or
       individuals in the public service, showcasing distinguished examples of professionalism,
       innovation and collaboration." />
-  <Message :closable="false" v-if="items.length > settings.get('maxDrafts')" severity="warning">
+  <Message :closable="false" v-if="items.length >= settings.get('maxDrafts')" severity="warn">
     You are at the maximum allowed number ({{items.length}}) of submitted and draft nominations.
   </Message>
   <Message :closable="false" v-else severity="info">
@@ -21,7 +21,7 @@
       <template #header>
         <div class="grid">
           <div class="col-12" style="text-align: right">
-            <DataViewLayoutOptions v-model="layout" />
+            <DataViewLayoutOptions aria-label="Layout Options" v-model="layout" />
           </div>
         </div>
       </template>
@@ -49,8 +49,8 @@
             </template>
             <template #footer>
               <Button
-                  :disabled="items.length > settings.get('maxDrafts')"
-                  label="Nominate"
+                  :disabled="items.length >= settings.get('maxDrafts')"
+                  label="Create Nomination"
                   icon="pi pi-bookmark"
                   @click="()=>{navigate(slotProps.data.key)}" />
             </template>

@@ -7,13 +7,13 @@
           <span class="p-float-label">
             <InputText
                 :disabled="submitted"
-                id="title"
+                id="nomination_title"
                 type="text"
                 v-model="selected.title"
                 @input="v$.title.$touch()"
                 :class="v$.title.$invalid ? 'p-invalid' : ''"
             />
-            <label for="title">Title</label>
+            <label for="nomination_title">Title</label>
           </span>
           <div v-for="error of v$.title.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -38,6 +38,6 @@ const { current } = storeToRefs(authDataStore());
 const { selected, submitted, error } = storeToRefs(nominationsDataStore());
 
 // apply validators
-const v$ = useVuelidate({title: {required}}, selected.value);
+const v$ = useVuelidate({title: {required}}, selected);
 
 </script>

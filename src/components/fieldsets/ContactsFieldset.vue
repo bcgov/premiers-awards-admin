@@ -1,7 +1,7 @@
 <template>
   <div id="contacts-fieldset" class="card"><!-- Nominator Contacts -->
     <h3>Contacts</h3>
-    <ContactFieldset :contact="selected.contacts.primary" legend="Primary contact">
+    <ContactFieldset :contact="selected.contacts.primary" legend="Primary contact" type="primary">
       <template v-slot:overview>
         <p>
           The nomination contact will be responsible for providing/confirming information that is relevant
@@ -11,7 +11,7 @@
         </p>
       </template>
     </ContactFieldset>
-    <ContactFieldset :contact="selected.contacts.video" legend="Video Contact">
+    <ContactFieldset :contact="selected.contacts.video" legend="Video Contact" type="video">
       <template v-slot:overview>
         <p>
           The video contact acts as the nomination liaison and will work directly with the Premier’s Awards
@@ -30,7 +30,7 @@ import {authDataStore} from "@/stores/auth.store";
 import {useVuelidate} from "@vuelidate/core";
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {helpers} from "@vuelidate/validators";
-import {validateEmail, validatePhone} from "@/services/util.services";
+import {validateEmail} from "@/services/util.services";
 
 // get current user
 const { current } = storeToRefs(authDataStore());

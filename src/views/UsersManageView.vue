@@ -35,8 +35,19 @@
           :breakpoints="{'960px': '80vw', '640px': '90vw'}"
           :style="{width: '70vw'}">
         <template #footer>
-          <Button label="Cancel" icon="pi pi-times" @click="reset" class="p-button-text"/>
-          <Button :disabled="invalid()" label="Submit" icon="pi pi-check" @click="dialog.callback" autofocus />
+          <Button
+              label="Cancel"
+              icon="pi pi-times"
+              @click="reset"
+              class="p-button-text"
+          />
+          <Button
+              :disabled="invalid()"
+              label="Submit"
+              icon="pi pi-check"
+              @click="dialog.callback"
+              autofocus
+          />
         </template>
         <UserFieldset mode="edit" />
       </Dialog>
@@ -109,8 +120,13 @@
         <Column bodyStyle="text-align: center; overflow: visible">
           <template #body="{data}">
           <div class="p-buttonset" style="text-align: right">
-              <Button icon="pi pi-user-edit" @click="edit(data)" />
               <Button
+                  aria-label="Edit User"
+                  icon="pi pi-user-edit"
+                  @click="edit(data)"
+              />
+              <Button
+                  aria-label="Delete User"
                   :disabled="data.guid !== 'super-administrator' && data.guid === current.guid"
                   icon="pi pi-trash"
                   @click="remove(data)"
@@ -194,9 +210,9 @@ store.$onAction(
         // post message
         const {text=''} = messages.get(name) || {};
         if (store.getErrors) toast.add({
-          severity: 'error', summary: 'An Error has Occurred', detail: store.getErrors.text, life: 3000});
+          severity: 'error', summary: 'An Error has Occurred', detail: store.getErrors.text, life: 5000});
         else if (text) {
-          toast.add({severity: 'success', summary: 'Update Successful!', detail: text, life: 3000})
+          toast.add({severity: 'success', summary: 'Update Successful!', detail: text, life: 5000})
         }
       })
     }

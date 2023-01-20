@@ -13,7 +13,7 @@
     </ul>
 
     <AcknowledgmentFieldset />
-    <OrganizationFieldset />
+    <OrganizationsFieldset />
     <NominationTitleFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />

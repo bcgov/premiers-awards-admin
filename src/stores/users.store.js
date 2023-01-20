@@ -65,7 +65,7 @@ export const usersDataStore = defineStore({
             this.loading = true;
             if (!this.error) {
                 const [error, user] = await get(`admin/users/info`);
-                if (user && user.hasOwnProperty('roles')) {
+                if (user) {
                     this.current = user;
                     // set user roles/status
                     const {guid='', username='', firstname='', lastname='', email='', roles=['inactive']} = user || {};

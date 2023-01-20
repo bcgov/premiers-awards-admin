@@ -49,16 +49,18 @@ import Divider from "primevue/divider";
 import Editor from "primevue/editor";
 import Checkbox from "primevue/checkbox";
 import ToggleButton from "primevue/togglebutton";
+import Toolbar from "primevue/toolbar";
 import FileUpload from "primevue/fileupload";
 
 // import custom components
 import Header from '@/components/common/Header.vue';
 import Placeholder from '@/components/common/Placeholder.vue';
+import EditorToolbar from '@/components/common/EditorToolbar.vue';
 import PartnersFieldset from '@/components/fieldsets/PartnersFieldset.vue';
 import PartnerFieldset from '@/components/fieldsets/PartnerFieldset.vue';
 import NomineeFieldset from '@/components/fieldsets/NomineeFieldset.vue';
 import NomineesFieldset from '@/components/fieldsets/NomineesFieldset.vue';
-import OrganizationFieldset from '@/components/fieldsets/OrganizationFieldset.vue';
+import OrganizationsFieldset from '@/components/fieldsets/OrganizationsFieldset.vue';
 import NominatorFieldset from '@/components/fieldsets/NominatorFieldset.vue';
 import NominatorsFieldset from '@/components/fieldsets/NominatorsFieldset.vue';
 import NominationTitleFieldset from '@/components/fieldsets/NominationTitleFieldset.vue';
@@ -99,6 +101,7 @@ app.component('Avatar', Avatar);
 app.component('Divider', Divider);
 app.component('Menu', Menu);
 app.component('ScrollPanel', ScrollPanel);
+app.component('Toolbar', Toolbar);
 
 // register form components
 app.component('Fieldset', Fieldset);
@@ -112,13 +115,14 @@ app.component('Editor', Editor);
 app.component('ToggleButton', ToggleButton);
 
 // register custom components
-app.component('Placeholder', Placeholder);
 app.component('Header', Header);
+app.component('Placeholder', Placeholder);
+app.component('EditorToolbar', EditorToolbar);
 app.component('PartnersFieldset', PartnersFieldset);
 app.component('PartnerFieldset', PartnerFieldset);
 app.component('NomineeFieldset', NomineeFieldset);
 app.component('NomineesFieldset', NomineesFieldset);
-app.component('OrganizationFieldset', OrganizationFieldset);
+app.component('OrganizationsFieldset', OrganizationsFieldset);
 app.component('NominatorFieldset', NominatorFieldset);
 app.component('NominatorsFieldset', NominatorsFieldset);
 app.component('NominationTitleFieldset', NominationTitleFieldset);

@@ -33,15 +33,20 @@
                 <PartnerFieldset :partner="partner" :index="index" />
               </div>
               <div class="field col-1">
-                <Button icon="pi pi-trash" @click="remove(index)" :disabled="selected.submitted" />
+                <Button
+                    aria-label="Delete Partner"
+                    icon="pi pi-trash"
+                    @click="remove(index)"
+                    :disabled="selected.submitted"
+                />
               </div>
             </div>
           </div>
         </div>
-        <div class="field col-9">
+        <div class="field  md:col-9 col-12">
           <p><b>Number of partners:</b> {{selected.partners.length}} / {{maxPartners}} Maximum</p>
         </div>
-        <div class="field col-3">
+        <div class="field md:col-3 col-12">
           <Button
               :disabled="selected.partners.length >= maxPartners || selected.submitted"
               label="Add Partner"

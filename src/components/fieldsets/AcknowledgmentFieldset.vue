@@ -15,7 +15,7 @@
                   :disabled="submitted"
                   v-model="selected.acknowledgment"
                   onLabel="Yes, they have been informed"
-                  offLabel="Not confirmed"
+                  offLabel="Click to Confirm"
                   onIcon="pi pi-check"
                   offIcon="pi pi-times"
                   @input="v$.acknowledgment.$touch()"
@@ -49,5 +49,5 @@ const { current } = storeToRefs(authDataStore());
 const { selected, submitted, error, validate } = storeToRefs(nominationsDataStore());
 
 // apply validators
-const v$ = useVuelidate({acknowledgment: {required}}, selected.value);
+const v$ = useVuelidate({acknowledgment: {required}}, selected);
 </script>

@@ -6,8 +6,10 @@
       :breakpoints="{'960px': '80vw', '640px': '90vw'}"
       :style="{width: '70vw'}"
       :baseZIndex="9999"
+      :closable="false"
+      :closeOnEscape="false"
   >
-    <AttachmentFieldset :data="selectedAttachment" :cancel="reset" />
+    <AttachmentFieldset :data="selectedAttachment" :cancel="reload" />
   </Dialog>
 
   <ConfirmDialog group="attachments">
@@ -47,16 +49,16 @@
           >
             <template #header>
               <div class="grid">
-                <div class="col-3">
+                <div class=" md:col-9 col-12">
+                  <p><strong>Only Adobe PDF (Portable Document Format) documents are accepted.</strong></p>
+                </div>
+                <div class="md:col-3 col-12">
                   <Button
                     :disabled="selected.attachments.length >= 5 || selected.submitted"
                     label="Attach File"
                     icon="pi pi-plus"
                     @click="add"
                   />
-                </div>
-                <div class="col-9">
-                  <p><strong>Only Adobe PDF (Portable Document Format) documents are accepted.</strong></p>
                 </div>
               </div>
             </template>
@@ -75,19 +77,33 @@
             <Column field="file" header="File" :sortable="true">
               <template #body="{data}">
                 <span style="cursor: default" v-tooltip.top="data.file.originalname">
-                  {{ data.file
-                    ? `${data.file.originalname.slice(0,15)} (${ formatFileSize(data.file.size) })`
-                    : '(No File)'
+                  {{
+                    !data.file ? '(No File)' : `${data.file.originalname.slice(0, 15)} (${formatFileSize(data.file.size)})`
                   }}
                 </span>
               </template>
             </Column>
-            <Column bodyStyle="text-align: center; overflow: visible;">
+            <Column bodyStyle="text-align: center; overflow: visible;" header="Editor">
               <template #body="{data}">
                 <div class="p-buttonset">
-                  <Button :loading="downloading" icon="pi pi-download" @click="download(data)" />
-                  <Button icon="pi pi-pencil" @click="edit(data)" :disabled="submitted" />
-                  <Button icon="pi pi-trash" @click="remove(data)" :disabled="submitted" />
+                  <Button
+                      aria-label="Download Attachment"
+                      :loading="downloading"
+                      icon="pi pi-download"
+                      @click="download(data)"
+                  />
+                  <Button
+                      aria-label="Edit Attachment"
+                      icon="pi pi-pencil"
+                      @click="edit(data)"
+                      :disabled="submitted"
+                  />
+                  <Button
+                      aria-label="Delete Attachment"
+                      icon="pi pi-trash"
+                      @click="remove(data)"
+                      :disabled="submitted"
+                  />
                 </div>
               </template>
             </Column>
@@ -105,7 +121,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { storeToRefs } from 'pinia';
 import {useRoute, useRouter} from 'vue-router'
 import {useVuelidate} from "@vuelidate/core";
-import {formatFileSize} from "@/services/util.services";
+import {formatFileSize, scrollToAnchor} from "@/services/util.services";
 import {nominationsDataStore} from "@/stores/nominations.store";
 
 // validator
@@ -151,6 +167,7 @@ const edit = (data) => {
 
 // open add attachment dialog
 const add = async () => {
+  await store.update();
   selectedAttachment.value = {
     label: '',
     description: '',
@@ -180,8 +197,8 @@ const remove = (data) => {
       await store.removeAttachment(_id);
       await reload();
     },
-    reject: reset,
-    onHide: reset
+    reject: reload,
+    onHide: reload
   });
 };
 
@@ -201,6 +218,7 @@ const download = async (attachment) => {
 const reset = () => {
   // store.reset();
   resetDialog();
+  scrollToAnchor();
 };
 
 // cancel item update

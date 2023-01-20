@@ -69,7 +69,6 @@ export const authorizeNominator = async (to, from, next) => {
 
 export const isLoggedIn = async (to, from, next) => {
   const {roles=[]} = await getUserData() || {};
-  console.log(roles)
   if (['administrator', 'super-administrator'].some(r => roles.includes(r)))
     return next({name: 'admin-dashboard'});
   else if (['nominator'].some(r => roles.includes(r)))

@@ -41,10 +41,11 @@ const v$ = useVuelidate();
 const toast = useToast();
 // users store
 const store = usersDataStore();
+const authStore = authDataStore();
 // get current user
 const { isRegistered } = storeToRefs(authDataStore());
 // initialize references
-const { loading, selected } = storeToRefs(usersDataStore());
+const { loading } = storeToRefs(usersDataStore());
 const done = ref(false);
 
 // load current user data into store
@@ -69,9 +70,12 @@ store.$onAction(
 const submit = async () => {
   // validate form
   if (invalid()) return;
-
-  // insert new record
+  // insert new user record
   await store.register();
+  // reload user data
+  await authStore.currentUserInit();
+  await store.getCurrent();
+  // exit on submission errors
   if (store.getErrors) return;
   done.value = true;
   // redirect to users list
