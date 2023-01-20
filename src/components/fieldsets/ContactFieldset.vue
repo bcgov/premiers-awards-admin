@@ -55,14 +55,13 @@
         </div>
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
-                <InputText
+                <InputMask
                     :disabled="submitted"
                     :id="`contact_${type}_phone`"
-                    type="phone"
                     v-model="contact.phone"
                     @input="v$.phone.$touch()"
                     :class="v$.phone.$invalid ? 'p-invalid' : ''"
-                    mask="(999) 999-9999? x99999"
+                    mask="(999) 999-9999"
                 />
                 <label :for="`contact_${type}_phone`">Phone</label>
               </span>
@@ -80,7 +79,8 @@ import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
 import {useVuelidate} from "@vuelidate/core";
 import {nominationsDataStore} from "@/stores/nominations.store";
-import {email, required} from "@vuelidate/validators";
+import {validatePhone} from "@/services/validation.services";
+import {email, required, helpers} from "@vuelidate/validators";
 
 // define data prop
 const props = defineProps({
@@ -100,7 +100,12 @@ const v$ = useVuelidate({
   firstname: {required},
   lastname: {required},
   email: {required, email},
-  phone: {}
+  phone: {
+    accepted: helpers.withMessage(
+        "Invalid phone number", (data) => {
+          return validatePhone(data)
+        })
+  }
 }, props.contact);
 
 </script>

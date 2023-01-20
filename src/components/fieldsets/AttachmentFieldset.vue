@@ -92,7 +92,7 @@
   </Fieldset>
   <div class="card">
     <div class="flex align-self-end p-3">
-      <Button v-if="data.file" label="Update" icon="pi pi-check" @click="update" />
+      <Button v-if="data.file" class="p-button-success mr-2" label="Update" icon="pi pi-check" @click="update" />
       <Button label="Close" icon="pi pi-times" @click="complete" class="p-button-info"/>
     </div>
   </div>
