@@ -5,13 +5,13 @@
         <span class="p-float-label">
           <InputText
               :disabled="submitted"
-              id="address"
+              :id="`location_${index}_address`"
               type="text"
               v-model="location.address"
               @input="v$.address.$touch()"
               :class="v$.address.$invalid ? 'p-invalid' : ''"
           />
-          <label for="address">Address</label>
+          <label :for="`location_${index}_address`">Address</label>
         </span>
         <div v-for="error of v$.address.$errors" :key="error.$uid">
           <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -20,13 +20,13 @@
       <div class="field col-12 md:col-6">
         <span class="p-float-label">
           <InputText
-              id="city"
+              :id="`location_${index}_city`"
               type="text"
               v-model="location.city"
               @input="v$.city.$touch()"
               :class="v$.city.$invalid ? 'p-invalid' : ''"
           />
-          <label for="label">City</label>
+          <label :for="`location_${index}_city`">City</label>
         </span>
         <div v-for="error of v$.city.$errors" :key="error.$uid">
           <InlineMessage>{{ error.$message }}</InlineMessage>

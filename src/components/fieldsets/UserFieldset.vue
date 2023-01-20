@@ -5,14 +5,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
-                  id="guid"
+                  id="user_guid"
                   type="text"
                   v-model="selected.guid"
                   @change.native="v$.guid.$touch()"
                   :class="v$.guid.$invalid ? 'p-invalid' : ''"
                   :disabled="true"
               />
-              <label for="guid">GUID</label>
+              <label for="user_guid">GUID</label>
           </span>
           <p v-for="error of v$.guid.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -21,14 +21,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
-                  id="idir"
+                  id="user_username"
                   type="text"
                   v-model="selected.username"
                   @change.native="v$.username.$touch()"
                   :class="v$.username.$invalid ? 'p-invalid' : ''"
                   :disabled="true"
               />
-              <label for="idir">IDIR</label>
+              <label for="user_username">IDIR</label>
           </span>
           <p v-for="error of v$.username.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -37,14 +37,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
-                  id="firstname"
+                  id="user_firstname"
                   type="text"
                   v-model="selected.firstname"
                   :class="v$.firstname.$invalid ? 'p-invalid' : ''"
                   @change.native="v$.firstname.$touch()"
                   :disabled="disable"
               />
-              <label for="firstname">First Name</label>
+              <label for="user_firstname">First Name</label>
           </span>
           <p v-for="error of v$.firstname.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -53,14 +53,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
-                  id="lastname"
+                  id="user_lastname"
                   type="text"
                   v-model="selected.lastname"
                   :class="v$.lastname.$invalid ? 'p-invalid' : ''"
                   @change.native="v$.lastname.$touch()"
                   :disabled="disable"
               />
-              <label for="lastname">Last Name</label>
+              <label for="user_lastname">Last Name</label>
           </span>
           <p v-for="error of v$.lastname.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -69,14 +69,14 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
               <InputText
-                  id="email"
+                  id="user_email"
                   type="email"
                   v-model="selected.email"
                   :class="v$.email.$invalid ? 'p-invalid' : ''"
                   @change.native="v$.email.$touch()"
                   :disabled="disable"
               />
-              <label for="email">Email</label>
+              <label for="user_email">Email</label>
           </span>
           <p v-for="error of v$.email.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -85,6 +85,8 @@
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
             <MultiSelect
+                id="user_roles"
+                aria-label="User Roles"
                 v-model="selected.roles"
                 :options="roles"
                 optionLabel="label"
@@ -95,7 +97,7 @@
                 :showToggleAll="false"
                 style="width:15rem;"
             />
-              <label for="roles">Roles</label>
+              <label>Roles</label>
           </span>
           <p v-for="error of v$.roles.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -146,7 +148,7 @@ const v$ = useVuelidate({
   lastname: { required },
   email: { required, email },
   roles: { required }
-}, selected.value);
+}, selected);
 
 </script>
 <style>

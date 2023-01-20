@@ -6,6 +6,7 @@
         <div class="field col-12">
           <p>Include one or more organizations sponsoring this nomination.</p>
           <MultiSelect
+              aria-label="Organizations"
               v-model="selected.organizations"
               :options="orgs"
               optionLabel="label"
@@ -42,6 +43,6 @@ const store = nominationsDataStore();
 const orgs = settings.get('organizations');
 
 // apply validators
-const v$ = useVuelidate({organizations: {required}}, selected.value);
+const v$ = useVuelidate({organizations: {required}}, selected);
 
 </script>

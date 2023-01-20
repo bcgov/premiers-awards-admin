@@ -78,14 +78,14 @@
     <div v-else class="p-fluid grid">
       <div class="field col-12 md:col-6">
             <span class="p-float-label">
-              <InputText :disabled="submitted" id="label" type="text" v-model="data.label" />
-              <label for="label">Label</label>
+              <InputText :disabled="submitted" id="attachment_label" type="text" v-model="data.label" />
+              <label for="attachment_label">Label</label>
             </span>
       </div>
       <div class="field col-12 md:col-6">
               <span class="p-float-label">
-                <InputText :disabled="submitted" id="description" type="text" v-model="data.description" />
-                <label for="label">Description</label>
+                <InputText :disabled="submitted" id="attachment_description" type="text" v-model="data.description" />
+                <label for="attachment_description">Description</label>
               </span>
       </div>
     </div>
@@ -93,7 +93,7 @@
   <div class="card">
     <div class="flex align-self-end p-3">
       <Button v-if="data.file" label="Update" icon="pi pi-check" @click="update" />
-      <Button label="Close" icon="pi pi-times" @click="complete" class="p-button-text"/>
+      <Button label="Close" icon="pi pi-times" @click="complete" class="p-button-info"/>
     </div>
   </div>
 </template>

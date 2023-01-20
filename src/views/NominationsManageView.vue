@@ -100,7 +100,11 @@
               </span>
               <span class="p-input-icon-left ml-2">
                 <i class="pi pi-search" />
-                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                <InputText
+                    aria-label="Keyword Search"
+                    v-model="filters['global'].value"
+                    placeholder="Keyword Search"
+                />
               </span>
             </div>
           </div>
@@ -127,6 +131,7 @@
           </template>
           <template #filter="{filterModel, filterCallback}">
             <MultiSelect
+                aria-label="Filter Nomination Status"
                 v-model="filterModel.value"
                 :options="statuses"
                 optionLabel="label"
@@ -151,6 +156,7 @@
           </template>
           <template #filter="{filterModel, filterCallback}">
             <MultiSelect
+                aria-label="Filter Nomination Categories"
                 v-model="filterModel.value"
                 :options="cats"
                 optionLabel="label"
@@ -185,6 +191,7 @@
           </template>
           <template #filter="{filterModel, filterCallback}">
             <MultiSelect
+                aria-label="Filter Organization"
                 v-model="filterModel.value"
                 :options="orgs"
                 optionLabel="label"
@@ -196,7 +203,7 @@
             />
           </template>
         </Column>
-        <Column field="owner" header="Owner" :sortable="true">
+        <Column field="owner.username" header="Owner" :sortable="true">
           <template #body="{data}">
             {{data.owner && data.owner.hasOwnProperty('username') ? data.owner.username : '-'}}
           </template>
@@ -215,6 +222,7 @@
           <template #body="{data}">
             <div class="p-buttonset">
               <Button
+                  aria-label="Unsubmit Nomination"
                   v-if="isAdmin"
                   v-tooltip.top="'Unsubmit Nomination'"
                   :disabled="!data.submitted"
@@ -222,23 +230,27 @@
                   @click="unsubmit(data)"
               />
               <Button
+                  aria-label="View Nomination"
                   v-tooltip.top="'View Nomination'"
                   icon="pi pi-eye"
                   @click="view(data)"
               />
               <Button
+                  aria-label="Download Nomination Package"
                   :disabled="!data.submitted"
                   v-tooltip.top="'Download Nomination'"
                   icon="pi pi-download"
                   @click="download(data)"
               />
               <Button
+                  aria-label="Edit Nomination"
                   :disabled="data.submitted"
                   v-tooltip.top="'Edit Nomination'"
                   icon="pi pi-pencil"
                   @click="edit(data)"
               />
               <Button
+                  aria-label="Delete Nomination"
                   :disabled="data.submitted"
                   v-tooltip.top="'Delete Nomination'"
                   icon="pi pi-trash"

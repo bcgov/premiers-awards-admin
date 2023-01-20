@@ -9,13 +9,13 @@
               <span class="p-float-label">
                 <InputText
                     :disabled="submitted"
-                    id="firstname"
+                    :id="`contact_${type}_firstname`"
                     type="text"
                     v-model="contact.firstname"
                     @input="v$.firstname.$touch()"
                     :class="v$.firstname.$invalid ? 'p-invalid' : ''"
                 />
-                <label for="firstname">First Name</label>
+                <label :for="`contact_${type}_firstname`">First Name</label>
               </span>
           <div v-for="error of v$.firstname.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -25,13 +25,13 @@
               <span class="p-float-label">
                 <InputText
                     :disabled="submitted"
-                    id="lastname"
+                    :id="`contact_${type}_lastname`"
                     type="text"
                     v-model="contact.lastname"
                     @input="v$.lastname.$touch()"
                     :class="v$.lastname.$invalid ? 'p-invalid' : ''"
                 />
-                <label for="lastname">Last Name</label>
+                <label :for="`contact_${type}_lastname`">Last Name</label>
               </span>
           <div v-for="error of v$.lastname.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -41,13 +41,13 @@
               <span class="p-float-label">
                 <InputText
                     :disabled="submitted"
-                    id="email"
+                    :id="`contact_${type}_email`"
                     type="email"
                     v-model="contact.email"
                     @input="v$.email.$touch()"
                     :class="v$.email.$invalid ? 'p-invalid' : ''"
                 />
-                <label for="email">Email</label>
+                <label :for="`contact_${type}_email`">Email</label>
               </span>
           <div v-for="error of v$.email.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -57,14 +57,14 @@
               <span class="p-float-label">
                 <InputText
                     :disabled="submitted"
-                    id="phone"
+                    :id="`contact_${type}_phone`"
                     type="phone"
                     v-model="contact.phone"
                     @input="v$.phone.$touch()"
                     :class="v$.phone.$invalid ? 'p-invalid' : ''"
                     mask="(999) 999-9999? x99999"
                 />
-                <label for="phone">Phone</label>
+                <label :for="`contact_${type}_phone`">Phone</label>
               </span>
           <div v-for="error of v$.phone.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -86,7 +86,7 @@ import {email, required} from "@vuelidate/validators";
 const props = defineProps({
   contact: Object,
   legend: String,
-  index: Number
+  type: String
 });
 
 // get current user

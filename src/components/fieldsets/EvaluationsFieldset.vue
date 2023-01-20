@@ -22,14 +22,7 @@
               editorStyle="height: 320px"
           >
             <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+              <EditorToolbar />
             </template>
           </Editor>
           <InlineMessage :closeable="false" :severity="wordCounts.summary > wordCounts.max.summary ? 'error' : 'info'">
@@ -49,14 +42,7 @@
               @text-change="() => {v$.total.$touch(); ; v$.total.$touch()}"
           >
             <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+              <EditorToolbar />
             </template>
           </Editor>
           <InlineMessage :closeable="false" :severity="wordCounts.context > wordCounts.max.context ? 'error' : 'info'">
@@ -76,14 +62,7 @@
             @text-change="v$.total.$touch()"
         >
           <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+            <EditorToolbar />
           </template>
         </Editor>
         <InlineMessage :closeable="false" severity="info">
@@ -102,14 +81,7 @@
             @text-change="v$.total.$touch()"
         >
           <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+            <EditorToolbar />
           </template>
         </Editor>
         <InlineMessage :closeable="false" severity="info">
@@ -128,14 +100,7 @@
             @text-change="v$.total.$touch()"
         >
           <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+            <EditorToolbar />
           </template>
         </Editor>
         <InlineMessage :closeable="false" severity="info">
@@ -154,14 +119,7 @@
             @text-change="v$.total.$touch()"
         >
           <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+            <EditorToolbar />
           </template>
         </Editor>
         <InlineMessage :closeable="false" severity="info">
@@ -180,14 +138,7 @@
             @text-change="v$.total.$touch()"
         >
           <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+            <EditorToolbar />
           </template>
         </Editor>
         <InlineMessage :closeable="false" severity="info">
@@ -206,14 +157,7 @@
             @text-change="v$.total.$touch()"
         >
           <template #toolbar>
-                  <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                  </span>
+            <EditorToolbar />
           </template>
         </Editor>
         <InlineMessage :closeable="false" severity="info">

@@ -28,7 +28,9 @@ function genID() {
 
 const scrollToAnchor = () => {
     const el = document.querySelector(window.location.hash);
-    el && el.scrollIntoView();
+    if (el) {
+        el && el.scrollIntoView();
+    }
 }
 
 /**

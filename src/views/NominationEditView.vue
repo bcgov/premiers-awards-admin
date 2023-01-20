@@ -49,6 +49,7 @@
           </div>
           <div class="col-12">
             <Button
+                aria-label="Delete"
                 :disabled="loading || selected.submitted"
                 :label="isMobile() ? '' : 'Delete'"
                 icon="pi pi-trash"

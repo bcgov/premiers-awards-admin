@@ -2,7 +2,7 @@
   <div class="navbar-fixed">
     <Menubar :model="menu">
       <template #start>
-        <img alt="logo" :src="logoSrc" height="60" class="mr-2">
+        <img alt="Government of British Columbia" :src="logoSrc" height="60" class="mr-2">
       </template>
       <template #end>
         <Button class="mr-4" label="Profile" icon="pi pi-user" @click="toggleProfile" />

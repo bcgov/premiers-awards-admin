@@ -55,6 +55,7 @@ import FileUpload from "primevue/fileupload";
 // import custom components
 import Header from '@/components/common/Header.vue';
 import Placeholder from '@/components/common/Placeholder.vue';
+import EditorToolbar from '@/components/common/EditorToolbar.vue';
 import PartnersFieldset from '@/components/fieldsets/PartnersFieldset.vue';
 import PartnerFieldset from '@/components/fieldsets/PartnerFieldset.vue';
 import NomineeFieldset from '@/components/fieldsets/NomineeFieldset.vue';
@@ -114,8 +115,9 @@ app.component('Editor', Editor);
 app.component('ToggleButton', ToggleButton);
 
 // register custom components
-app.component('Placeholder', Placeholder);
 app.component('Header', Header);
+app.component('Placeholder', Placeholder);
+app.component('EditorToolbar', EditorToolbar);
 app.component('PartnersFieldset', PartnersFieldset);
 app.component('PartnerFieldset', PartnerFieldset);
 app.component('NomineeFieldset', NomineeFieldset);

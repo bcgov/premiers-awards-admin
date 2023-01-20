@@ -13,7 +13,12 @@
                 <NominatorFieldset :nominator="nominator" :index="index" />
               </div>
               <div class="field col-1">
-                <Button icon="pi pi-trash" @click="remove(index)" :disabled="selected.submitted" />
+                <Button
+                    aria-label="Delete Nominator"
+                    icon="pi pi-trash"
+                    @click="remove(index)"
+                    :disabled="selected.submitted"
+                />
               </div>
             </div>
           </div>

@@ -6,13 +6,13 @@
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
                 <InputText
-                    id="firstname"
+                    id="`nominee_firstname`"
                     type="text"
                     v-model="selected.nominee.firstname"
                     @input="v$.firstname.$touch()"
                     :class="v$.firstname.$invalid ? 'p-invalid' : ''"
                 />
-                <label for="firstname">First Name</label>
+                <label for="nominee_firstname">First Name</label>
               </span>
           <div v-for="error of v$.firstname.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
@@ -21,13 +21,13 @@
         <div class="field col-12 md:col-6">
               <span class="p-float-label">
                 <InputText
-                    id="lastname"
+                    id="nominee_lastname"
                     type="text"
                     v-model="selected.nominee.lastname"
                     @input="v$.lastname.$touch()"
                     :class="v$.lastname.$invalid ? 'p-invalid' : ''"
                 />
-                <label for="lastname">Last Name</label>
+                <label for="nominee_lastname">Last Name</label>
               </span>
           <div v-for="error of v$.lastname.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>

@@ -21,7 +21,7 @@
       <template #header>
         <div class="grid">
           <div class="col-12" style="text-align: right">
-            <DataViewLayoutOptions v-model="layout" />
+            <DataViewLayoutOptions aria-label="Layout Options" v-model="layout" />
           </div>
         </div>
       </template>

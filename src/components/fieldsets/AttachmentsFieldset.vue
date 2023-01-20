@@ -7,6 +7,7 @@
       :style="{width: '70vw'}"
       :baseZIndex="9999"
       :closable="false"
+      :closeOnEscape="false"
   >
     <AttachmentFieldset :data="selectedAttachment" :cancel="reload" />
   </Dialog>
@@ -76,19 +77,33 @@
             <Column field="file" header="File" :sortable="true">
               <template #body="{data}">
                 <span style="cursor: default" v-tooltip.top="data.file.originalname">
-                  {{ data.file
-                    ? `${data.file.originalname.slice(0,15)} (${ formatFileSize(data.file.size) })`
-                    : '(No File)'
+                  {{
+                    !data.file ? '(No File)' : `${data.file.originalname.slice(0, 15)} (${formatFileSize(data.file.size)})`
                   }}
                 </span>
               </template>
             </Column>
-            <Column bodyStyle="text-align: center; overflow: visible;">
+            <Column bodyStyle="text-align: center; overflow: visible;" header="Editor">
               <template #body="{data}">
                 <div class="p-buttonset">
-                  <Button :loading="downloading" icon="pi pi-download" @click="download(data)" />
-                  <Button icon="pi pi-pencil" @click="edit(data)" :disabled="submitted" />
-                  <Button icon="pi pi-trash" @click="remove(data)" :disabled="submitted" />
+                  <Button
+                      aria-label="Download Attachment"
+                      :loading="downloading"
+                      icon="pi pi-download"
+                      @click="download(data)"
+                  />
+                  <Button
+                      aria-label="Edit Attachment"
+                      icon="pi pi-pencil"
+                      @click="edit(data)"
+                      :disabled="submitted"
+                  />
+                  <Button
+                      aria-label="Delete Attachment"
+                      icon="pi pi-trash"
+                      @click="remove(data)"
+                      :disabled="submitted"
+                  />
                 </div>
               </template>
             </Column>
