@@ -6,9 +6,9 @@
       :breakpoints="{'960px': '80vw', '640px': '90vw'}"
       :style="{width: '70vw'}"
       :baseZIndex="9999"
-      :after-hide="update"
+      :closable="false"
   >
-    <AttachmentFieldset :data="selectedAttachment" :cancel="reset" />
+    <AttachmentFieldset :data="selectedAttachment" :cancel="reload" />
   </Dialog>
 
   <ConfirmDialog group="attachments">
@@ -152,6 +152,7 @@ const edit = (data) => {
 
 // open add attachment dialog
 const add = async () => {
+  await store.update();
   selectedAttachment.value = {
     label: '',
     description: '',
@@ -181,8 +182,8 @@ const remove = (data) => {
       await store.removeAttachment(_id);
       await reload();
     },
-    reject: reset,
-    onHide: reset
+    reject: reload,
+    onHide: reload
   });
 };
 

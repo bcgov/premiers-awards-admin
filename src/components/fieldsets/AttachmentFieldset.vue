@@ -36,6 +36,7 @@
               :disabled="submitted"
               name="attachedFiles[]"
               :multiple="false"
+              :fileLimit="maxUploads"
               :accept="acceptedFileTypes"
               :maxFileSize="maxFileSize"
               :customUpload="true"
