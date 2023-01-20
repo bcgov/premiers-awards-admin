@@ -51,9 +51,7 @@
 import { storeToRefs } from 'pinia';
 import {useVuelidate} from "@vuelidate/core";
 import {nominationsDataStore} from "@/stores/nominations.store";
-
-// validator
-const v$ = useVuelidate();
+import {required} from "@vuelidate/validators";
 
 // initialize references
 const { selected, items, loading, error, submitted } = storeToRefs(nominationsDataStore());
@@ -64,5 +62,10 @@ const add = store.addLocation;
 
 // delete location from nomination
 const remove = store.removeLocation;
+
+// apply validators
+const v$ = useVuelidate({
+  locations: {required}
+}, selected.value.contacts.video);
 
 </script>

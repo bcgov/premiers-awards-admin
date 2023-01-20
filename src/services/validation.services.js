@@ -58,16 +58,16 @@ export function validateNomination(data, wordCounts) {
 
   // Video location information
   validations.locations = (data.contacts.video.locations || []).filter(location =>
-      location.hasOwnProperty('address')
+      !(location.hasOwnProperty('address')
       && location.hasOwnProperty('city')
-      && location.address === ''
-      && location.city === ''
+      && location.address !== ''
+      && location.city !== '')
   ).length === 0;
 
+  console.log(data.contacts.video.locations)
+
   // Aggregate contact information
-  validations.contacts = validations.locations
-      && validations.primary_contact
-      && validations.video_contact
+  validations.contacts = validations.locations && validations.primary_contact && validations.video_contact
 
   // Nominators
   // - ensure nominators exist and are complete

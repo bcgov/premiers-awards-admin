@@ -30,7 +30,7 @@ import {authDataStore} from "@/stores/auth.store";
 import {useVuelidate} from "@vuelidate/core";
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {helpers} from "@vuelidate/validators";
-import {validateEmail, validatePhone} from "@/services/util.services";
+import {validateEmail} from "@/services/util.services";
 
 // get current user
 const { current } = storeToRefs(authDataStore());
