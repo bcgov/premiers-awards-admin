@@ -6,6 +6,7 @@
       </template>
       <template #end>
         <Button class="mr-4" label="Profile" icon="pi pi-user" @click="toggleProfile" />
+        <Button class="mr-4" label="Help" icon="pi pi-question-circle" @click="toggleHelp" />
       </template>
     </Menubar>
   </div>
@@ -28,6 +29,9 @@
         </div>
       </div>
     </Sidebar>
+  <Sidebar class="p-sidebar-lg" position="bottom" v-model:visible="isHelpVisible">
+    <Help />
+  </Sidebar>
 </template>
 
 <script setup>
@@ -35,17 +39,24 @@ import {onBeforeMount, onMounted, onUnmounted, ref} from 'vue';
 import logoSrc from '@/assets/BCID_H_rgb_pos.png';
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
+import Help from "@/components/common/Help.vue";
 
 // get current user
 const { current, error, isAdmin, isRegistered, isSuperAdmin, isNominator } = storeToRefs(authDataStore());
 
-// toggle profile sidebar
+// toggle sidebars
 const isProfileVisible = ref(false);
+const isHelpVisible = ref(false);
 const menu = ref([]);
 
 // show/hide user profile
 const toggleProfile = () => {
   isProfileVisible.value = !isProfileVisible.value;
+}
+
+// show/hide help panel
+const toggleHelp = () => {
+  isHelpVisible.value = !isHelpVisible.value;
 }
 
 // handle menu scroll effects
@@ -101,6 +112,7 @@ onBeforeMount(async() => {
       url: '#'
     });
   }
+
 });
 
 onMounted(() => {
