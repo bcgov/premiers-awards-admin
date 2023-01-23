@@ -179,15 +179,15 @@
           </template>
         </Column>
         <Column
-            field="organization"
-            header="Organization"
+            field="organizations"
+            header="Organizations"
             :sortable="true"
             :showFilterMatchModes="false"
             :filterMenuStyle="{'width':'14rem'}"
-            style="min-width:12rem"
+            style="min-width:14rem"
         >
           <template #body="{data}">
-            {{ lookup('organizations', data.organization) }}
+            <div v-for="org in data.organizations">{{ lookup('organizations', org) || '' }}</div>
           </template>
           <template #filter="{filterModel, filterCallback}">
             <MultiSelect
@@ -274,7 +274,7 @@ import { authDataStore } from "@/stores/auth.store";
 import {nominationsDataStore} from "@/stores/nominations.store";
 import {useVuelidate} from "@vuelidate/core";
 import settings from "@/services/settings.services";
-import {FilterMatchMode} from "primevue/api";
+import {FilterMatchMode, FilterService} from "primevue/api";
 import messages from "@/services/message.services";
 import {useToast} from "primevue/usetoast";
 import NominationView from "@/views/NominationView.vue";
@@ -338,14 +338,33 @@ const reload = async () => {
 // load data on component mount
 // - nominators load nominations associated with their GUID
 // - administrators load all nominations
-onMounted(reload);
+onMounted(() => {
+  // load data on component mount
+  reload()
+  // init custom data table filter
+  FilterService.register('someInArray', (values, filter) => {
+    return filter === undefined
+        || filter === null
+        || filter.length === 0
+        || values === undefined
+        || values === null
+        || filter.some(r=> values.includes(r))
+  });
+});
+
+// apply custom data filter match
+// define roles filter key
+const orgsFilter = ref('someInArray');
+const matchModeOptions = ref([
+  {label: 'In Array', value: orgsFilter.value},
+]);
 
 // apply custom data filters
 const filters = ref({
   'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
   'submitted': {value: null, matchMode: FilterMatchMode.IN},
   'category': {value: null, matchMode: FilterMatchMode.IN},
-  'organization': {value: null, matchMode: FilterMatchMode.IN},
+  'organizations': {value: null, matchMode: orgsFilter.value},
 });
 
 // subscribe to user store actions
