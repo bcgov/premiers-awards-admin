@@ -7,4 +7,5 @@
       <button aria-label="Ordered List" class="ql-list" value="ordered"></button>
       <button aria-label="Unordered List" class="ql-list" value="bullet"></button>
     </span>
+  <button aria-label="Clipboard" class="ql-clipboard"></button>
 </template>
