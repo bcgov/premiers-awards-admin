@@ -12,7 +12,7 @@
     <h2 class="mb-5 mt-5">User Management</h2>
     <h3>Nominator Registration <Tag value="Non-registered Users" /></h3>
     <ol>
-      <li>Navigate to the main <a href="#" @click="()=>{redirect('/')}">Dashboard</a> (homepage)</li>
+      <li>Navigate to the main Homepage</li>
       <li>Complete the User Registration form to be added as a Nominator. Note the following:
         <ul>
           <li>GUID and IDIR fields will be filled in for you (based on your IDIR authentication)</li>
@@ -26,12 +26,12 @@
         </ul>
       </li>
       <li>Once the role change has been completed, notify the nominator that the registration has been approved
-        and return to the <a href="#" @click="()=>{redirect('/')}">Dashboard</a>.</li>
+        and return to the Dashboard.</li>
     </ol>
     <Divider />
     <h3>Activating Nominators <Tag value="Administrators" /></h3>
     <ol>
-      <li>Navigate to <a href="#" @click="()=>{redirect('/users')}">Manage Users</a></li>
+      <li>Navigate to Manage Users</li>
       <li>Locate inactive users (role or status is &quot;Inactive&quot;)</li>
       <li>Click the &ldquo;Edit User&rdquo; icon to open the edit user dialog box.</li>
       <li>Update the user role to include &ldquo;Nominator&rdquo; and deselect &ldquo;Inactive&rdquo;.
@@ -44,7 +44,7 @@
     <Divider />
     <h2 class="mb-5 mt-b">Nominations</h2>
     <h3>Creating Nominations <Tag value="Nominators" /> <Tag value="Administrators" /></h3>
-    <p>From the <a href="#" @click="()=>{redirect('/')}">Nominator Dashboard</a>),
+    <p>From the Nominator Dashboard,
       users can click &ldquo;Create Nomination&rdquo; for any of the
       following award categories to start a new nomination:</p>
     <ol>

@@ -18,6 +18,9 @@
           </slot>
           <Editor
               v-model="selected.evaluation.summary"
+              :modules="{clipboard: {
+                matchVisual: false
+              }}"
               @text-change="() => {v$.summary.$touch(); v$.total.$touch()}"
               editorStyle="height: 320px"
           >
