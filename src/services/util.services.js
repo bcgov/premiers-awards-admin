@@ -35,21 +35,28 @@ const scrollToAnchor = () => {
 
 /**
  * Get word count for given string (based on 5 character word length)
- * - Remove HTML tags in the input string;
- * - Replace non-alphanumeric characters with spaces;
- * - Replace multiple spaces to single space;
+ * - Removes HTML tags in the input string;
+ * - Counts contiguous non-whitespace strings
  * **/
 
 function getWordCount(strRaw) {
   const str = strRaw.toString() || '';
-  return str !== ''
-      ? str
-          .replace( /(<([^>]+)>)/ig, ' ')
-          .replace(/[^0-9a-zA-Z_ ]/g,' ')
-          .replace(/\s\s+/g, ' ')
-          .trim()
-          .split(' ').length
-      : 0;
+//   return str !== ''
+//       ? str
+//           .replace( /(<([^>]+)>)/ig, ' ')
+//           .replace(/[.,;'"]/g,'')
+//           .replace(/[^0-9a-zA-Z_ ]/g,' ')
+//           .replace(/\s\s+/g, ' ')
+//           .trim()
+//           .split(' ').length
+//       : 0;
+  return str !== '' 
+    ? str
+        .replace( /(<([^>]+)>)/ig, ' ')
+        .match(/\S+/g)
+        .length 
+    : 0;
+      
 }
 
 /**
