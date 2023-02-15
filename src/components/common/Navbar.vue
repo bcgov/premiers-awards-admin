@@ -109,7 +109,7 @@ onBeforeMount(async() => {
     menu.value.push({
       label: 'Settings',
       icon: 'pi pi-fw pi-cog',
-      url: '#'
+      url: import.meta.env['BASE_URL'] + 'settings'
     });
   }
 

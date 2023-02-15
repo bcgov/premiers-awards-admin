@@ -6,7 +6,7 @@
  */
 
 const schemaData = {
-  maxDrafts: 12,
+  maxDrafts: 60,
   maxAttachments: 5,
   "status": [
     {key: 'draft', label: 'Draft', value: false},

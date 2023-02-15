@@ -15,7 +15,8 @@ import UsersRegister from '@/views/UsersRegisterView.vue';
 import UsersList from '@/views/UsersManageView.vue';
 import NominationsManage from '@/views/NominationsManageView.vue';
 import NominationCreate from '@/views/NominationCreateView.vue';
-import NominationEdit from '@/views/NominationEditView.vue'
+import NominationEdit from '@/views/NominationEditView.vue';
+import SettingsEdit from '@/views/SettingsManageView.vue';
 import {getMeta} from "@/services/meta.services";
 import {authorizeAdmin, authorizeNominator, authenticate, isLoggedIn} from "@/services/auth.services";
 
@@ -93,6 +94,13 @@ const router = createRouter({
       component: NominationEdit,
       meta: getMeta('Emerging Leader'),
       beforeEnter: authorizeNominator
+    },
+    {
+      path: "/settings",
+      name: "edit-settings",
+      component: SettingsEdit,
+      meta: getMeta('Settings'),
+      beforeEnter: authorizeAdmin
     },
     {
       path: '/401',
