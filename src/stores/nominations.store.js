@@ -51,6 +51,7 @@ export const nominationsDataStore = defineStore({
         downloading: false,
         error: null,
         attachmentError: null,
+        settings: null
     }),
     getters: {
         getErrors: (state) => state.error,

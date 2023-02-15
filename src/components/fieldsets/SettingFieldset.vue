@@ -10,7 +10,6 @@
                   v-model="selected.type"
                   @change.native="v$.type.$touch()"
                   :class="v$.type.$invalid ? 'p-invalid' : ''"
-                  :disabled="true"
               />
               <label for="setting_type">Type</label>
           </span>
@@ -26,7 +25,6 @@
                   v-model="selected.label"
                   @change.native="v$.label.$touch()"
                   :class="v$.label.$invalid ? 'p-invalid' : ''"
-                  :disabled="true"
               />
               <label for="setting_label">Label</label>
           </span>
@@ -56,13 +54,12 @@
 </template>
 
 <script setup>
-import { usersDataStore } from "@/stores/users.store";
-import settings from "@/services/settings.services";
+
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
-import { email, required } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
-import {ref} from "vue";
+import {settingsStore} from "@/stores/settings.store";
 
 // properties
 const props = defineProps(['mode', 'disable']);
@@ -72,23 +69,14 @@ const heading = isNew ? 'Create New Setting' : 'Edit Setting';
 // get current user
 const { current } = storeToRefs(authDataStore());
 
-// load users state
-const { selected, error } = storeToRefs(usersDataStore());
-
-// // custom validators
-// const notCurrentGUID = (value) => value !== current.value.guid;
-// const notCurrentUsername = (value) => value !== current.value.username;
-//     notCurrentGUID: helpers.withMessage("Cannot create user with current GUID.", notCurrentGUID)
-//     notCurrentUsername: helpers.withMessage("Cannot create user with current username.", notCurrentUsername)
+// load settings state
+const { selected, error } = storeToRefs(settingsStore());
 
 // apply validators
 const v$ = useVuelidate({
-  guid: { required },
-  username: { required },
-  firstname: { required },
-  lastname: { required },
-  email: { required, email },
-  roles: { required }
+  type: { required },
+  label: { required },
+  value: { required },
 }, selected);
 
 </script>
