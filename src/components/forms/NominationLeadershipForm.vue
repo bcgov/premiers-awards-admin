@@ -21,9 +21,11 @@
     <ContactsFieldset />
     <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
+
       <template v-slot:context_overview>
         <p>Briefly describe the conditions under which the employee demonstrates exemplary leadership to provide background and perspective.</p>
       </template>
+
       <template v-slot:complexity_overview>
         <p>Describe the employee’s ability to demonstrate exemplary leadership acumen including, but not limited to</p>
         <ul>
@@ -49,7 +51,8 @@
       </template>
 
       <template v-slot:commitment_overview>
-        <p>Identify and describe the effect the leader has on employees, clients, the public service and/or citizens of British Columbia.</p>
+        <p>Identify and describe the effect the leader has on employees, clients, the public service and/or citizens of
+          British Columbia.</p>
         <p>Considerations may include but are not limited to</p>
         <ul>
           <li>Anticipating future trends and working with others to develop strategies to meet future challenges</li>

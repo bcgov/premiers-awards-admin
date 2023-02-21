@@ -104,6 +104,7 @@ const schemaData = {
       evaluation:[
         'summary',
         'context',
+        'complexity',
         'valuing_people',
         'commitment',
         'impact',
