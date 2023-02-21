@@ -101,6 +101,7 @@ export const nominationsDataStore = defineStore({
                         firstname: '',
                         lastname: '',
                         email: '',
+                        phone: '',
                         locations: []
                     }
                 },
