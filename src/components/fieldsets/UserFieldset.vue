@@ -92,6 +92,7 @@
               optionLabel="label"
               optionValue="key"
               placeholder="Select an organization"
+              :disabled="isCurrent || isNew || disable"
             />
             <label for="organization">Organization</label>
           </span>
