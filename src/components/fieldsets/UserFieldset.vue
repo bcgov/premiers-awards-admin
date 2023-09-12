@@ -84,6 +84,22 @@
         </div>
         <div class="field col-12 md:col-6">
           <span class="p-float-label">
+              <InputText
+                  id="user_organization"
+                  type="text"
+                  v-model="selected.organization"
+                  :class="v$.organization.$invalid ? 'p-invalid' : ''"
+                  @change.native="v$.organization.$touch()"
+                  :disabled="disable"
+              />
+              <label for="organization">Organization</label>
+          </span>
+          <p v-for="error of v$.organization.$errors" :key="error.$uid">
+            <InlineMessage>{{ error.$message }}</InlineMessage>
+          </p>
+        </div>
+        <div class="field col-12 md:col-6">
+          <span class="p-float-label">
             <MultiSelect
                 id="user_roles"
                 aria-label="User Roles"
@@ -147,7 +163,8 @@ const v$ = useVuelidate({
   firstname: { required },
   lastname: { required },
   email: { required, email },
-  roles: { required }
+  roles: { required },
+  organization: { required }
 }, selected);
 
 </script>
