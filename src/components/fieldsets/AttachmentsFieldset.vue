@@ -39,6 +39,7 @@
         <div class="field col-12">
           <p>Please submit up to <b>5</b> attachments in support of the nomination.
             The combined total page count of your documents cannot exceed <b>5</b> pages.</p>
+            <p><b>Reminder: All individual nominations require two testimonials or letters of support.</b></p>
         </div>
         <div class="field col-12">
           <DataTable

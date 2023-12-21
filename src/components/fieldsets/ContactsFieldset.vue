@@ -4,19 +4,14 @@
     <ContactFieldset :contact="selected.contacts.primary" legend="Primary contact" type="primary">
       <template v-slot:overview>
         <p>
-          The nomination contact will be responsible for providing/confirming information that is relevant
-          to the nomination. This may include confirming partner organizations, providing correct titles,
-          checking spelling and providing pictures. The nomination contact should be someone who has been
-          directly involved in the nomination.
+          The nomination contact is responsible for managing information relevant to the nomination. This may include confirming partner organizations, job titles, spelling and coordinating other resources or video/photo assets. The nomination contact should be someone who has been directly involved in completing the nomination process.
         </p>
       </template>
     </ContactFieldset>
     <ContactFieldset :contact="selected.contacts.video" legend="Video Contact" type="video">
       <template v-slot:overview>
         <p>
-          The video contact acts as the nomination liaison and will work directly with the Premier’s Awards
-          video production team to confirm interviewees, filming locations, and assist with the coordination
-          of supporting video footage and materials.
+          The video contact acts as the nomination’s liaison between the nominating ministry and the Premier’s Awards team. This person works directly with the Premier’s Awards video production team to select interview candidates, coordinate their video shoots and filming locations. They also assist with the coordination of supporting video footage and materials.
         </p>
       </template>
     </ContactFieldset>
