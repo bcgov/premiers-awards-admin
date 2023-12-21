@@ -10,8 +10,8 @@
             the nominated project and initiative.
           </p>
           <p>
-            Please consider retaining a list of names for your organization’s purpose should this
-            nomination be selected as a finalist for award distribution.
+            Please retain a list of nominee’s names should this
+            nomination be selected as a finalist. Your organization will need this for award distribution.
           </p>
           <p>
             Please enter the number of individuals who played a significant role in the initiative,
