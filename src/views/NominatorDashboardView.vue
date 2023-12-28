@@ -75,7 +75,7 @@ const { current, isRegistered } = storeToRefs(authDataStore());
 const indexRouter = useRouter();
 const auth = authDataStore();
 const store = nominationsDataStore();
-const nominations = ref(settings.get('categories') || []);
+const nominations = ref(settings.get('categories'));
 const layout = ref('grid');
 
 const navigate = (category) => {
