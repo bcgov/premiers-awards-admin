@@ -16,7 +16,7 @@
         :layout="layout"
         :paginator="false"
         :rows="9"
-        sortField="label"
+        :sortField="label"
     >
       <template #header>
         <div class="grid">
