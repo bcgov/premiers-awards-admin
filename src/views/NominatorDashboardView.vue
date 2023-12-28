@@ -16,7 +16,6 @@
         :layout="layout"
         :paginator="false"
         :rows="9"
-        :sortField="label"
     >
       <template #header>
         <div class="grid">
@@ -78,8 +77,6 @@ const auth = authDataStore();
 const store = nominationsDataStore();
 const nominations = ref(settings.get('categories') || []);
 const layout = ref('grid');
-console.log("Nominations: ");
-console.log(nominations);
 
 const navigate = (category) => {
   indexRouter.push({name: 'create-nomination', params: {category: category}});
