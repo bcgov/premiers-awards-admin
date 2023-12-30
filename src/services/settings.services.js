@@ -25,7 +25,7 @@ const schemaData = {
       type: "individual",
       label: "Emerging Leader",
       description:
-        "This award recognizes a BC Public Service employee 40 years and under and at or below the level of director who has made a significant impact in their ministry, division, workgroup or the greater BC Public Service early in their career.",
+        "This award recognizes a BC Public Service employee at or below the level of director who has made a significant impact in their ministry, division, workgroup or the greater BC Public Service early in their career.",
       sections: [
         { label: "Acknowledgment", id: "acknowledgment" },
         { label: "Organizations", id: "organizations" },
@@ -222,7 +222,7 @@ const schemaData = {
       key: "org-9",
       label: "Environment and Climate Change Strategy",
     },
-    { key: "org-10", label: "Assessment Office" },
+    { key: "org-10", label: "Environment Assessment Office" },
     { key: "org-11", label: "Finance" },
     {
       key: "org-12",
@@ -247,7 +247,7 @@ const schemaData = {
       label: "Social Development & Poverty Reduction",
     },
     { key: "org-21", label: "Tourism, Arts, Culture and Sport" },
-    { key: "org-22", label: "Transportation & Infrastructure" },
+    { key: "org-22", label: "Transportation and Infrastructure" },
     { key: "org-23", label: "BC Public Service Agency" },
     { key: "org-24", label: "Government Communications and Public Engagement" },
     { key: "org-25", label: "Office of the Premier" },
@@ -257,6 +257,7 @@ const schemaData = {
       key: "org-28",
       label: "Declaration Act Secretariat",
     },
+    { key: "org-29", label: "Crown Agencies Secretariat" },
   ],
   mimeTypes: [
     { key: "application/pdf", label: "PDF" },

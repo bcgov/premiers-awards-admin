@@ -1,7 +1,7 @@
 <template>
   <div id="contacts-fieldset" class="card"><!-- Nominator Contacts -->
     <h3>Contacts</h3>
-    <ContactFieldset :contact="selected.contacts.primary" legend="Primary contact" type="primary">
+    <ContactFieldset :contact="selected.contacts.primary" legend="Nomination Contact" type="primary">
       <template v-slot:overview>
         <p>
           The nomination contact is responsible for managing information relevant to the nomination. This may include confirming partner organizations, job titles, spelling and coordinating other resources or video/photo assets. The nomination contact should be someone who has been directly involved in completing the nomination process.
@@ -36,7 +36,7 @@ const { selected, submitted, error } = storeToRefs(nominationsDataStore());
 // apply validators
 const v$ = useVuelidate({
     primary: helpers.withMessage(
-        "Primary contact is not complete.", (value) => {
+        "Nomination contact is not complete.", (value) => {
           return selected.value.contacts.primary.firstname.length > 0
               && selected.value.contacts.primary.lastname.length > 0
               && validateEmail(selected.value.contacts.primary.email);

@@ -7,7 +7,7 @@
       sector, other levels of government, Indigenous communities or in the
       private or non-profit sectors.
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         Development and management of sustained strategic partnerships with
@@ -69,7 +69,7 @@
       <template v-slot:approach_overview>
         <p>
           Identify key aspects of the approach and partnership including, but
-          not limited to
+          not limited to:
         </p>
         <ul>
           <li>
@@ -87,7 +87,7 @@
             of the design and/or implementation of the partnership
           </li>
           <li>
-            Inclusive employee or citizen engagement practices with diverse
+            Applying inclusive employee or citizen engagement practices with diverse
             stakeholder groups
           </li>
           <li>
@@ -105,7 +105,7 @@
         <p>
           Describe and use metrics (if applicable) to support the effect the
           partnership has on the organization, public service or citizens of
-          British Columbia including, not limited to
+          British Columbia including, but not limited to:
         </p>
         <ul>
           <li>

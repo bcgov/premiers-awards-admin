@@ -97,11 +97,11 @@
         <ul>
           <li>
             Ability to create, communicate and implement a clear and compelling
-            vision for their team aligned with the Corporate Plan for the BC
+            vision for their team, aligned with the Corporate Plan for the BC
             Public Service
           </li>
           <li>
-            Anticipating future trends and working with others to develop
+            Ability to anticipate future trends and work with others to develop
             strategies to meet future challenges
           </li>
           <li>

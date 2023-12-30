@@ -17,15 +17,15 @@
               names – what is entered here will be used to populate the
               Premier’s Awards website and will be displayed in print at the
               Premier’s Awards ceremony, should your nomination be selected as a
-              finalist. If there is interest to submit more than 12, please
+              finalist.</p> 
+              <p>Note: If there is interest to submit more than 12, please
               email
               <a href="mailto:PremiersAwards@gov.bc.ca"
-                >PremiersAwards@gov.bc.ca</a
-              >
-              to discuss.This list determines the number of award materials
+                >PremiersAwards@gov.bc.ca</a>
+              to discuss.</p>
+              <p>This list determines the number of award materials
               (framed certificates, trophies, etc.) ordered should the
-              nomination become a finalist.
-            </p>
+              nomination become a finalist.</p>
             <Message
               :closable="false"
               v-if="selected.partners.length >= maxPartners"

@@ -40,17 +40,15 @@
       <template v-slot:context_overview>
         <p>
           Briefly describe the conditions under which the employee demonstrates
-          exemplary leadership to provide background and perspective.
+          exemplary leadership, to provide background and perspective.
         </p>
       </template>
 
       <template v-slot:valuing_people_overview>
         <p>
           Identify and describe how the employee demonstrates their leadership
-          in to support the workplace either by leading a team or organization,
-          or as leader of a substantial project, process or initiative.
+          in supporting the workplace including, but not limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Innovative problem solving, team building and collaborating with
@@ -69,11 +67,8 @@
 
       <template v-slot:commitment_overview>
         <p>
-          Identify and describe how the employee demonstrates their leadership
-          in to support the workplace either by leading a team or organization,
-          or as leader of a substantial project, process or initiative.
+          Identify and describe how the employee demonstrates their leadership in operations including, but not limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Commitment to and pride in the BC Public Service by contributions
@@ -106,7 +101,7 @@
         <p>
           Describe and use metrics (if applicable) to support how the employee
           exemplifies the future of corporate leadership as demonstrated by, but
-          not limited to
+          not limited to:
         </p>
         <ul>
           <li>
@@ -124,9 +119,9 @@
             increased efficiencies, or safety
           </li>
           <li>
-            Creating measurable benefits to their organization(s) and/or
+            Measurable benefits to their organization(s) and/or
             citizens through process improvements to transform business
-            practices, and/or sustainable revenue generation or savings.
+            practices, and/or sustainable revenue generation or savings
           </li>
         </ul>
       </template>

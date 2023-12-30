@@ -47,7 +47,7 @@
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>
-          Briefly describe why the policy or program was developed to provide
+          Briefly describe why the policy or program was developed, to provide
           background and perspective.
         </p>
       </template>
@@ -56,7 +56,7 @@
           <p>
             Describe the scope and scale of the evidence-based or
             evidence-informed approach to developing the policy or program
-            including, but not limited to
+            including, but not limited to:
           </p>
           <ul>
             <li>
@@ -81,7 +81,7 @@
         <p>
           Describe how the new policy or program used an evidence-based or
           evidence-informed approach for the development from inception to
-          delivery including, but not limited to
+          delivery including, but not limited to:
         </p>
         <ul>
           <li>
@@ -115,7 +115,7 @@
         <p>
           Describe and use metrics (if applicable) to support the impact of the
           evidence-based approach resulting in the new policy or program as
-          demonstrated by, but not limited to
+          demonstrated by, but not limited to:
         </p>
         <ul>
           <li>
@@ -138,7 +138,7 @@
           <li>
             Application and/or development of best practices to remove barriers
             that may have prevented the successful outcome of the policy or
-            program.
+            program
           </li>
         </ul>
       </template>

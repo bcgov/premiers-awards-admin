@@ -7,7 +7,7 @@
       initiatives benefiting citizens in a specific location (town, city,
       municipality or region).
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         Projects or initiatives directly benefiting citizens in the specific
@@ -27,7 +27,7 @@
         the design and/or implementation of the partnership
       </li>
       <li>
-        Development and management of and managing sustained strategic
+        Development and management of sustained strategic
         partnerships with local government, Indigenous, private sector,
         volunteer or non-profit organizations, integrating policy and/or service
         delivery to better serving British Columbians in a specific location
@@ -52,7 +52,7 @@
       <template v-slot:context_overview>
         <p>
           Briefly describe why the new program, project or initiative was
-          undertaken to provide background and perspective.
+          undertaken, to provide background and perspective.
         </p>
       </template>
       <template v-slot:complexity_overview>

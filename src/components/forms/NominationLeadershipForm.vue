@@ -7,7 +7,7 @@
       leading a team or organization, or a substantial project, process or
       initiative.
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         Ability to create, communicate and implement a clear and compelling
@@ -24,11 +24,11 @@
         the development of programs, policies and services
       </li>
       <li>
-        Advocation for meaningful engagement and learning with Indigenous
+        Advocating meaningful engagement and learning with Indigenous
         peoples to support and facilitate reconciliation
       </li>
       <li>
-        Ability to anticipate future trends and work with others to develop
+        Anticipating future trends and working with others to develop
         strategies to meet future challenges
       </li>
       <li>
@@ -40,7 +40,7 @@
         internal or external clients
       </li>
       <li>
-        Demonstrating superior of an experimental or innovative mindset whereby
+        Demonstration of an experimental or innovative mindset whereby
         openness to change, taking calculated risks and challenging the status
         quo to try something new resulted in a measurable outcome
       </li>
@@ -56,14 +56,14 @@
       <template v-slot:context_overview>
         <p>
           Briefly describe the conditions under which the employee demonstrates
-          exemplary leadership to provide background and perspective.
+          exemplary leadership, to provide background and perspective.
         </p>
       </template>
 
       <template v-slot:complexity_overview>
         <p>
           Describe the employee’s ability to demonstrate exemplary leadership
-          acumen including, but not limited to
+          acumen including, but not limited to:
         </p>
         <ul>
           <li>
@@ -75,7 +75,7 @@
             and implement solutions
           </li>
           <li>
-            Constraints encountered and overcome under their leadership such as
+            Ability to encounter and overcome constraints such as
             time frame, technical, financial, organizational or policy
           </li>
         </ul>
@@ -84,7 +84,7 @@
       <template v-slot:valuing_people_overview>
         <p>
           Identify and describe how the employee demonstrates their leadership
-          in to support the workplace either by leading a team or organization,
+          to support the workplace either by leading a team or organization,
           or as leader of a substantial project, process or initiative.
         </p>
         <p>Considerations may include but are not limited to:</p>
@@ -114,7 +114,7 @@
             mentorship
           </li>
           <li>
-            Demonstration of the importance the importance of respect,
+            Modeling the importance of respect,
             inclusion, ethics and integrity and ensuring employees' awareness of
             obligations regarding ethics and professional conduct
           </li>
@@ -131,10 +131,10 @@
           Identify and describe the effect the leader has on employees, clients,
           the public service and/or citizens of British Columbia.
         </p>
-        <p>Considerations may include but are not limited to</p>
+        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
-            Ability to anticipate future trends and work with others to develop
+            Ability to anticipate future trends and working with others to develop
             strategies to meet future challenges
           </li>
           <li>
@@ -142,7 +142,7 @@
             context, anticipating emerging priorities as well as current needs
           </li>
           <li>
-            Demonstration of an experimental or innovative mindset whereby
+            Having an experimental or innovative mindset whereby
             openness to change, taking calculated risks and challenging the
             status quo to try something new resulted in a measurable outcome
           </li>
@@ -165,7 +165,7 @@
           leader has on employees, clients, the public service and/or citizens
           of British Columbia.
         </p>
-        <p>Considerations may include but are not limited to</p>
+        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Improving the quality of the workplace for employees by contributing
@@ -178,11 +178,11 @@
             increasing efficiencies
           </li>
           <li>
-            Improvements to the quality, cost-effectiveness or productivity of
+            Improving the quality, cost-effectiveness or productivity of
             services to internal or external stakeholders
           </li>
           <li>
-            Improvements to government-to-business or government-to-citizen
+            Improving government-to-business or government-to-citizen
             service delivery
           </li>
           <li>
@@ -192,7 +192,7 @@
             or savings
           </li>
           <li>
-            Improved organizational performance as indicated by Work Environment
+            Demonstrating improved organizational performance as indicated by Work Environment
             Survey scores
           </li>
         </ul>

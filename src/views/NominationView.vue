@@ -60,7 +60,7 @@
     <div class="col-12">
       <div class="grid">
         <div class="col-12 md:col-6">
-          <h4>Primary</h4>
+          <h4>Nomination</h4>
           <div class="grid">
             <div class="col-12 md:col-3">First Name</div>
             <div class="col-12 md:col-9">{{selected.contacts.primary.firstname}}</div>

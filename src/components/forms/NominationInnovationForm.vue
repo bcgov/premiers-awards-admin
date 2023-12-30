@@ -9,7 +9,7 @@
       leverage technology or pursue creative solutions to fulfill organizational
       mandates.
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         Generating breakthrough ideas, fresh perspectives and new opportunities
@@ -28,7 +28,7 @@
         management or problem solving
       </li>
       <li>
-        Demonstration of an experimental or innovative mindset whereby openness
+        Applying an experimental or innovative mindset whereby openness
         to change, taking calculated risks and challenging the status quo to try
         something new resulted in a measurable outcome
       </li>
@@ -60,7 +60,7 @@
           <p>
             Describe the scope and scale of the new initiative, streamlined
             business processes, technology or creative solution developed
-            including, but not limited to
+            including, but not limited to:
           </p>
           <ul>
             <li>Size of the project, process and technology solution</li>
@@ -128,7 +128,7 @@
             management or problem solving
           </li>
           <li>
-            Demonstration of an experimental or innovative mindset whereby
+            Having an experimental or innovative mindset whereby
             openness to change, taking calculated risks and challenging the
             status quo to try something new resulted in a measurable outcome
           </li>
@@ -144,8 +144,8 @@
           <li>
             Quantitative or measurable improvement to the programs or services
           </li>
-          <li>Please describe why and how this was innovative.</li>
         </ul>
+        <p>Please describe why and how this was innovative.</p>
       </template>
     </EvaluationsFieldset>
     <AttachmentsFieldset />

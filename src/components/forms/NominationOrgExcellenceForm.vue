@@ -42,7 +42,7 @@
       <template v-slot:context_overview>
         <p>
           Briefly describe why the new approach to the program, service or
-          initiative was undertaken to provide background and perspective.
+          initiative was undertaken, to provide background and perspective.
         </p>
       </template>
       <template v-slot:complexity_overview>
@@ -74,7 +74,7 @@
         </p>
         <ul>
           <li>
-            Applying a citizen-centric or customer-centric approach to the heart
+            Taking a citizen-centric or customer-centric approach to the heart
             of the design and/or implementation of the partnership
           </li>
           <li>
@@ -96,7 +96,7 @@
         <p>
           Describe and use metrics (if applicable) to support the outcomes the
           program, service or initiative has on the organization, public service
-          or citizens of British Columbia including, but not limited to
+          or citizens of British Columbia including, but not limited to:
         </p>
         <ul>
           <li>Process improvements in business practices</li>
