@@ -45,7 +45,7 @@
       <template v-slot:context_overview>
         <p>
           Briefly describe why the partnership was undertaken to establish a
-          background to provide background and perspective.
+          background, to provide background and perspective.
         </p>
       </template>
       <template v-slot:complexity_overview>

@@ -59,7 +59,7 @@
         <p>
           Describe the scope and scale of the program, project or initiative
           resulting in significant impact directly benefiting local citizens
-          including, but not limited to
+          including, but not limited to:
         </p>
         <ul>
           <li>Size of the program, service or initiative</li>
@@ -80,7 +80,7 @@
         <p>
           Describe key aspects of the approach taken throughout the development
           of the new program, project or initiative including, but not limited
-          to
+          to:
         </p>
         <ul>
           <li>
@@ -115,7 +115,7 @@
         <p>
           Describe and use metrics (if applicable) to support the outcomes and
           impact the program, project or initiative has on the BC Public Service
-          and local citizens including, but not limited to
+          and local citizens including, but not limited to:
         </p>
         <ul>
           <li>

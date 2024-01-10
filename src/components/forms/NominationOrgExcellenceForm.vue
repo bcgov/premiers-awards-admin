@@ -51,7 +51,7 @@
             Describe the scope and scale of the delivery of the program, service
             or initiative resulting in substantial benefits to their
             organization, the public service or citizens of British Columbia
-            including, but not limited to
+            including, but not limited to:
           </p>
           <ul>
             <li>Size of the program, service or initiative</li>

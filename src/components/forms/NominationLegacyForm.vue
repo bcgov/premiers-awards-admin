@@ -18,7 +18,7 @@
         their field of expertise
       </li>
       <li>
-        Demonstration of an experimental or innovative mindset whereby openness
+        Experimental or innovative mindset whereby openness
         to change, taking calculated risks and challenging the status quo to try
         something new resulted in a measurable outcome
       </li>
@@ -27,7 +27,7 @@
       </li>
       <li>
         Commitment to diversity and inclusion in both the work environment and
-        in the development of programs, policies and services
+        in the development of programs, policies, and services
       </li>
       <li>
         Advocation for meaningful engagement and learning with Indigenous
@@ -39,7 +39,7 @@
         solving problems and implementing solutions
       </li>
       <li>
-        Achieving outcomes despite constraints such as technical, organizational
+        Achieving outcomes despite constraints, such as technical, organizational
         and financial
       </li>
       <li>
@@ -66,7 +66,7 @@
         <div>
           <p>
             Explain how the employee demonstrated exemplary leadership
-            throughout their career including, but not limited to
+            throughout their career including, but not limited to:
           </p>
           <ul>
             <li>
@@ -93,7 +93,7 @@
           organization, or as leader of a substantial project, process or
           initiative.
         </p>
-        <p>Considerations may include but are not limited to</p>
+        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Ability to create, communicate and implement a clear and compelling
@@ -129,8 +129,8 @@
 
       <template v-slot:contribution_overview>
         <p>
-          Describe how the individual approached leadership resulting in public
-          service excellence. Considerations may include but are not limited to
+          Describe how the individual approached leadership, resulting in public
+          service excellence. Considerations may include but are not limited to:
         </p>
         <ul>
           <li>
@@ -142,7 +142,7 @@
             Service
           </li>
           <li>
-            Commitment to diversity and inclusion in both the work environment
+            Demonstrating commitment to diversity and inclusion in both the work environment
             and in the development of programs, policies and services
           </li>
           <li>
@@ -177,7 +177,7 @@
           positive contributions the individual has made to the BC Public
           Service and/or the province of British Columbia.
         </p>
-        <p>Considerations may include but are not limited to</p>
+        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Measurable benefits to either their organization(s) and/or the
