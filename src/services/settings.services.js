@@ -276,7 +276,11 @@ export default {
    * **/
 
   get: function get(type) {
-    return schemaData[type] !== "undefined" ? schemaData[type] : [];
+    const data = schemaData[type] !== "undefined" ? schemaData[type] : [];
+    //if array is returned, sort by label
+    return data.length && data[0].hasOwnProperty("label")
+      ? data.sort((a, b) => a.label.localeCompare(b.label))
+      : data;
   },
 
   /**

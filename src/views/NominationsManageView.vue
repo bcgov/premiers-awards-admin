@@ -86,6 +86,7 @@
         :paginator="false"
         class="p-datatable-nominations"
         dataKey="_id"
+        ref="dt"
         :rowHover="true"
         v-model:filters="filters"
         v-model:selection="selectedNominations"
@@ -117,6 +118,11 @@
                   label="Download"
                   icon="pi pi-download"
                   @click="downloadBulk"
+                />
+                <Button
+                  label="Export"
+                  icon="pi pi-sign-out"
+                  @click="exportCSV($event)"
                 />
                 <Button label="Nominate" icon="pi pi-bookmark" @click="add" />
               </span>
@@ -233,6 +239,107 @@
             />
           </template>
         </Column>
+        <Column field="ministry" header="Ministry" style="display: none">
+          <template #body="{ data }">
+            {{ data.ministry }}
+          </template>
+        </Column>
+        <Column
+          field="primaryNominator"
+          header="Nominator"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.primaryNominator }}
+          </template>
+        </Column>
+        <Column
+          field="primaryNominatorTitle"
+          header="Nominator's Title"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.primaryNominatorTitle }}
+          </template>
+        </Column>
+        <Column
+          field="primaryNominatorEmail"
+          header="Nominator's Email"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.primaryNominatorEmail }}
+          </template>
+        </Column>
+        <Column field="coNominator" header="Co-nominator" style="display: none">
+          <template #body="{ data }">
+            {{ data.coNominator }}
+          </template>
+        </Column>
+        <Column
+          field="coNominatorEmail"
+          header="Co-nominator's Email"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.coNominatorEmail }}
+          </template>
+        </Column>
+        <Column
+          field="coNominatorTitle"
+          header="Co-nominator's Title"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.coNominatorTitle }}
+          </template>
+        </Column>
+        <Column
+          field="nominationContact"
+          header="Nomination contact"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.nominationContact }}
+          </template>
+        </Column>
+        <Column
+          field="nominationContactEmail"
+          header="Contact's Email"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.nominationContactEmail }}
+          </template>
+        </Column>
+        <Column
+          field="nominationContactPhone"
+          header="Contact's Phone"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.nominationContactPhone }}
+          </template>
+        </Column>
+        <Column
+          field="videoContact"
+          header="Video contact"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.videoContact }}
+          </template>
+        </Column>
+        <Column
+          field="videoContactEmail"
+          header="Video contact email"
+          style="display: none"
+        >
+          <template #body="{ data }">
+            {{ data.videoContactEmail }}
+          </template>
+        </Column>
+
         <Column field="owner.username" header="Owner" :sortable="true">
           <template #body="{ data }">
             {{
@@ -338,6 +445,9 @@ const { selected, items, loading, downloading, error } = storeToRefs(
   nominationsDataStore()
 );
 
+console.log(items);
+
+const dt = ref();
 const store = nominationsDataStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
@@ -508,6 +618,11 @@ const downloadBulk = async () => {
       await store.download(filteredNominations, "zip");
     },
   });
+};
+
+// export nominations
+const exportCSV = async () => {
+  dt.value.exportCSV();
 };
 
 // test if form is invalid
