@@ -10,6 +10,7 @@
               type="text"
               v-model="nominator.firstname"
               @input="v$.firstname.$touch()"
+              :class="v$.firstname.$invalid ? 'p-invalid' : ''"
             />
             <label :for="`nominator_${index}_firstname`">First Name</label>
           </span>
@@ -25,6 +26,7 @@
               type="text"
               v-model="nominator.lastname"
               @input="v$.lastname.$touch()"
+              :class="v$.lastname.$invalid ? 'p-invalid' : ''"
             />
             <label :for="`nominator_${index}_lastname`">Last Name</label>
           </span>
@@ -40,6 +42,7 @@
               type="text"
               v-model="nominator.title"
               @input="v$.title.$touch()"
+              :class="v$.title.$invalid ? 'p-invalid' : ''"
             />
             <label :for="`nominator_${index}_title`">Title</label>
           </span>
@@ -56,6 +59,7 @@
               type="email"
               v-model="nominator.email"
               @input="v$.email.$touch()"
+              :class="v$.email.$invalid ? 'p-invalid' : ''"
             />
             <label :for="`nominator_${index}_email`">Email</label>
           </span>
@@ -72,6 +76,7 @@
               type="text"
               v-model="nominator.branch"
               @input="v$.branch.$touch()"
+              :class="v$.branch.$invalid ? 'p-invalid' : ''"
             />
             <label :for="`nominator_${index}_branch`">Branch</label>
           </span>
