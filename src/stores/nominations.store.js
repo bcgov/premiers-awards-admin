@@ -146,7 +146,10 @@ export const nominationsDataStore = defineStore({
       const [error, items] = await get(`nominations/view`);
 
       // update data properties needed for CSV export
-      items.map((each) => {
+      items.map((each, i) => {
+        const number = {
+          number: i + 1,
+        };
         const ministry = {
           ministry: each.organizations.map((o) =>
             JSON.stringify(lookup("organizations", o))
@@ -211,6 +214,7 @@ export const nominationsDataStore = defineStore({
         each = Object.assign(
           each,
           ministry,
+          number,
           primaryNominator,
           primaryNominatorEmail,
           primaryNominatorTitle,

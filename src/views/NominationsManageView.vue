@@ -141,6 +141,11 @@
         <template #loading> Loading user data... </template>
         <Column selectionMode="multiple"></Column>
         <Column field="seq" header="Seq"> </Column>
+        <Column field="number" header="Number" style="display: none">
+          <template #body="{ data }">
+            {{ data.number }}
+          </template>
+        </Column>
         <Column
           field="submitted"
           header="Status"
@@ -444,8 +449,6 @@ const lookup = settings.lookup;
 const { selected, items, loading, downloading, error } = storeToRefs(
   nominationsDataStore()
 );
-
-console.log(items);
 
 const dt = ref();
 const store = nominationsDataStore();
