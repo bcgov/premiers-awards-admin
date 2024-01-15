@@ -2,12 +2,12 @@
   <div id="form-sections">
     <h3 id="overview-fieldset">Overview</h3>
     <p>
-      This award recognizes a BC Public Service employee 40 years and under and
-      at or below the level of director who has made a significant impact in
-      their ministry, division, workgroup or the greater BC Public Service early
-      in their career.
+      This award recognizes a BC Public Service employee 40 years and under (at
+      the time of nomination), and at or below the level of director, who has
+      made a significant impact in their ministry, division, workgroup or the
+      greater BC Public Service early in their career.
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         Superior formal or informal leadership with colleagues across all levels
@@ -67,7 +67,8 @@
 
       <template v-slot:commitment_overview>
         <p>
-          Identify and describe how the employee demonstrates their leadership in operations including, but not limited to:
+          Identify and describe how the employee demonstrates their leadership
+          in operations including, but not limited to:
         </p>
         <ul>
           <li>
@@ -119,9 +120,9 @@
             increased efficiencies, or safety
           </li>
           <li>
-            Measurable benefits to their organization(s) and/or
-            citizens through process improvements to transform business
-            practices, and/or sustainable revenue generation or savings
+            Measurable benefits to their organization(s) and/or citizens through
+            process improvements to transform business practices, and/or
+            sustainable revenue generation or savings
           </li>
         </ul>
       </template>

@@ -28,8 +28,8 @@
         management or problem solving
       </li>
       <li>
-        Applying an experimental or innovative mindset whereby openness
-        to change, taking calculated risks and challenging the status quo to try
+        Applying an experimental or innovative mindset whereby openness to
+        change, taking calculated risks and challenging the status quo to try
         something new resulted in a measurable outcome
       </li>
       <li>
@@ -50,7 +50,7 @@
 
       <template v-slot:context_overview>
         <p>
-          Briefly describe why the new innovative approach was undertaken to
+          Briefly describe why the new innovative approach was undertaken, to
           provide background and perspective.
         </p>
       </template>
@@ -80,7 +80,7 @@
         <p>
           Describe how the new initiative, product or service was developed from
           inception to delivery and transformed new ideas into tangible
-          initiatives including, but not limited to
+          initiatives including, but not limited to:
         </p>
         <ul>
           <li>
@@ -116,7 +116,7 @@
         <p>
           Describe and use metrics (if applicable) to support the impact of the
           innovative approach to programs and services as demonstrated by, but
-          not limited to
+          not limited to:
         </p>
         <ul>
           <li>
@@ -128,9 +128,9 @@
             management or problem solving
           </li>
           <li>
-            Having an experimental or innovative mindset whereby
-            openness to change, taking calculated risks and challenging the
-            status quo to try something new resulted in a measurable outcome
+            Having an experimental or innovative mindset whereby openness to
+            change, taking calculated risks and challenging the status quo to
+            try something new resulted in a measurable outcome
           </li>
           <li>
             The effect of the innovative approach to the programs or services on

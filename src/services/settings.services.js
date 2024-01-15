@@ -25,7 +25,7 @@ const schemaData = {
       type: "individual",
       label: "Emerging Leader",
       description:
-        "This award recognizes a BC Public Service employee at or below the level of director who has made a significant impact in their ministry, division, workgroup or the greater BC Public Service early in their career.",
+        "This award recognizes a BC Public Service employee 40 years and under (at the time of nomination), and at or below the level of director, who has made a significant impact in their ministry, division, workgroup or the greater BC Public Service early in their career.",
       sections: [
         { label: "Acknowledgment", id: "acknowledgment" },
         { label: "Organizations", id: "organizations" },

@@ -11,10 +11,9 @@
                   inputId="acknowledgment"
                   :disabled="submitted"
                   v-model="selected.acknowledgment"
-                  onLabel="Yes, they have been informed"
+                  onLabel="Confirmed"
                   offLabel="Click to Confirm"
                   onIcon="pi pi-check"
-                  offIcon="pi pi-times"
                   @input="v$.acknowledgment.$touch()"
                   aria-label="Confirmation"
               />
@@ -24,7 +23,7 @@
               class="field col-12 md:col-6"
               v-if="(validate || []).filter(item => item.id === 'acknowledgment' && item.valid).length === 0"
           >
-            <InlineMessage>Please confirm this acknowledgment.</InlineMessage>
+            <InlineMessage severity="warn">Please confirm this acknowledgment.</InlineMessage>
           </div>
         </div>
       </div>

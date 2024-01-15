@@ -9,7 +9,7 @@
       policy or program development for internal government or citizen-facing
       initiatives.
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         The evidence-based or evidence-informed process in which the policy

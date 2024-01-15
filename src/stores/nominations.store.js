@@ -381,6 +381,8 @@ export const nominationsDataStore = defineStore({
         lastname: "",
         title: "",
         email: "",
+        branch: "",
+        division: "",
       });
     },
     // Remove nominator from selected

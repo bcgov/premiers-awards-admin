@@ -44,8 +44,8 @@
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>
-          Briefly describe why the partnership was undertaken to establish a
-          background, to provide background and perspective.
+          Briefly describe why the partnership was undertaken, to provide
+          background and perspective.
         </p>
       </template>
       <template v-slot:complexity_overview>
@@ -87,8 +87,8 @@
             of the design and/or implementation of the partnership
           </li>
           <li>
-            Applying inclusive employee or citizen engagement practices with diverse
-            stakeholder groups
+            Applying inclusive employee or citizen engagement practices with
+            diverse stakeholder groups
           </li>
           <li>
             Demonstrating creativity and/or use of new technology or methods

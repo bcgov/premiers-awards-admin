@@ -6,7 +6,7 @@
       have delivered a program, service or initiative resulting in substantial
       benefits to their organization(s), the public service or citizens.
     </p>
-    <p>Considerations may include but are not limited to</p>
+    <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
         Applying a citizen-centric or customer-centric approach to the heart of
@@ -70,7 +70,7 @@
       <template v-slot:approach_overview>
         <p>
           Identify key aspects of the approach taken in the delivery of the new
-          program, service or initiative including, but not limited to
+          program, service or initiative including, but not limited to:
         </p>
         <ul>
           <li>
