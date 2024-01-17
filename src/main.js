@@ -50,6 +50,7 @@ import Divider from "primevue/divider";
 import Editor from "primevue/editor";
 import Checkbox from "primevue/checkbox";
 import ToggleButton from "primevue/togglebutton";
+import TriStateCheckbox from "primevue/tristatecheckbox";
 import Toolbar from "primevue/toolbar";
 import FileUpload from "primevue/fileupload";
 
@@ -115,6 +116,7 @@ app.component("Checkbox", Checkbox);
 app.component("FileUpload", FileUpload);
 app.component("Editor", Editor);
 app.component("ToggleButton", ToggleButton);
+app.component("TriStateCheckbox", TriStateCheckbox);
 
 // register custom components
 app.component("Header", Header);

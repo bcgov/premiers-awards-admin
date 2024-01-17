@@ -26,8 +26,8 @@
         Embodying the ideal vision of leadership within the BC Public Service
       </li>
       <li>
-        Commitment to diversity and inclusion in both the work environment and
-        in the development of programs, policies, and services
+        Demonstrating commitment to diversity and inclusion in both the work
+        environment and in the development of programs, policies, and services
       </li>
       <li>
         Advocation for meaningful engagement and learning with Indigenous

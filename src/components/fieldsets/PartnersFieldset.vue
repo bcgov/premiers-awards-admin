@@ -22,7 +22,8 @@
               Awards ceremony, should your nomination be selected as a finalist.
             </p>
             <p>
-              Note: If there is interest to submit more than 12, please email
+              <b>Note:</b> If there is interest to submit more than 12, please
+              email
               <a href="mailto:PremiersAwards@gov.bc.ca"
                 >PremiersAwards@gov.bc.ca</a
               >

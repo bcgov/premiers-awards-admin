@@ -1,12 +1,20 @@
 <template>
   <div id="nominators-fieldset">
     <h3>Nominators</h3>
+    <p>
+      Note: this information may be used to identify you in your finalist video.
+      Please avoid use of acronyms and ensure this information is accurate.
+    </p>
     <div class="card">
       <div class="p-fluid grid">
         <div class="field col-12">
           <slot name="overview"></slot>
         </div>
-        <div v-for="(nominator, index) in selected.nominators" v-bind:key="index" class="field col-12">
+        <div
+          v-for="(nominator, index) in selected.nominators"
+          v-bind:key="index"
+          class="field col-12"
+        >
           <div class="card">
             <div class="p-fluid grid">
               <div class="field col-11">
@@ -14,10 +22,10 @@
               </div>
               <div class="field col-1">
                 <Button
-                    aria-label="Delete Nominator"
-                    icon="pi pi-trash"
-                    @click="remove(index)"
-                    :disabled="selected.submitted"
+                  aria-label="Delete Nominator"
+                  icon="pi pi-trash"
+                  @click="remove(index)"
+                  :disabled="selected.submitted"
                 />
               </div>
             </div>
@@ -25,10 +33,10 @@
         </div>
         <div class="field md:col-6 col-12">
           <Button
-              :disabled="selected.submitted"
-              label="Add Nominator"
-              icon="pi pi-plus"
-              @click="add"
+            :disabled="selected.submitted"
+            label="Add Nominator"
+            icon="pi pi-plus"
+            @click="add"
           />
         </div>
         <div class="field col-9">
@@ -38,15 +46,16 @@
         </div>
       </div>
     </div>
-  </div><!-- End Locations -->
+  </div>
+  <!-- End Locations -->
 </template>
 
 <script setup>
-import {storeToRefs} from "pinia/dist/pinia";
-import {authDataStore} from "@/stores/auth.store";
-import {useVuelidate} from "@vuelidate/core";
-import {nominationsDataStore} from "@/stores/nominations.store";
-import {required} from "@vuelidate/validators";
+import { storeToRefs } from "pinia/dist/pinia";
+import { authDataStore } from "@/stores/auth.store";
+import { useVuelidate } from "@vuelidate/core";
+import { nominationsDataStore } from "@/stores/nominations.store";
+import { required } from "@vuelidate/validators";
 
 // get current user
 const { current } = storeToRefs(authDataStore());
@@ -58,14 +67,16 @@ const store = nominationsDataStore();
 const { selected, submitted, error } = storeToRefs(nominationsDataStore());
 
 // apply validators
-const v$ = useVuelidate({
-  nominators: {required}
-}, selected);
+const v$ = useVuelidate(
+  {
+    nominators: { required },
+  },
+  selected
+);
 
 // add location to selected nomination
 const add = store.addNominator;
 
 // delete location from nomination
 const remove = store.removeNominator;
-
 </script>
