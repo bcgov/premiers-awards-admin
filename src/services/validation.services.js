@@ -115,6 +115,9 @@ export function validateNomination(data, wordCounts) {
   // Attachments
   // - ensure files exists
   validations.attachments =
+    (data.category !== "leadership" &&
+      data.category !== "emerging-leader" &&
+      data.category !== "legacy") ||
     data.attachments.length > 0 ||
     ((data.attachments || []).length > 0 &&
       data.attachments.filter((attachment) => !attachment.file).length > 0);
