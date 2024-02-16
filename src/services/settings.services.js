@@ -258,7 +258,7 @@ const schemaData = {
     { key: "application/doc", label: "MS Word" },
   ],
   wordCounts: {
-    total: 1650,
+    total: 1700,
     summary: 160,
     context: 260,
   },
