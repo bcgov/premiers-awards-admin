@@ -259,8 +259,8 @@ const schemaData = {
   ],
   wordCounts: {
     total: 1650,
-    summary: 150,
-    context: 250,
+    summary: 160,
+    context: 260,
   },
 };
 
