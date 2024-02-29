@@ -172,6 +172,7 @@ import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useVuelidate } from "@vuelidate/core";
 import settings from "@/services/settings.services";
+import { usePrimeVue } from "primevue/config";
 
 const nominationsStore = nominationsDataStore();
 const { selected, items, loading, saving, error, wordCounts } = storeToRefs(
@@ -311,6 +312,8 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     updateScreenWidth();
   });
+  const primevue = usePrimeVue();
+  primevue.config.locale.pending = "Ready to upload";
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", onScroll);
