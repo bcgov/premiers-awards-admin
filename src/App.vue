@@ -9,6 +9,10 @@
     </Message>
     <RouterView />
   </main>
+  <div v-if="nodeENV === 'development' || isDevSite"
+    className="testing-banner w-screen bg-orange-500 fixed top-0 m-0 text-center">
+    Test Environment
+  </div>
 </template>
 
 <script setup>
@@ -21,6 +25,15 @@ import {storeToRefs} from "pinia/dist/pinia";
 // initialization
 const { current } = storeToRefs(authDataStore());
 const notification = ref({severity: '', message: ''});
+
+// check environment 
+const nodeENV = process.env.NODE_ENV;
+
+// Check if the URL contains the dev site url
+const currentUrl = window.location.href;
+const isDevSite =
+  currentUrl.includes('https://pa-test-4015f5-test.apps.silver.devops.gov.bc.ca/nominations/') ||
+  currentUrl.includes("localhost");
 
 // load user data
 onBeforeMount(()=> {
@@ -54,4 +67,7 @@ onBeforeMount(()=> {
 
 <style lang="scss">
 @import "@/assets/_theme.scss";
+.testing-banner {
+  z-index: 9999;
+}
 </style>
