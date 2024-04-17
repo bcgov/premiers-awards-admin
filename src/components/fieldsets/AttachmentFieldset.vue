@@ -20,7 +20,7 @@
     </template>
   </ConfirmDialog>
 
-  <Fieldset legend="Nomination Attachment">
+  <Fieldset legend="Nomination Attachment" class="upload-dialog">
     <div class="card">
       <Message
         v-if="uploadedFiles.length + selected.attachments.length >= maxUploads"
@@ -49,6 +49,7 @@
             :maxFileSize="maxFileSize"
             :customUpload="true"
             :previewWidth="0"
+            :showCancelButton="false"
             @uploader="upload($event)"
           >
             <!--            <template #header>-->
@@ -126,7 +127,53 @@
     </div>
   </div>
 </template>
+<style #scoped>
+.upload-dialog {
+  padding-bottom: 5rem;
+}
+.p-fileupload {
+  position: relative;
+}
 
+.p-fileupload .p-fileupload-buttonbar {
+  span {
+    width: 7rem;
+    .p-button-label {
+      bottom: 0.5rem;
+    }
+  }
+  button {
+    width: 7rem;
+    .p-button-label {
+      bottom: 0.5rem;
+    }
+  }
+}
+
+.p-fileupload .p-fileupload-buttonbar :nth-child(2) {
+  position: absolute;
+  bottom: -9rem;
+  width: 98%;
+  border: none;
+
+  span {
+    bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .p-fileupload .p-fileupload-buttonbar :nth-child(2) {
+    position: absolute;
+    bottom: -14rem;
+    width: 94%;
+    border: none;
+
+    span {
+      bottom: 0.5rem;
+    }
+  }
+}
+</style>
 <script setup>
 import { reactive, ref } from "vue";
 import { useConfirm } from "primevue/useconfirm";
