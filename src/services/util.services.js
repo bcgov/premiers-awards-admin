@@ -53,6 +53,7 @@ function getWordCount(strRaw) {
   return str !== '' 
     ? str
         .replace( /(<([^>]+)>)/ig, ' ')
+        .replace(/–/g,' ') // replace em dash with space
         .match(/\S+/g)
         .length 
     : 0;
