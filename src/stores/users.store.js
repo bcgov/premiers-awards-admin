@@ -123,5 +123,12 @@ export const usersDataStore = defineStore({
       this.error = error;
       this.loading = false;
     },
+    // Reset/delete all non-admin users
+    async resetUsers() {
+      this.loading = true;
+      const [error] = await get(`admin/users/resetusers`);
+      this.error = error;
+      this.loading = false;
+    },
   },
 });
