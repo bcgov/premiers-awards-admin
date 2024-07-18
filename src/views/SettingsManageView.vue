@@ -3,21 +3,21 @@
     <Header header="Manage Settings" />
     <Placeholder v-if="loading" />
     <div v-else>
-
       <ConfirmDialog>
         <template #message="slotProps">
           <div class="card p-4">
             <div class="flex mb-5">
               <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-              <span class="pl-2">Delete Setting</span></div>
+              <span class="pl-2">Delete Setting</span>
+            </div>
             <div class="pl-2 w-80">
               <div class="grid">
                 <div class="col-6"><b>Type:</b></div>
-                <div class="col-6">{{slotProps.message.message.type}}</div>
+                <div class="col-6">{{ slotProps.message.message.type }}</div>
                 <div class="col-6"><b>Label:</b></div>
-                <div class="col-6">{{slotProps.message.message.label}}</div>
+                <div class="col-6">{{ slotProps.message.message.label }}</div>
                 <div class="col-6"><b>Value:</b></div>
-                <div class="col-6">{{slotProps.message.message.value}}</div>
+                <div class="col-6">{{ slotProps.message.message.value }}</div>
               </div>
             </div>
           </div>
@@ -25,78 +25,81 @@
       </ConfirmDialog>
 
       <Dialog
-          header="Edit Setting"
-          v-model:visible="dialog.visible"
-          :breakpoints="{'960px': '80vw', '640px': '90vw'}"
-          :style="{width: '70vw'}">
+        header="Edit Setting"
+        v-model:visible="dialog.visible"
+        :breakpoints="{ '960px': '80vw', '640px': '90vw' }"
+        :style="{ width: '70vw' }"
+      >
         <template #footer>
           <Button
-              label="Cancel"
-              icon="pi pi-times"
-              @click="reset"
-              class="p-button-text"
+            label="Cancel"
+            icon="pi pi-times"
+            @click="reset"
+            class="p-button-text"
           />
           <Button
-              :disabled="invalid()"
-              label="Submit"
-              icon="pi pi-check"
-              @click="dialog.callback"
-              autofocus
+            :disabled="invalid()"
+            label="Submit"
+            icon="pi pi-check"
+            @click="dialog.callback"
+            autofocus
           />
         </template>
         <SettingFieldset mode="edit" />
       </Dialog>
 
       <DataTable
-          :value="items"
-          :paginator="false"
-          class="p-datatable-settings"
-          dataKey="id"
-          :rowHover="true"
-          :loading="loading"
-          responsiveLayout="stack">
+        :value="items"
+        :paginator="false"
+        class="p-datatable-settings"
+        dataKey="id"
+        :rowHover="true"
+        :loading="loading"
+        responsiveLayout="stack"
+      >
         <template #header>
           <div class="flex justify-content-between">
             <h2 class="m-0">Settings</h2>
             <span class="p-buttonset">
               <Button label="Refresh" icon="pi pi-sync" @click="reload" />
-              <Button :disabled="!isSuperAdmin" label="Add Setting" icon="pi pi-plus" @click="add" />
-          </span>
+              <Button
+                :disabled="!isSuperAdmin"
+                label="Add Setting"
+                icon="pi pi-plus"
+                @click="add"
+              />
+            </span>
           </div>
         </template>
-        <template #empty>
-          No settings found.
-        </template>
-        <template #loading>
-          Loading settings...
-        </template>
+        <template #empty> No settings found. </template>
+        <template #loading> Loading settings... </template>
         <Column field="type" header="Type" :sortable="true">
-          <template #body="{data}">
-            {{data.type}}
+          <template #body="{ data }">
+            {{ data.type }}
           </template>
         </Column>
         <Column field="label" header="Label" :sortable="true">
-          <template #body="{data}">
-            {{data.label}}
+          <template #body="{ data }">
+            {{ data.label }}
           </template>
         </Column>
         <Column field="value" header="Value" :sortable="true">
-          <template #body="{data}">
-            {{data.value}}
+          <template #body="{ data }">
+            {{ data.value }}
           </template>
         </Column>
         <Column bodyStyle="text-align: center; overflow: visible">
-          <template #body="{data}">
+          <template #body="{ data }">
             <div class="p-buttonset" style="text-align: right">
               <Button
-                  aria-label="Edit Setting"
-                  icon="pi pi-pencil"
-                  @click="edit(data)"
+                aria-label="Edit Setting"
+                icon="pi pi-pencil"
+                @click="edit(data)"
               />
               <Button
-                  aria-label="Delete Setting"
-                  icon="pi pi-trash"
-                  @click="remove(data)"
+                aria-label="Delete Setting"
+                icon="pi pi-trash"
+                @click="remove(data)"
               />
             </div>
           </template>
@@ -107,15 +110,14 @@
 </template>
 
 <script setup>
-
-import {onMounted, reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { useConfirm } from "primevue/useconfirm";
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router'
-import {useToast} from "primevue/usetoast";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { useToast } from "primevue/usetoast";
 import { authDataStore } from "@/stores/auth.store";
 import { settingsStore } from "@/stores/settings.store";
-import {useVuelidate} from "@vuelidate/core";
+import { useVuelidate } from "@vuelidate/core";
 import messages from "@/services/message.services";
 import SettingFieldset from "@/components/fieldsets/SettingFieldset.vue";
 
@@ -134,28 +136,36 @@ const store = settingsStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const dialog = reactive({
-  header: '',
+  header: "",
   visible: false,
-  callback: ()=>{}
+  callback: () => {},
 });
 
 // load data
 onMounted(store.getAll);
 
 // subscribe to settings store actions
-store.$onAction(
-    ({name, store, _, after}) => {
-      after(() => {
-        // post message
-        const {text=''} = messages.get(name) || {};
-        if (store.getErrors) toast.add({
-          severity: 'error', summary: 'An Error has Occurred', detail: store.getErrors.text, life: 5000});
-        else if (text) {
-          toast.add({severity: 'success', summary: 'Update Successful!', detail: text, life: 5000})
-        }
-      })
+store.$onAction(({ name, store, _, after }) => {
+  after(() => {
+    // post message
+    const { text = "" } = messages.get(name) || {};
+    if (store.getErrors)
+      toast.add({
+        severity: "error",
+        summary: "An Error has Occurred",
+        detail: store.getErrors.text,
+        life: 5000,
+      });
+    else if (text) {
+      toast.add({
+        severity: "success",
+        summary: "Update Successful!",
+        detail: text,
+        life: 5000,
+      });
     }
-);
+  });
+});
 
 // update dialog data
 const setDialog = (setting) => {
@@ -166,24 +176,24 @@ const setDialog = (setting) => {
 
 // reset dialog data
 const resetDialog = () => {
-  dialog.header = '';
+  dialog.header = "";
   dialog.visible = false;
-  dialog.callback = ()=>{};
+  dialog.callback = () => {};
 };
 
 // open new item dialog
 const add = () => {
   reset();
   setDialog({
-    header: 'New Setting',
+    header: "New Setting",
     visible: true,
-    callback: create
+    callback: create,
   });
 };
 
 // create new item
 const create = async () => {
-  await store.insert()
+  await store.insert();
   await reload();
 };
 
@@ -191,9 +201,9 @@ const create = async () => {
 const edit = (data) => {
   selected.value = Object.assign({}, data);
   setDialog({
-    header: 'Edit Record',
+    header: "Edit Record",
     visible: true,
-    callback: update
+    callback: update,
   });
 };
 
@@ -213,18 +223,17 @@ const remove = (data) => {
   selected.value = data;
   confirm.require({
     message: data,
-    header: 'Confirm Deletion',
-    icon: 'pi pi-info-circle',
-    acceptClass: 'p-button-danger',
+    header: "Confirm Deletion",
+    icon: "pi pi-info-circle",
+    acceptClass: "p-button-danger",
     accept: async () => {
       await store.remove();
       await reload();
     },
     reject: reset,
-    onHide: reset
+    onHide: reset,
   });
 };
-
 
 // cancel item update
 const reset = () => {
@@ -242,6 +251,5 @@ const reload = async () => {
 const invalid = () => {
   v$.value.$touch();
   return v$.value.$invalid;
-}
-
+};
 </script>

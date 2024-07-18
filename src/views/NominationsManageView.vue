@@ -25,12 +25,17 @@
                 </div>
                 <div class="col-3"><b>Category:</b></div>
                 <div class="col-9">
-                  {{ lookup("categories", slotProps.message.message.category) }}
+                  {{
+                    settings.lookup(
+                      "categories",
+                      slotProps.message.message.category
+                    )
+                  }}
                 </div>
                 <div class="col-3"><b>Organization:</b></div>
                 <div class="col-9">
                   {{
-                    lookup(
+                    settings.lookup(
                       "organizations",
                       slotProps.message.message.organization
                     )
@@ -60,7 +65,7 @@
                     {{ nomination.seq }}
                   </div>
                   <div class="col-10">
-                    {{ lookup("categories", nomination.category) }}
+                    {{ settings.lookup("categories", nomination.category) }}
                   </div>
                 </div>
               </div>
@@ -188,7 +193,7 @@
           style="min-width: 12rem"
         >
           <template #body="{ data }">
-            {{ lookup("categories", data.category) }}
+            {{ settings.lookup("categories", data.category) }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <MultiSelect
@@ -227,7 +232,7 @@
         >
           <template #body="{ data }">
             <div v-for="org in data.organizations">
-              {{ lookup("organizations", org) || "" }}
+              {{ settings.lookup("organizations", org) || "" }}
             </div>
           </template>
           <template #filter="{ filterModel, filterCallback }">
@@ -420,8 +425,9 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { authDataStore } from "@/stores/auth.store";
 import { nominationsDataStore } from "@/stores/nominations.store";
+import { settingsStore } from "@/stores/settings.store";
 import { useVuelidate } from "@vuelidate/core";
-import settings from "@/services/settings.services";
+//import settings from "@/services/settings.services";
 import { FilterMatchMode, FilterService } from "primevue/api";
 import messages from "@/services/message.services";
 import { useToast } from "primevue/usetoast";
@@ -429,6 +435,12 @@ import NominationView from "@/views/NominationView.vue";
 
 // get current user
 const { current, isAdmin } = storeToRefs(authDataStore());
+const {
+  selected: settingSelected,
+  items: settingItems,
+  loading: settingLoading,
+  error: settingError,
+} = storeToRefs(settingsStore());
 
 // validator
 const v$ = useVuelidate();
@@ -440,10 +452,10 @@ const toast = useToast();
 const selectedNominations = ref();
 
 // get local options
-const orgs = settings.get("organizations") || [];
-const cats = settings.get("categories") || [];
-const statuses = settings.get("status") || [];
-const lookup = settings.lookup;
+//const orgs = (await settings.lookup("organizations")) || [];
+//const cats = (await settings.lookup("categories")) || [];
+//const statuses = (await settings.lookup("status")) || [];
+//const lookup = settings.lookup;
 
 // initialize references
 const { selected, items, loading, downloading, error } = storeToRefs(
@@ -452,6 +464,7 @@ const { selected, items, loading, downloading, error } = storeToRefs(
 
 const dt = ref();
 const store = nominationsDataStore();
+const settings = settingsStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const dialog = reactive({
@@ -482,9 +495,11 @@ const reset = () => {
 
 // define data loader
 const reload = async () => {
+  if (isAdmin.value) await settings.getAll();
   isAdmin.value
     ? await store.getAll()
     : await store.getByGUID(current.value.guid);
+
   await reset();
 };
 

@@ -157,6 +157,7 @@
 <script setup>
 import { onBeforeMount, onMounted, onUnmounted, reactive, ref } from "vue";
 import { nominationsDataStore } from "@/stores/nominations.store";
+import { settingsStore } from "@/stores/settings.store";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import NominationEmergingLeader from "@/components/forms/NominationEmergingLeaderForm.vue";
@@ -171,10 +172,11 @@ import messages from "@/services/message.services";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useVuelidate } from "@vuelidate/core";
-import settings from "@/services/settings.services";
+//import settings from "@/services/settings.services";
 import { usePrimeVue } from "primevue/config";
 
 const nominationsStore = nominationsDataStore();
+const settings = settingsStore();
 const { selected, items, loading, saving, error, wordCounts } = storeToRefs(
   nominationsDataStore()
 );
@@ -187,7 +189,7 @@ const screenWidth = ref(window.innerWidth);
 
 // get requested parameters
 const { category = "" } = route.params || {};
-const nomination = settings.lookupCategory(category);
+const nomination = settings.lookup("categories", category);
 
 // apply validators
 const v$ = useVuelidate();
@@ -307,7 +309,12 @@ const updateScreenWidth = () => {
   screenWidth.value = window.innerWidth;
 };
 
+const reload = async () => {
+  await settings.getAll();
+};
+
 onMounted(() => {
+  reload();
   window.addEventListener("scroll", onScroll);
   window.addEventListener("resize", () => {
     updateScreenWidth();
