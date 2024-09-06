@@ -427,7 +427,6 @@ import { authDataStore } from "@/stores/auth.store";
 import { nominationsDataStore } from "@/stores/nominations.store";
 import { settingsStore } from "@/stores/settings.store";
 import { useVuelidate } from "@vuelidate/core";
-//import settings from "@/services/settings.services";
 import { FilterMatchMode, FilterService } from "primevue/api";
 import messages from "@/services/message.services";
 import { useToast } from "primevue/usetoast";
@@ -465,6 +464,7 @@ const { selected, items, loading, downloading, error } = storeToRefs(
 const dt = ref();
 const store = nominationsDataStore();
 const settings = settingsStore();
+settings.getAll();
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const dialog = reactive({

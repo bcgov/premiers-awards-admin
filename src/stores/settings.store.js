@@ -63,31 +63,42 @@ export const settingsStore = defineStore({
       this.error = error;
       this.loading = false;
     },
-    // lookup setting by type and key, and return it's label
-    async lookup(type) {
-      if (key != undefined) {
-        const found = this.items[type].filter((item) => item.key === key);
-        return found.length > 0 ? found[0].label : null;
-      } else {
-        return this.items.filter((item) => item.type === type);
-      }
-    },
-    // lookup setting by type and key, and return it's label
-    lookup(type, key) {
-      if (key != undefined && this.items.length > 0) {
-        const setting = this.items.find((item) => item.type === type);
-        //console.log(test2.value);
-        const jsonSetting = JSON.parse(setting.value);
-        const keySetting = jsonSetting.find((item) => item.key === key);
-        if (keySetting)
-          return keySetting.label && keySetting.label.length > 0
-            ? keySetting.label
-            : jsonSetting;
-      } else if (this.items.length > 0) {
-        const test = this.items.filter((item) => item.type === type);
-        return test;
-      } else {
-        console.log("[ERROR] -  Settings.store.js: Cannot find lookup");
+    // lookup setting by type and, if defined, the key within the value
+    // Returns: Only type defined: entire settings content
+    //          type+key defined: label by default,
+    //          key+type+fullValue(true) defined: entire setting contents of the selected key
+    lookup(type, key, fullValue) {
+      try {
+        if (key != undefined && this.items.length > 0) {
+          const setting = this.items.find((item) => item.type === type);
+          //console.log(test2.value);
+          const jsonSetting = JSON.parse(setting.value);
+          const keySetting = jsonSetting.find((item) => item.key === key);
+          if (keySetting && !fullValue)
+            return keySetting.label && keySetting.label.length > 0
+              ? keySetting.label
+              : jsonSetting;
+          if (keySetting && fullValue) return keySetting;
+        } else if (key == undefined && this.items.length > 0) {
+          //const test = this.items.filter((item) => item.type === type);
+          const setting = this.items.find((item) => item.type === type);
+          const jsonSetting = JSON.parse(setting.value);
+          if (fullValue) return jsonSetting;
+          const sorted = jsonSetting.sort((a, b) => {
+            if (a.label < b.label) {
+              return -1;
+            }
+          });
+          return sorted;
+        } else {
+          console.log("[ERROR] -  Settings.store.js: Cannot find lookup");
+          return "NOT FOUND";
+        }
+      } catch (e) {
+        console.log(
+          "[ERROR] -  Settings.store.js: Cannot find lookup --- Caught error:",
+          e
+        );
         return "NOT FOUND";
       }
     },

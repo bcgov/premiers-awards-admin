@@ -4,18 +4,24 @@
  * Copyright(c) 2022 BC Gov
  * MIT Licensed
  */
-
-import settings from "@/services/settings.services";
+import { storeToRefs } from "pinia/dist/pinia";
+import { settingsStore } from "@/stores/settings.store";
 
 /**
  * Validate nomination data
  *
  * **/
 
-export function validateNomination(data, wordCounts) {
+export function validateNomination(
+  data,
+  wordCounts,
+  wordCountsMax,
+  nomination
+) {
+  //const wordCountsMax = await settings.lookup("wordCounts", undefined, true);
+  //const nomination = await settings.lookup("categories", data.category, true);
   // init validation object
   const validations = {};
-  const nomination = settings.lookupCategory(data.category);
 
   // Nomination Acknowledgement
   validations.acknowledgment = !!data.acknowledgment;
@@ -108,9 +114,9 @@ export function validateNomination(data, wordCounts) {
   // - compare section/total word counts to limits
   validations.evaluation =
     wordCounts.total > 0 &&
-    wordCounts.total <= wordCounts.max.total &&
-    wordCounts.summary <= wordCounts.max.summary &&
-    wordCounts.context <= wordCounts.max.context;
+    wordCounts.total <= wordCountsMax.total &&
+    wordCounts.summary <= wordCountsMax.summary &&
+    wordCounts.context <= wordCountsMax.context;
 
   // Attachments
   // - ensure files exists

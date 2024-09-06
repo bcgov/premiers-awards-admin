@@ -73,7 +73,7 @@
           <div class="col-6 m-0">
             <InlineMessage
               :severity="
-                wordCounts.total > wordCounts.max.total ? 'error' : 'info'
+                wordCounts.total > wordCountsMax.total ? 'error' : 'info'
               "
             >
               Word Count: {{ wordCounts.total }}
@@ -172,7 +172,6 @@ import messages from "@/services/message.services";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useVuelidate } from "@vuelidate/core";
-//import settings from "@/services/settings.services";
 import { usePrimeVue } from "primevue/config";
 
 const nominationsStore = nominationsDataStore();
@@ -190,6 +189,7 @@ const screenWidth = ref(window.innerWidth);
 // get requested parameters
 const { category = "" } = route.params || {};
 const nomination = settings.lookup("categories", category);
+const wordCountsMax = settings.lookup("wordCounts", undefined, true);
 
 // apply validators
 const v$ = useVuelidate();

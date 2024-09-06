@@ -29,7 +29,7 @@
                 <div class="col-6"><b>Roles:</b></div>
                 <div class="col-6">
                   <div v-for="role in slotProps.message.message.roles">
-                    {{ lookup("roles", role) }}
+                    {{ settings.lookup("roles", role) }}
                   </div>
                 </div>
               </div>
@@ -155,7 +155,7 @@
         >
           <template #body="{ data }">
             <div v-for="role in data.roles">
-              {{ lookup("roles", role) || "" }}
+              {{ settings.lookup("roles", role) || "" }}
             </div>
           </template>
           <template #filter="{ filterModel, filterCallback }">
@@ -204,7 +204,7 @@ import { useRouter } from "vue-router";
 import { authDataStore } from "@/stores/auth.store";
 import { usersDataStore } from "@/stores/users.store";
 import { useVuelidate } from "@vuelidate/core";
-import settings from "@/services/settings.services";
+import { settingsStore } from "@/stores/settings.store";
 import { FilterService } from "primevue/api";
 import UserFieldset from "@/components/fieldsets/UserFieldset.vue";
 import messages from "@/services/message.services";
@@ -212,6 +212,13 @@ import { useToast } from "primevue/usetoast";
 
 // get current user info
 const { current, isSuperAdmin } = storeToRefs(authDataStore());
+
+const {
+  selected: settingSelected,
+  items: settingItems,
+  loading: settingLoading,
+  error: settingError,
+} = storeToRefs(settingsStore());
 
 // validator
 const v$ = useVuelidate();
@@ -224,6 +231,7 @@ const rolesFilter = ref("someInArray");
 
 onMounted(() => {
   // load data on component mount
+  settings.getAll();
   store.getAll();
   // init custom data table filter
   FilterService.register("someInArray", (values, filter) => {
@@ -245,12 +253,13 @@ const filters = ref({
 const matchModeOptions = ref([{ label: "In Array", value: rolesFilter.value }]);
 
 // get options for user roles
-const roles = settings.get("roles") || [];
-const lookup = settings.lookup;
+//const roles = settings.lookup("roles") || [];
+//const lookup = settings.lookup;
 
 // initialize references
 const { selected, items, loading, error } = storeToRefs(usersDataStore());
 const store = usersDataStore();
+const settings = settingsStore();
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const dialog = reactive({
@@ -372,6 +381,7 @@ const reset = () => {
 
 // cancel item update
 const reload = async () => {
+  await settings.getAll();
   await store.getAll();
   reset();
 };

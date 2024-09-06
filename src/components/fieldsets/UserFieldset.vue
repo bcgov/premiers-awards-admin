@@ -128,7 +128,7 @@
 
 <script setup>
 import { usersDataStore } from "@/stores/users.store";
-import settings from "@/services/settings.services";
+import { settingsStore } from "@/stores/settings.store";
 import { storeToRefs } from "pinia/dist/pinia";
 import { authDataStore } from "@/stores/auth.store";
 import { email, required } from "@vuelidate/validators";
@@ -140,6 +140,9 @@ const props = defineProps(["mode", "disable"]);
 const isNew = props.mode === "new";
 const heading = isNew ? "Register New User" : "Edit User Data";
 
+//stores
+const settings = settingsStore();
+
 // get current user
 const { current } = storeToRefs(authDataStore());
 
@@ -150,8 +153,11 @@ const { selected, error } = storeToRefs(usersDataStore());
 const isCurrent = ref(selected.value.guid === current.value.guid);
 
 // get options for user roles
-const roles = settings.get("roles") || [];
-const organizations = settings.get("organizations") || [];
+const roles = settings.lookup("roles");
+const organizations = settings.lookup("organizations");
+
+// const roles = old_settings.get("roles") || [];
+// const organizations = old_settings.get("organizations") || [];
 
 // // custom validators
 // const notCurrentGUID = (value) => value !== current.value.guid;

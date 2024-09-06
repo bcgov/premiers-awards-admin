@@ -50,7 +50,7 @@ export const usersDataStore = defineStore({
         firstname: "",
         lastname: "",
         email: "",
-        organization,
+        organization: "",
         roles: ["inactive"],
       };
     },

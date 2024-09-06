@@ -12,41 +12,18 @@
 import { defineStore } from "pinia";
 import { download, get, post, upload } from "@/services/api.services";
 import { getWordCount } from "@/services/util.services";
-import settings from "@/services/settings.services.js";
 import { validateNomination } from "@/services/validation.services";
-import formServices from "../services/settings.services";
+import { settingsStore } from "@/stores/settings.store";
 
-// get current word count limits
-const maxWordCounts = settings.get("wordCounts");
-const maxAttachments = settings.get("maxAttachments");
+// const settings = settingsStore();
+// await settings.getAll();
+// // get current word count limits
+// const maxWordCounts = settings.get("wordCounts");
+// const maxAttachments = settings.get("maxAttachments");
 
-const lookup = function (key, value) {
-  return formServices.lookup(key, value);
-};
-
-const getWordCounts = (state) => {
-  if (!state.selected) return {};
-
-  let wordCountTotal = 0;
-  const wordCounts = {
-    summary: getWordCount(state.selected.evaluation.summary || ""),
-    context: getWordCount(state.selected.evaluation.context || ""),
-    complexity: getWordCount(state.selected.evaluation.complexity || ""),
-    approach: getWordCount(state.selected.evaluation.approach || ""),
-    valuing_people: getWordCount(
-      state.selected.evaluation.valuing_people || ""
-    ),
-    commitment: getWordCount(state.selected.evaluation.commitment || ""),
-    contribution: getWordCount(state.selected.evaluation.contribution || ""),
-    impact: getWordCount(state.selected.evaluation.impact || ""),
-  };
-  Object.keys(state.selected.evaluation || {}).forEach((key) => {
-    wordCountTotal += getWordCount(state.selected.evaluation[key]);
-  });
-  wordCounts.max = maxWordCounts;
-  wordCounts.total = wordCountTotal;
-  return wordCounts;
-};
+// const lookup = function (key, value) {
+//   return settings.lookup(key, value);
+// };
 
 export const nominationsDataStore = defineStore({
   id: "nominationData",
@@ -61,19 +38,59 @@ export const nominationsDataStore = defineStore({
     settings: null,
   }),
   getters: {
+    getWordCounts: (state) => {
+      if (!state.selected) return {};
+
+      let wordCountTotal = 0;
+      const wordCounts = {
+        summary: getWordCount(state.selected.evaluation.summary || ""),
+        context: getWordCount(state.selected.evaluation.context || ""),
+        complexity: getWordCount(state.selected.evaluation.complexity || ""),
+        approach: getWordCount(state.selected.evaluation.approach || ""),
+        valuing_people: getWordCount(
+          state.selected.evaluation.valuing_people || ""
+        ),
+        commitment: getWordCount(state.selected.evaluation.commitment || ""),
+        contribution: getWordCount(
+          state.selected.evaluation.contribution || ""
+        ),
+        impact: getWordCount(state.selected.evaluation.impact || ""),
+      };
+      Object.keys(state.selected.evaluation || {}).forEach((key) => {
+        wordCountTotal += getWordCount(state.selected.evaluation[key]);
+      });
+      return wordCounts;
+    },
     getErrors: (state) => state.error,
     getAttachmentErrors: (state) => state.attachmentError,
-    wordCounts: getWordCounts,
+    wordCounts: (state) => {
+      return state.getWordCounts;
+    },
     submitted: (state) => {
       return state.selected && state.selected.submitted;
     },
     validateAttachments: (state) => {
+      const settings = settingsStore();
+      const maxAttachments = settings.get("maxAttachments");
       return state.selected.attachments.length >= maxAttachments;
     },
     validate: (state) => {
+      const settings = settingsStore();
+      settings.getAll();
       if (!state.selected) return [];
-      const wordCounts = getWordCounts(state);
-      return validateNomination(state.selected, wordCounts);
+      var wordCounts = state.wordCounts;
+      var wordCountsMax = settings.lookup("wordCounts", undefined, true);
+      var nomination = settings.lookup(
+        "categories",
+        state.selected.category,
+        true
+      );
+      return validateNomination(
+        state.selected,
+        wordCounts,
+        wordCountsMax,
+        nomination
+      );
     },
   },
   actions: {
@@ -142,6 +159,13 @@ export const nominationsDataStore = defineStore({
     },
     // Get all nominations
     async getAll() {
+      const settings = settingsStore();
+      await settings.getAll();
+
+      const lookup = function (key, value) {
+        return settings.lookup(key, value);
+      };
+
       this.loading = true;
       const [error, items] = await get(`nominations/view`);
 
