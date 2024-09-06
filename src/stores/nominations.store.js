@@ -76,7 +76,8 @@ export const nominationsDataStore = defineStore({
     },
     validate: (state) => {
       const settings = settingsStore();
-      settings.getAll();
+      if (settings.items == undefined || settings.items == [])
+        settings.getAll();
       if (!state.selected) return [];
       var wordCounts = state.wordCounts;
       var wordCountsMax = settings.lookup("wordCounts", undefined, true);
