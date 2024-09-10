@@ -5,7 +5,7 @@
  * MIT Licensed
  */
 
-export {genID, scrollToAnchor, getWordCount, formatFileSize};
+export { genID, scrollToAnchor, getWordCount, formatFileSize };
 
 /**
  * Generate random ID string
@@ -13,9 +13,10 @@ export {genID, scrollToAnchor, getWordCount, formatFileSize};
  * **/
 
 function genID() {
-  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let id = '';
-  for ( let i = 0; i < chars.length; i++ ) {
+  const chars =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let id = "";
+  for (let i = 0; i < chars.length; i++) {
     id += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return id;
@@ -27,11 +28,11 @@ function genID() {
  * **/
 
 const scrollToAnchor = () => {
-    const el = document.querySelector(window.location.hash);
-    if (el) {
-        el && el.scrollIntoView();
-    }
-}
+  const el = document.querySelector(window.location.hash);
+  if (el) {
+    el && el.scrollIntoView();
+  }
+};
 
 /**
  * Get word count for given string (based on 5 character word length)
@@ -40,24 +41,36 @@ const scrollToAnchor = () => {
  * **/
 
 function getWordCount(strRaw) {
-  const str = strRaw.toString() || '';
-//   return str !== ''
-//       ? str
-//           .replace( /(<([^>]+)>)/ig, ' ')
-//           .replace(/[.,;'"]/g,'')
-//           .replace(/[^0-9a-zA-Z_ ]/g,' ')
-//           .replace(/\s\s+/g, ' ')
-//           .trim()
-//           .split(' ').length
-//       : 0;
-  return str !== '' 
-    ? str
-        .replace( /(<([^>]+)>)/ig, ' ')
-        .replace(/–/g,' ') // replace em dash with space
-        .match(/\S+/g)
-        .length 
-    : 0;
-      
+  const str = strRaw.toString() || "";
+  //   return str !== ''
+  //       ? str
+  //           .replace( /(<([^>]+)>)/ig, ' ')
+  //           .replace(/[.,;'"]/g,'')
+  //           .replace(/[^0-9a-zA-Z_ ]/g,' ')
+  //           .replace(/\s\s+/g, ' ')
+  //           .trim()
+  //           .split(' ').length
+  //       : 0;
+  // return str !== ''
+  //   ? str
+  //       .replace( /(<([^>]+)>)/ig, ' ')
+  //       .replace(/–/g,' ') // replace em dash with space
+  //       .match(/\S+/g)
+  //       .length
+  //   : 0;
+  const words =
+    str !== ""
+      ? [
+          ...str
+            .replace(/&nbsp;/g, " ")
+            .replace(/(<([^>]+)>)/gi, " ")
+            //.replace( /\b[-,\s\·\|]+\b/g, ' ')
+            .match(/\S+/g),
+        ].filter((x) => !/^[-,;\.\s\·\–|'"\]\[\)\(]+$/.test(x))
+      : "";
+
+  //console.log("Changed: " +[...changed].map(x => `'${x}'`));
+  return words.length;
 }
 
 /**
@@ -65,14 +78,14 @@ function getWordCount(strRaw) {
  * **/
 
 const formatFileSize = (bytes) => {
-    if (bytes === 0) {
-        return '0 B';
-    }
+  if (bytes === 0) {
+    return "0 B";
+  }
 
-    let k = 1000,
-        dm = 3,
-        sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-        i = Math.floor(Math.log(bytes) / Math.log(k));
+  let k = 1000,
+    dm = 3,
+    sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+    i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+};
