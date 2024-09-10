@@ -4,6 +4,8 @@
  * Copyright(c) 2022 BC Gov
  * MIT Licensed
  */
+// Obsolete -- Moved to settings.store.js
+// TODO: Remove this file after sufficient testing of new settings.store.js.
 
 const schemaData = {
   maxDrafts: 60,
@@ -264,54 +266,47 @@ const schemaData = {
   },
 };
 
+// Obsolete -- Moved to settings.store.js
+// TODO: Remove this file after sufficient testing of new settings.store.js.
 export default {
   /**
    * get enumerated data by category type
    * **/
-
-  get: function get(type) {
-    const data = schemaData[type] !== "undefined" ? schemaData[type] : [];
-    //if array is returned, sort by label
-    return data.length && data[0].hasOwnProperty("label")
-      ? data.sort((a, b) => a.label.localeCompare(b.label))
-      : data;
-  },
-
-  /**
-   * get enumerated data by key
-   * **/
-
-  lookup: function lookup(type, key) {
-    if (typeof schemaData[type] === "undefined") return null;
-    const found = schemaData[type].filter((item) => item.key === key);
-    return found.length > 0 ? found[0].label : null;
-  },
-
-  /**
-   * get category data by key
-   * **/
-
-  lookupCategory: function lookup(key) {
-    const found = schemaData.categories.filter((item) => item.key === key);
-    return found.length > 0 ? found[0] : null;
-  },
-
-  /**
-   * lookup nomination form type
-   * **/
-
-  lookupType: function lookupType(category) {
-    const found = schemaData.categories.filter((item) => item.key === category);
-    return found.length > 0 ? found[0].type : null;
-  },
-
-  /**
-   * check if category contains given section
-   * **/
-
-  checkSection: function checkSection(section, category) {
-    const metadata = this.lookupCategory(category);
-    if (!metadata) return null;
-    return metadata.sections.filter((sec) => sec.id === section).length > 0;
-  },
+  // get: function get(type) {
+  //   const data = schemaData[type] !== "undefined" ? schemaData[type] : [];
+  //   //if array is returned, sort by label
+  //   return data.length && data[0].hasOwnProperty("label")
+  //     ? data.sort((a, b) => a.label.localeCompare(b.label))
+  //     : data;
+  // },
+  // /**
+  //  * get enumerated data by key
+  //  * **/
+  // lookup: function lookup(type, key) {
+  //   if (typeof schemaData[type] === "undefined") return null;
+  //   const found = schemaData[type].filter((item) => item.key === key);
+  //   return found.length > 0 ? found[0].label : null;
+  // },
+  // /**
+  //  * get category data by key
+  //  * **/
+  // lookupCategory: function lookup(key) {
+  //   const found = schemaData.categories.filter((item) => item.key === key);
+  //   return found.length > 0 ? found[0] : null;
+  // },
+  // /**
+  //  * lookup nomination form type
+  //  * **/
+  // lookupType: function lookupType(category) {
+  //   const found = schemaData.categories.filter((item) => item.key === category);
+  //   return found.length > 0 ? found[0].type : null;
+  // },
+  // /**
+  //  * check if category contains given section
+  //  * **/
+  // checkSection: function checkSection(section, category) {
+  //   const metadata = this.lookupCategory(category);
+  //   if (!metadata) return null;
+  //   return metadata.sections.filter((sec) => sec.id === section).length > 0;
+  // },
 };
