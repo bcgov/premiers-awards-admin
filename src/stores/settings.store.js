@@ -84,7 +84,7 @@ export const settingsStore = defineStore({
         } else if (key == undefined && this.items.length > 0) {
           const setting = this.items.find((item) => item.type === type);
           const jsonSetting = JSON.parse(setting.value);
-          if (fullValue || jsonSetting) return jsonSetting;
+          if (fullValue) return jsonSetting;
           try {
             const sorted = jsonSetting.sort((a, b) => {
               if (a.label < b.label) {
