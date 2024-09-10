@@ -179,6 +179,7 @@ const settings = settingsStore();
 const { selected, items, loading, saving, error, wordCounts } = storeToRefs(
   nominationsDataStore()
 );
+
 const route = useRoute();
 const indexRouter = useRouter();
 const toast = useToast();
@@ -309,12 +310,7 @@ const updateScreenWidth = () => {
   screenWidth.value = window.innerWidth;
 };
 
-const reload = async () => {
-  await settings.getAll();
-};
-
 onMounted(() => {
-  reload();
   window.addEventListener("scroll", onScroll);
   window.addEventListener("resize", () => {
     updateScreenWidth();

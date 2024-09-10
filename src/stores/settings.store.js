@@ -69,9 +69,11 @@ export const settingsStore = defineStore({
     //          key+type+fullValue(true) defined: entire setting contents of the selected key
     lookup(type, key, fullValue) {
       try {
+        if (this.items == undefined || this.items.length == 0) {
+          this.getAll();
+        }
         if (key != undefined && this.items.length > 0) {
           const setting = this.items.find((item) => item.type === type);
-          //console.log(test2.value);
           const jsonSetting = JSON.parse(setting.value);
           const keySetting = jsonSetting.find((item) => item.key === key);
           if (keySetting && !fullValue)
@@ -80,16 +82,19 @@ export const settingsStore = defineStore({
               : jsonSetting;
           if (keySetting && fullValue) return keySetting;
         } else if (key == undefined && this.items.length > 0) {
-          //const test = this.items.filter((item) => item.type === type);
           const setting = this.items.find((item) => item.type === type);
           const jsonSetting = JSON.parse(setting.value);
-          if (fullValue) return jsonSetting;
-          const sorted = jsonSetting.sort((a, b) => {
-            if (a.label < b.label) {
-              return -1;
-            }
-          });
-          return sorted;
+          if (fullValue || jsonSetting) return jsonSetting;
+          try {
+            const sorted = jsonSetting.sort((a, b) => {
+              if (a.label < b.label) {
+                return -1;
+              }
+            });
+            return sorted;
+          } catch (e) {
+            return jsonSetting;
+          }
         } else {
           console.log("[ERROR] -  Settings.store.js: Cannot find lookup");
           return "NOT FOUND";
@@ -124,6 +129,11 @@ export const settingsStore = defineStore({
       const [error] = await get(`admin/settings/delete/${id}`);
       this.error = error;
       this.loading = false;
+    },
+    async checkSection(section, category) {
+      const metadata = this.lookup("categories", category);
+      if (!metadata) return null;
+      return metadata.sections.filter((sec) => sec.id === section).length > 0;
     },
   },
 });

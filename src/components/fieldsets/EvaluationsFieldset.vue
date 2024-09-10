@@ -304,10 +304,8 @@ const { selected, submitted, error, wordCounts } = storeToRefs(
   nominationsDataStore()
 );
 
-// get nomination settings
-await settings.getAll();
-const nomination = await settings.lookup("categories", selected.value.category);
-const wordCountsMax = await settings.lookup("wordCounts", undefined, true);
+const nomination = settings.lookup("categories", selected.value.category);
+const wordCountsMax = settings.lookup("wordCounts", undefined, true);
 
 // check if nomination includes evaluation section
 const hasEvaluation = (section) => {

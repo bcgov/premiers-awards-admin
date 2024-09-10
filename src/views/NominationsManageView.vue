@@ -32,14 +32,11 @@
                     )
                   }}
                 </div>
-                <div class="col-3"><b>Organization:</b></div>
+                <div class="col-3"><b>Organizations:</b></div>
                 <div class="col-9">
-                  {{
-                    settings.lookup(
-                      "organizations",
-                      slotProps.message.message.organization
-                    )
-                  }}
+                  <div v-for="org in slotProps.message.message.organizations">
+                    {{ settings.lookup("organizations", org) || "" }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -464,7 +461,7 @@ const { selected, items, loading, downloading, error } = storeToRefs(
 const dt = ref();
 const store = nominationsDataStore();
 const settings = settingsStore();
-settings.getAll();
+
 const confirm = useConfirm();
 const indexRouter = useRouter();
 const dialog = reactive({
@@ -495,7 +492,6 @@ const reset = () => {
 
 // define data loader
 const reload = async () => {
-  if (isAdmin.value) await settings.getAll();
   isAdmin.value
     ? await store.getAll()
     : await store.getByGUID(current.value.guid);

@@ -38,7 +38,7 @@ export const nominationsDataStore = defineStore({
     settings: null,
   }),
   getters: {
-    getWordCounts: (state) => {
+    wordCounts: (state) => {
       if (!state.selected) return {};
 
       let wordCountTotal = 0;
@@ -59,13 +59,11 @@ export const nominationsDataStore = defineStore({
       Object.keys(state.selected.evaluation || {}).forEach((key) => {
         wordCountTotal += getWordCount(state.selected.evaluation[key]);
       });
+      wordCounts.total = wordCountTotal;
       return wordCounts;
     },
     getErrors: (state) => state.error,
     getAttachmentErrors: (state) => state.attachmentError,
-    wordCounts: (state) => {
-      return state.getWordCounts;
-    },
     submitted: (state) => {
       return state.selected && state.selected.submitted;
     },
