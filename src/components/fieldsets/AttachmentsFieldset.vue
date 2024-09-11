@@ -37,9 +37,22 @@
     <div class="card">
       <div class="p-fluid grid">
         <div class="field col-12">
-          <p>Please submit up to <b>5</b> attachments in support of the nomination.
-            The combined total page count of your documents cannot exceed <b>5</b> pages.</p>
-            <p><b>Reminder: All individual nominations require two testimonials or letters of support.</b></p>
+          
+          <!-- Updated text (PA-159) -->
+          <p>
+            Please submit up to <b>5</b> attachments in support of the nomination. The combined total page count of your documents cannot exceed <b>5</b> pages. 
+          </p>
+          <p><b>Reminder: All individual nominations require 2 testimonials or letters of support.</b></p>
+          <p>
+            <b>IMPORTANT NOTES:</b>
+          </p>
+          <ul>
+            <li>Any pages over 5 are automatically deleted from your nomination and will not be reviewed by the adjudicators and judges</li>
+            <li>Attachments cannot include videos or hyperlinks. These will not be reviewed by the adjudicators and judges</li>
+            <li>Be sure your attachments do not have access restrictions prior to submitting. Password protected attachments will be automatically deleted from your nomination</li>
+            <li>Attachments must be in PDF format</li>
+          </ul> 
+          
         </div>
         <div class="field col-12">
           <DataTable
