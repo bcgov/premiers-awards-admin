@@ -26,8 +26,9 @@
               v-model="selected.nominees"
               showButtons
               :min="0"
-              :max="500"
+              :max="100"
           />
+          <!-- Updated the max number of nominations to 100 (PA-152)-->
           <p v-for="error of v$.nominees.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
           </p>
