@@ -23,6 +23,7 @@
           :disabled="submitted"
           :legend="`Summary (${wordCountsMax.summary} words maximum)`"
           :toggleable="true"
+          id="summary-sub-fieldset"
         >
           <slot name="summary_overview">
             <p>
@@ -82,6 +83,7 @@
         <Fieldset
           :disabled="submitted"
           :legend="`Context (${wordCountsMax.context} words maximum)`"
+          id="context-sub-fieldset"
         >
           <slot name="context_overview"></slot>
           <Editor
@@ -89,7 +91,7 @@
             editorStyle="height: 320px"
             @text-change="
               () => {
-                v$.total.$touch();
+                v$.context.$touch(); // total was touched twice, so replaced it with context
                 v$.total.$touch();
               }
             "
@@ -124,6 +126,7 @@
           :disabled="submitted"
           legend="Complexity"
           :togglable="true"
+          id="complexity-sub-fieldset"
         >
           <slot name="complexity_overview"></slot>
           <Editor
@@ -151,6 +154,7 @@
           v-if="hasEvaluation('approach')"
           :disabled="submitted"
           legend="Approach"
+          id="approach-sub-fieldset"
         >
           <slot name="approach_overview"></slot>
           <Editor
@@ -178,6 +182,7 @@
           v-if="hasEvaluation('valuing_people')"
           :disabled="submitted"
           legend="Valuing People"
+          id="valuing_people-sub-fieldset"
         >
           <slot name="valuing_people_overview"></slot>
           <Editor
@@ -205,6 +210,7 @@
           v-if="hasEvaluation('commitment')"
           :disabled="submitted"
           legend="Commitment"
+          id="commitment-sub-fieldset"
         >
           <slot name="commitment_overview"></slot>
           <Editor
@@ -232,6 +238,7 @@
           v-if="hasEvaluation('contribution')"
           :disabled="submitted"
           legend="Contribution"
+          id="contribution-sub-fieldset"
         >
           <slot name="contribution_overview"></slot>
           <Editor
@@ -259,6 +266,7 @@
           v-if="hasEvaluation('impact')"
           :disabled="submitted"
           legend="Impact"
+          id="impact-sub-fieldset"
         >
           <slot name="impact_overview"></slot>
           <Editor
@@ -304,7 +312,7 @@ const { selected, submitted, error, wordCounts } = storeToRefs(
   nominationsDataStore()
 );
 
-const nomination = settings.lookup("categories", selected.value.category);
+const nomination = settings.lookup("categories", selected.value.category, true); // Added true because it was not returning the list of sections for use in hasEvaluation
 const wordCountsMax = settings.lookup("wordCounts", undefined, true);
 
 // check if nomination includes evaluation section
@@ -322,7 +330,7 @@ const v$ = useVuelidate(
     },
     context: {
       acccepted: helpers.withMessage("Context has exceeded word limit.", () => {
-        return wordCounts.value.summary < wordCounts.value.max.summary;
+        return wordCounts.value.context < wordCounts.value.max.context; // Changed field from summary to context
       }),
     },
     total: {
