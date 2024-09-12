@@ -29,7 +29,8 @@ import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
 import {useVuelidate} from "@vuelidate/core";
 import {nominationsDataStore} from "@/stores/nominations.store";
-import {required} from "@vuelidate/validators";
+import {required, helpers} from "@vuelidate/validators";
+import { settingsStore } from "@/stores/settings.store";
 
 // get current user
 const { current } = storeToRefs(authDataStore());
@@ -37,7 +38,32 @@ const { current } = storeToRefs(authDataStore());
 // load users state
 const { selected, submitted, error } = storeToRefs(nominationsDataStore());
 
+/* 
+  (PA-156) Added max word length to Nomination title. Value should be defined in settings as:
+
+ { "type": "nominations", "label": "Entry for nominations max title length, etc", "value": {"maxTitle": 7} } 
+
+*/
+const settings = settingsStore();
+const nominationsSettings = settings.lookup("nominations") || { maxTitle: 7 };
 // apply validators
-const v$ = useVuelidate({title: {required}}, selected);
+const v$ = useVuelidate({
+    title: {
+      required, 
+      count: helpers.withMessage(
+        ({
+          /*
+          $pending,
+          $invalid,
+          $params,
+          $model
+          */
+        }) => `Maximum length of ${nominationsSettings.maxTitle} words`,
+        (v) => v.split(/\s/).length <= nominationsSettings.maxTitle
+      )
+    }
+  }, 
+  selected
+);
 
 </script>

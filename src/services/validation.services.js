@@ -4,7 +4,7 @@
  * Copyright(c) 2022 BC Gov
  * MIT Licensed
  */
-import { storeToRefs } from "pinia/dist/pinia";
+//import { storeToRefs } from "pinia/dist/pinia";
 import { settingsStore } from "@/stores/settings.store";
 
 /**
@@ -33,8 +33,17 @@ export function validateNomination(
       return !organization;
     }).length === 0;
 
+  const settings = settingsStore();
+
+  const nominationsSettings = settings.lookup("nominations") || { maxTitle: 7 };
   // Nomination Title
-  validations.title = !!data.title;
+  /*
+  (PA-156) Added max word length to Nomination title. Value should be defined in settings as:
+
+  { "type": "nominations", "label": "Entry for nominations max title length, etc", "value": {"maxTitle": 7} } 
+  */
+  validations.title = !!data.title &&
+    data.title.split(/\s/).length <= nominationsSettings.maxTitle;
 
   // Single Nominee
   // - ensure first and last names
@@ -102,13 +111,14 @@ export function validateNomination(
     }).length === 0;
 
   // Partners
+  // - allow for zero partners (PA-151), or 
   // - ensure nominee count is above zero
   // - ensure all partners have organizations
   validations.partners =
-    data.partners.length > 0 &&
+  ( data.partners.length === 0 ) || ( data.partners.length > 0 &&
     data.partners.filter((partner) => {
       return !partner.organization;
-    }).length === 0;
+    })).length === 0;
 
   // Evaluation
   // - compare section/total word counts to limits
