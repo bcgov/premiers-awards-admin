@@ -91,6 +91,35 @@ export const nominationsDataStore = defineStore({
         nomination
       );
     },
+    // New validation in order to facilitate the individual text fields for each category when editing Evaluations (PA-153)
+    validationDeep: (state) => {
+      if (!state.selected) return [];
+
+      const settings = settingsStore();
+      const validations = state.validate;
+     
+      var wordCountsMax = settings.lookup("wordCounts", undefined, true);
+     
+      const getSections = () => {
+
+        const sections = [],
+          nomination = settings.lookup("categories", state.selected.category, true);
+     
+        (nomination.evaluation || []).forEach((value) => {
+
+          sections.push({
+            label: value,
+            valid: state.wordCounts[value] && ( state.wordCounts[value] <= (wordCountsMax[value] || 1000) )
+          });
+        });
+
+        return sections;
+      };
+      
+      (validations.find(item => item.id === "evaluation") || {}).items = getSections();
+
+      return validations;
+    }
   },
   actions: {
     // Reset selected item
