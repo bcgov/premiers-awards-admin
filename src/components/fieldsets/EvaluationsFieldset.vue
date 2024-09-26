@@ -308,12 +308,12 @@ const settings = settingsStore();
 const { current } = storeToRefs(authDataStore());
 
 // load nominations state
-const { selected, submitted, error, wordCounts } = storeToRefs(
+// PA-164 Added wordCountsMax here which used the new limits on a per category basis
+const { selected, submitted, error, wordCounts, wordCountsMax } = storeToRefs(
   nominationsDataStore()
 );
 
 const nomination = settings.lookup("categories", selected.value.category, true); // Added true because it was not returning the list of sections for use in hasEvaluation
-const wordCountsMax = settings.lookup("wordCounts", undefined, true);
 
 // check if nomination includes evaluation section
 const hasEvaluation = (section) => {

@@ -25,6 +25,25 @@ import { settingsStore } from "@/stores/settings.store";
 //   return settings.lookup(key, value);
 // };
 
+/* 
+  PA-164, alters wordCountsMax.total to use the category's max or default.
+  Used by all the occurances of wordCountsMax in the store, and then also where ever the store is used.
+  Altered the setting's JSON to be 
+  { "total": { "default": 1700, "legacy": 2125, "leadership": 2125}, "summary": 160, "context": 260 }
+*/
+const getMaxWordCounts = (state) => {
+  
+  const settings = settingsStore(),
+    wordCountsMax = settings.lookup("wordCounts", undefined, true),
+    category = state.selected.category.toLowerCase();
+
+    //console.log(`Cat: ${category} has WC of ${wordCountsMax.total[category] || wordCountsMax.total.default }`);
+
+    wordCountsMax.total = wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
+
+    return wordCountsMax;
+};
+
 export const nominationsDataStore = defineStore({
   id: "nominationData",
   state: () => ({
@@ -78,7 +97,8 @@ export const nominationsDataStore = defineStore({
         settings.getAll();
       if (!state.selected) return [];
       var wordCounts = state.wordCounts;
-      var wordCountsMax = settings.lookup("wordCounts", undefined, true);
+      //var wordCountsMax = settings.lookup("wordCounts", undefined, true);
+      var wordCountsMax = getMaxWordCounts(state); // PA-164 Get category specific max counts
       var nomination = settings.lookup(
         "categories",
         state.selected.category,
@@ -98,7 +118,8 @@ export const nominationsDataStore = defineStore({
       const settings = settingsStore();
       const validations = state.validate;
      
-      var wordCountsMax = settings.lookup("wordCounts", undefined, true);
+      //var wordCountsMax = settings.lookup("wordCounts", undefined, true);
+      const wordCountsMax = getMaxWordCounts(state); // PA-164 Get category specific max counts
      
       const getSections = () => {
 
@@ -119,6 +140,12 @@ export const nominationsDataStore = defineStore({
       (validations.find(item => item.id === "evaluation") || {}).items = getSections();
 
       return validations;
+    },
+    // PA-164 Get category specific max counts
+    wordCountsMax: (state) => {
+
+      return getMaxWordCounts(state);
+      
     }
   },
   actions: {
