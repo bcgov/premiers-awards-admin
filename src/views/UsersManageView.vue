@@ -37,6 +37,43 @@
           </div>
         </template>
       </ConfirmDialog>
+      <ConfirmDialog group="bulkRemove">
+        <!-- Dialog for the bulk remove option (PA-148) -->
+        <template #message="slotProps">
+          
+          <div class="card p-4">
+            <div class="flex mb-5">
+              <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
+              <span class="pl-2">Delete Selected Users</span>
+            </div>
+            <div class="pl-2 w-80" v-for="entry in slotProps.message.message">
+              <div class="grid">
+                <div class="col-6"><b>GUID:</b></div>
+                <div class="col-6">{{ entry.guid }}</div>
+                <div class="col-6"><b>Username (IDIR):</b></div>
+                <div class="col-6">
+                  {{ entry.username }}
+                </div>
+                <div class="col-6"><b>First Name:</b></div>
+                <div class="col-6">
+                  {{ entry.firstname }}
+                </div>
+                <div class="col-6"><b>Last Name:</b></div>
+                <div class="col-6">
+                  {{ entry.lastname }}
+                </div>
+                <div class="col-6"><b>Roles:</b></div>
+                <div class="col-6">
+                  <div v-for="role in entry.roles">
+                    {{ settings.lookup("roles", role) }}
+                  </div>
+                </div>
+              </div>
+              <br /><br />
+            </div>
+          </div>
+        </template>
+      </ConfirmDialog>
       <ConfirmDialog group="resetUsers">
         <template #message="slotProps">
           <div class="card p-4">
@@ -101,10 +138,11 @@
         :value="items"
         :paginator="false"
         class="p-datatable-users"
-        dataKey="id"
+        dataKey="_id"
         :rowHover="true"
         v-model:filters="filters"
         :globalFilterFields="['role.value']"
+        v-model:selection="selectedUsers"
         filterDisplay="menu"
         :loading="loading"
         responsiveLayout="stack"
@@ -125,11 +163,19 @@
                 icon="pi pi-user-plus"
                 @click="add"
               />
+              <!-- New button for the bulk remove option (PA-148) -->
+              <Button
+                v-show="showBulkRemove()"
+                label="Delete Users"
+                icon="pi pi-user-minus"
+                @click="bulkRemove"
+              />
             </span>
           </div>
         </template>
         <template #empty> No users found. </template>
         <template #loading> Loading user data... </template>
+        <Column selectionMode="multiple"></Column>
         <Column field="username" header="Username" :sortable="true">
           <template #body="{ data }">
             {{ data.username }}
@@ -267,6 +313,36 @@ const dialog = reactive({
   visible: false,
   callback: () => {},
 });
+
+// initialize selected users, forms part of bulk delete users (PA-148)
+const selectedUsers = ref();
+
+// Bulk delete option for selected users (PA-148)
+const showBulkRemove = () => {
+
+  return isSuperAdmin && Array.isArray(selectedUsers.value) && selectedUsers.value.length > 0;
+};
+
+const bulkRemove = () => {
+
+  confirm.require({
+    group: "bulkRemove",
+    message: selectedUsers.value,
+    header: "Delete selected users",
+    icon: "pi pi-info-circle",
+    acceptClass: "p-button-danger",
+    accept: async () => {
+      // Create an array of Promises for each of the selected user's remove API call
+      Promise.all( selectedUsers.value.map( async x => {
+
+        return await store.removeGuid(x.guid);
+      }));
+      
+      selectedUsers.value = [];
+      await reload();
+    },
+  });
+};
 
 // subscribe to user store actions
 store.$onAction(({ name, store, _, after }) => {

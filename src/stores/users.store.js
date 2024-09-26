@@ -123,6 +123,13 @@ export const usersDataStore = defineStore({
       this.error = error;
       this.loading = false;
     },
+    // Delete user from GUID passed as param, forms part of bulk delete (PA-148)
+    async removeGuid(guid) {
+      this.loading = true;
+      const [error] = await get(`admin/users/delete/${guid}`);
+      this.error = error;
+      this.loading = false;
+    },
     // Reset/delete all non-admin users
     async resetUsers() {
       this.loading = true;
