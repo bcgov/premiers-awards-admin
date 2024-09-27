@@ -17,6 +17,7 @@
  *
  * **/
 
+import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 import { get, post } from "@/services/api.services";
 
@@ -34,6 +35,9 @@ export const settingsStore = defineStore({
   }),
   getters: {
     getErrors: (state) => state.error,
+    hasLoaded: (state) => { 
+      return state.items != undefined && state.items.length > 0 
+    }
   },
   actions: {
     // Reset selected item
@@ -107,6 +111,18 @@ export const settingsStore = defineStore({
         return "NOT FOUND";
       }
     },
+    // This function returns a Proxy object and then creates a watch on the .items array. When the items have finally loaded the watch callback performs the lookup again and updates the value.
+    lookupWithWatcher(type, key, fullValue) {
+
+      const proxy = ref(this.lookup(type, key, fullValue));
+      
+      watch(() => this.items, () => {
+        if ( !this.hasLoaded ) return;
+        proxy.value = this.lookup(type, key, fullValue);
+      }, { once:true });
+
+      return proxy;
+    },
     // Add new user
     async insert() {
       this.loading = true;
@@ -126,7 +142,7 @@ export const settingsStore = defineStore({
     async remove() {
       this.loading = true;
       const { _id = "" } = this.selected || {};
-      const [error] = await get(`admin/settings/delete/${id}`);
+      const [error] = await get(`admin/settings/delete/${_id}`);
       this.error = error;
       this.loading = false;
     },

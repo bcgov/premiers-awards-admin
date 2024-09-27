@@ -203,8 +203,8 @@ const screenWidth = ref(window.innerWidth);
 
 // get requested parameters
 const { category = "" } = route.params || {};
-const nomination = settings.lookup("categories", category);
-const wordCountsMax = settings.lookup("wordCounts", undefined, true);
+const nomination = settings.lookupWithWatcher("categories", category, true);
+const wordCountsMax = settings.lookupWithWatcher("wordCounts", undefined, true);
 
 // apply validators
 const v$ = useVuelidate();
