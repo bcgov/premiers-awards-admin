@@ -29,7 +29,7 @@
                 <div class="col-6"><b>Roles:</b></div>
                 <div class="col-6">
                   <div v-for="role in slotProps.message.message.roles">
-                    {{ settings.lookup("roles", role) }}
+                    {{ settings.lookupWithWatcher("roles", role) }}
                   </div>
                 </div>
               </div>
@@ -40,7 +40,6 @@
       <ConfirmDialog group="bulkRemove">
         <!-- Dialog for the bulk remove option (PA-148) -->
         <template #message="slotProps">
-          
           <div class="card p-4">
             <div class="flex mb-5">
               <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
@@ -65,7 +64,7 @@
                 <div class="col-6"><b>Roles:</b></div>
                 <div class="col-6">
                   <div v-for="role in entry.roles">
-                    {{ settings.lookup("roles", role) }}
+                    {{ settings.lookupWithWatcher("roles", role) }}
                   </div>
                 </div>
               </div>
@@ -201,7 +200,7 @@
         >
           <template #body="{ data }">
             <div v-for="role in data.roles">
-              {{ settings.lookup("roles", role) || "" }}
+              {{ settings.lookupWithWatcher("roles", role) || "" }}
             </div>
           </template>
           <template #filter="{ filterModel, filterCallback }">
@@ -319,12 +318,14 @@ const selectedUsers = ref();
 
 // Bulk delete option for selected users (PA-148)
 const showBulkRemove = () => {
-
-  return isSuperAdmin && Array.isArray(selectedUsers.value) && selectedUsers.value.length > 0;
+  return (
+    isSuperAdmin &&
+    Array.isArray(selectedUsers.value) &&
+    selectedUsers.value.length > 0
+  );
 };
 
 const bulkRemove = () => {
-
   confirm.require({
     group: "bulkRemove",
     message: selectedUsers.value,
@@ -333,11 +334,12 @@ const bulkRemove = () => {
     acceptClass: "p-button-danger",
     accept: async () => {
       // Create an array of Promises for each of the selected user's remove API call
-      Promise.all( selectedUsers.value.map( async x => {
+      Promise.all(
+        selectedUsers.value.map(async (x) => {
+          return await store.removeGuid(x.guid);
+        })
+      );
 
-        return await store.removeGuid(x.guid);
-      }));
-      
       selectedUsers.value = [];
       await reload();
     },
