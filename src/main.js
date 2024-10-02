@@ -79,6 +79,7 @@ import AcknowledgmentFieldset from "@/components/fieldsets/AcknowledgmentFieldse
 
 // initialize app
 const app = createApp(App);
+const pinia = createPinia();
 
 // register global components
 app.component("Menubar", Menubar);
@@ -147,7 +148,6 @@ app.use(ToastService);
 app.use(PrimeVue);
 app.directive("tooltip", Tooltip);
 app.use(createPinia());
-app.use(router);
 (async function () {
   const settings = settingsStore();
   console.log("load...");
@@ -160,6 +160,6 @@ app.use(router);
 
   // initialize current user
   await authStore.currentUserInit();
-
+  app.use(router);
   app.mount("#app");
 })();
