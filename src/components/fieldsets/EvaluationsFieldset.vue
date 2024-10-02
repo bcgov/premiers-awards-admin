@@ -313,7 +313,7 @@ const { selected, submitted, error, wordCounts, wordCountsMax } = storeToRefs(
   nominationsDataStore()
 );
 
-const nomination = settings.lookupWithWatcher(
+const nomination = settings.lookup(
   "categories",
   selected.value.category,
   true

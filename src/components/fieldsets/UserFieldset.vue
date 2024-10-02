@@ -153,8 +153,8 @@ const { selected, error } = storeToRefs(usersDataStore());
 const isCurrent = ref(selected.value.guid === current.value.guid);
 
 // get options for user roles
-const roles = settings.lookupWithWatcher("roles");
-const organizations = settings.lookupWithWatcher("organizations");
+const roles = settings.lookup("roles");
+const organizations = settings.lookup("organizations");
 
 // const roles = old_settings.get("roles") || [];
 // const organizations = old_settings.get("organizations") || [];

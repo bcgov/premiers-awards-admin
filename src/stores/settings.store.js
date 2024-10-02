@@ -17,7 +17,7 @@
  *
  * **/
 
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { defineStore } from "pinia";
 import { get, post } from "@/services/api.services";
 
@@ -71,7 +71,7 @@ export const settingsStore = defineStore({
     // Returns: Only type defined: entire settings content
     //          type+key defined: label by default,
     //          key+type+fullValue(true) defined: entire setting contents of the selected key
-    lookup(type, key, fullValue) {
+    lookupItem(type, key, fullValue) {
       try {
         if (this.items == undefined || this.items.length == 0) {
           this.getAll();
@@ -117,19 +117,25 @@ export const settingsStore = defineStore({
       }
     },
     // This function returns a Proxy object and then creates a watch on the .items array. When the items have finally loaded the watch callback performs the lookup again and updates the value.
-    lookupWithWatcher(type, key, fullValue) {
-      const proxy = ref(this.lookup(type, key, fullValue));
+    lookup(type, key, fullValue) {
+      if (this.items == undefined || this.items.length == 0) {
+        this.getAll();
+      }
+      const proxy = ref(this.lookupItem(type, key, fullValue));
+      const loadedData = computed(() => {
+        return proxy.value || null;
+      });
 
       watch(
         () => this.items,
         () => {
           if (!this.hasLoaded) return;
-          proxy.value = this.lookup(type, key, fullValue);
+          proxy.value = this.lookupItem(type, key, fullValue);
         },
-        { once: true }
+        { immediate: true }
       );
 
-      return proxy;
+      return loadedData.value;
     },
     // Add new user
     async insert() {
@@ -155,7 +161,7 @@ export const settingsStore = defineStore({
       this.loading = false;
     },
     async checkSection(section, category) {
-      const metadata = this.lookupWithWatcher("categories", category);
+      const metadata = this.lookup("categories", category);
       if (!metadata) return null;
       return metadata.sections.filter((sec) => sec.id === section).length > 0;
     },

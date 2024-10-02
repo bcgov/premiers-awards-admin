@@ -29,7 +29,7 @@
                 <div class="col-6"><b>Roles:</b></div>
                 <div class="col-6">
                   <div v-for="role in slotProps.message.message.roles">
-                    {{ settings.lookupWithWatcher("roles", role) }}
+                    {{ settings.lookup("roles", role) }}
                   </div>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                 <div class="col-6"><b>Roles:</b></div>
                 <div class="col-6">
                   <div v-for="role in entry.roles">
-                    {{ settings.lookupWithWatcher("roles", role) }}
+                    {{ settings.lookup("roles", role) }}
                   </div>
                 </div>
               </div>
@@ -200,7 +200,7 @@
         >
           <template #body="{ data }">
             <div v-for="role in data.roles">
-              {{ settings.lookupWithWatcher("roles", role) || "" }}
+              {{ settings.lookup("roles", role) || "" }}
             </div>
           </template>
           <template #filter="{ filterModel, filterCallback }">

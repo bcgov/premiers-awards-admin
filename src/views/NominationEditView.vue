@@ -122,7 +122,6 @@
           </div>
         </div>
       </div>
-
       <Header
         :header="nomination.label"
         :lead="`Premier's Awards ${nomination.label} Nomination Form`"
@@ -202,8 +201,10 @@ const screenWidth = ref(window.innerWidth);
 
 // get requested parameters
 const { category = "" } = route.params || {};
-const nomination = settings.lookupWithWatcher("categories", category, true);
-const wordCountsMax = settings.lookupWithWatcher("wordCounts", undefined, true);
+const nomination = ref(
+  settings.lookup("categories", category, true) || undefined
+);
+const wordCountsMax = settings.lookup("wordCounts", undefined, true);
 
 // apply validators
 const v$ = useVuelidate();
