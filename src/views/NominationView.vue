@@ -279,7 +279,7 @@ const store = nominationsDataStore();
 const settings = settingsStore();
 
 // get nomination settings
-const nomination = settings.lookup(selected.value.category);
+const nomination = settings.lookup("categories", selected.value.category, true);
 
 // check if nomination section is
 const hasSection = (section) => {

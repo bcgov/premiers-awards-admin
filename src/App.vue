@@ -23,7 +23,6 @@
 
 <script setup>
 import Navbar from "@/components/common/Navbar.vue";
-import { settingsStore } from "@/stores/settings.store";
 import { onBeforeMount, ref } from "vue";
 import { authDataStore } from "@/stores/auth.store";
 import messages from "@/services/message.services";
@@ -45,8 +44,6 @@ const isDevSite =
 
 // load user data
 onBeforeMount(async () => {
-  const settings = settingsStore();
-  await settings.getAll();
   // subscribe to auth store actions
   const authStore = authDataStore();
   authStore.$onAction(({ name, store, _, after }) => {

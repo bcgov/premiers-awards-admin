@@ -11,6 +11,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { createPinia } from "pinia/dist/pinia";
+import { settingsStore } from "@/stores/settings.store";
+import { authDataStore } from "@/stores/auth.store";
 
 // import Primevue components
 import PrimeVue from "primevue/config";
@@ -146,4 +148,19 @@ app.use(PrimeVue);
 app.directive("tooltip", Tooltip);
 app.use(createPinia());
 app.use(router);
-app.mount("#app");
+(async function () {
+  const settings = settingsStore();
+  console.log("load...");
+  const s = settings.getAll();
+  console.log(s);
+  await s;
+
+  console.log("loading auths");
+  const authStore = authDataStore();
+
+  // initialize current user
+  await authStore.currentUserInit();
+  console.log("...ing");
+
+  app.mount("#app");
+})();
