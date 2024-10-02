@@ -313,7 +313,11 @@ const { selected, submitted, error, wordCounts, wordCountsMax } = storeToRefs(
   nominationsDataStore()
 );
 
-const nomination = settings.lookup("categories", selected.value.category, true); // Added true because it was not returning the list of sections for use in hasEvaluation
+const nomination = settings.lookupWithWatcher(
+  "categories",
+  selected.value.category,
+  true
+); // Added true because it was not returning the list of sections for use in hasEvaluation
 
 // check if nomination includes evaluation section
 const hasEvaluation = (section) => {

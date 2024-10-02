@@ -35,9 +35,9 @@ export const settingsStore = defineStore({
   }),
   getters: {
     getErrors: (state) => state.error,
-    hasLoaded: (state) => { 
-      return state.items != undefined && state.items.length > 0 
-    }
+    hasLoaded: (state) => {
+      return state.items != undefined && state.items.length > 0;
+    },
   },
   actions: {
     // Reset selected item
@@ -78,7 +78,7 @@ export const settingsStore = defineStore({
         }
         if (key != undefined && this.items.length > 0) {
           const setting = this.items.find((item) => item.type === type);
-          const jsonSetting = JSON.parse(setting.value);
+          const jsonSetting = setting.value;
           const keySetting = jsonSetting.find((item) => item.key === key);
           if (keySetting && !fullValue)
             return keySetting.label && keySetting.label.length > 0
@@ -87,7 +87,7 @@ export const settingsStore = defineStore({
           if (keySetting && fullValue) return keySetting;
         } else if (key == undefined && this.items.length > 0) {
           const setting = this.items.find((item) => item.type === type);
-          const jsonSetting = JSON.parse(setting.value);
+          const jsonSetting = setting.value;
           if (fullValue) return jsonSetting;
           try {
             const sorted = jsonSetting.sort((a, b) => {
@@ -100,7 +100,12 @@ export const settingsStore = defineStore({
             return jsonSetting;
           }
         } else {
-          console.log("[ERROR] -  Settings.store.js: Cannot find lookup");
+          console.log(
+            "[ERROR] -  Settings.store.js: Cannot find lookup (type, key): ",
+            type,
+            ",",
+            key
+          );
           return "NOT FOUND";
         }
       } catch (e) {
@@ -113,13 +118,16 @@ export const settingsStore = defineStore({
     },
     // This function returns a Proxy object and then creates a watch on the .items array. When the items have finally loaded the watch callback performs the lookup again and updates the value.
     lookupWithWatcher(type, key, fullValue) {
-
       const proxy = ref(this.lookup(type, key, fullValue));
-      
-      watch(() => this.items, () => {
-        if ( !this.hasLoaded ) return;
-        proxy.value = this.lookup(type, key, fullValue);
-      }, { once:true });
+
+      watch(
+        () => this.items,
+        () => {
+          if (!this.hasLoaded) return;
+          proxy.value = this.lookup(type, key, fullValue);
+        },
+        { once: true }
+      );
 
       return proxy;
     },
@@ -147,7 +155,7 @@ export const settingsStore = defineStore({
       this.loading = false;
     },
     async checkSection(section, category) {
-      const metadata = this.lookup("categories", category);
+      const metadata = this.lookupWithWatcher("categories", category);
       if (!metadata) return null;
       return metadata.sections.filter((sec) => sec.id === section).length > 0;
     },

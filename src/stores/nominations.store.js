@@ -32,16 +32,16 @@ import { settingsStore } from "@/stores/settings.store";
   { "total": { "default": 1700, "legacy": 2125, "leadership": 2125}, "summary": 160, "context": 260 }
 */
 const getMaxWordCounts = (state) => {
-  
   const settings = settingsStore(),
     wordCountsMax = settings.lookup("wordCounts", undefined, true),
     category = state.selected.category.toLowerCase();
 
-    //console.log(`Cat: ${category} has WC of ${wordCountsMax.total[category] || wordCountsMax.total.default }`);
+  //console.log(`Cat: ${category} has WC of ${wordCountsMax.total[category] || wordCountsMax.total.default }`);
 
-    wordCountsMax.total = wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
+  wordCountsMax.total =
+    wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
 
-    return wordCountsMax;
+  return wordCountsMax;
 };
 
 export const nominationsDataStore = defineStore({
@@ -117,36 +117,40 @@ export const nominationsDataStore = defineStore({
 
       const settings = settingsStore();
       const validations = state.validate;
-     
+
       //var wordCountsMax = settings.lookup("wordCounts", undefined, true);
       const wordCountsMax = getMaxWordCounts(state); // PA-164 Get category specific max counts
-     
+
       const getSections = () => {
-
         const sections = [],
-          nomination = settings.lookup("categories", state.selected.category, true);
-     
-        (nomination.evaluation || []).forEach((value) => {
+          nomination = settings.lookup(
+            "categories",
+            state.selected.category,
+            true
+          );
 
+        (nomination.evaluation || []).forEach((value) => {
+          const label = settings.lookup("evaluationSections", value);
           sections.push({
-            label: value,
-            valid: state.wordCounts[value] && ( state.wordCounts[value] <= (wordCountsMax[value] || 1000) )
+            label: label,
+            valid:
+              state.wordCounts[value] &&
+              state.wordCounts[value] <= (wordCountsMax[value] || 1000),
           });
         });
 
         return sections;
       };
-      
-      (validations.find(item => item.id === "evaluation") || {}).items = getSections();
+
+      (validations.find((item) => item.id === "evaluation") || {}).items =
+        getSections();
 
       return validations;
     },
     // PA-164 Get category specific max counts
     wordCountsMax: (state) => {
-
       return getMaxWordCounts(state);
-      
-    }
+    },
   },
   actions: {
     // Reset selected item

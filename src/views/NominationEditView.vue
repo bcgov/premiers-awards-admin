@@ -43,26 +43,25 @@
               :popup="isMobile()"
               :model="
                 (nominationsStore.validationDeep || []).map((item) => {
-
                   // Used the new deep validation which lists the individual text input sections (PA-153)
                   return {
                     label: item.label,
-                    class: ( item.items && item.items.length > 0 ) ? 'text-base' : '',
+                    class:
+                      item.items && item.items.length > 0 ? 'text-base' : '',
                     icon: item.valid ? 'pi pi-check' : 'pi pi-times',
                     command: () => {
                       indexRouter.push(`#${item.id}-fieldset`);
                     },
-                    items: (item.items || []).map(item => {
+                    items: (item.items || []).map((item) => {
                       return {
                         label: item.label,
                         class: 'capitalize pl-2',
-                        icon:  item.valid ? 'pi pi-check' : 'pi pi-times',
+                        icon: item.valid ? 'pi pi-check' : 'pi pi-times',
                         command: () => {
                           indexRouter.push(`#${item.label}-sub-fieldset`);
-                        }
+                        },
                       };
-                      
-                    })
+                    }),
                   };
                 })
               "
