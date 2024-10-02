@@ -151,16 +151,15 @@ app.use(router);
 (async function () {
   const settings = settingsStore();
   console.log("load...");
-  const s = settings.getAll();
-  console.log(s);
-  await s;
+  await settings.getAll();
+  console.log(settings.items);
+  console.log("...ing");
 
   console.log("loading auths");
   const authStore = authDataStore();
 
   // initialize current user
   await authStore.currentUserInit();
-  console.log("...ing");
 
   app.mount("#app");
 })();
