@@ -116,7 +116,10 @@ export const settingsStore = defineStore({
         return "NOT FOUND";
       }
     },
-    // This function returns a Proxy object and then creates a watch on the .items array. When the items have finally loaded the watch callback performs the lookup again and updates the value.
+    /*
+      This function returns a Proxy object and then creates a watch on the .items array. When the items have finally loaded the watch callback performs the lookup again and updates the value.
+      Banging your head against a wall because you can't figure out why a setting has changed? That is because the proxy/ref being returned is probably changed somewhere down the line.
+    */
     lookup(type, key, fullValue) {
       if (this.items == undefined || this.items.length == 0) {
         this.getAll();
