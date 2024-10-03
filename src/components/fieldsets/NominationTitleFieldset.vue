@@ -15,6 +15,7 @@
             />
             <label for="nomination_title">Title</label>
           </span>
+          <p class="text-sm">Maximum of 7 words allowed for nomination title.</p>
           <div v-for="error of v$.title.$errors" :key="error.$uid">
             <InlineMessage>{{ error.$message }}</InlineMessage>
           </div>
