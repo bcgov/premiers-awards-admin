@@ -36,11 +36,11 @@ const getMaxWordCounts = (state) => {
     wordCountsMax = settings.lookup("wordCounts", undefined, true),
     category = state.selected.category.toLowerCase();
 
-  //console.log(`Cat: ${category} has WC of ${wordCountsMax.total[category] || wordCountsMax.total.default }`);
+  if ( typeof wordCountsMax.total == "object" ) {
 
-  wordCountsMax.total =
-    wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
-
+    wordCountsMax.total = wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
+  }
+  
   return wordCountsMax;
 };
 
@@ -142,8 +142,7 @@ export const nominationsDataStore = defineStore({
         return sections;
       };
 
-      (validations.find((item) => item.id === "evaluation") || {}).items =
-        getSections();
+      (validations.find((item) => item.id === "evaluation") || {}).items = getSections();
 
       return validations;
     },
