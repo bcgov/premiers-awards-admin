@@ -44,25 +44,32 @@
               :model="
                 (nominationsStore.validationDeep || []).map((item) => {
                   // Used the new deep validation which lists the individual text input sections (PA-153)
-                  return {
+                  const menuItem = {
+
                     label: item.label,
-                    class:
-                      item.items && item.items.length > 0 ? 'text-base' : '',
+                    class: item.items && item.items.length > 0 ? 'text-base' : '',
                     icon: item.valid ? 'pi pi-check' : 'pi pi-times',
                     command: () => {
                       indexRouter.push(`#${item.id}-fieldset`);
-                    },
-                    items: (item.items || []).map((item) => {
-                      return {
-                        label: item.label,
-                        class: 'capitalize pl-2',
-                        icon: item.valid ? 'pi pi-check' : 'pi pi-times',
-                        command: () => {
-                          indexRouter.push(`#${item.label}-sub-fieldset`);
-                        },
-                      };
-                    }),
+                    }
                   };
+
+                  // Changed it so that the 'items' key is only added if there are sub items. It messed up the classes of the original menu items even when empty 'items' key was added.
+                  if ( item.items && item.items.length > 0 ) {
+
+                    menuItem.items = (item.items || []).map((child) => {
+                      return {
+                        label: child.label,
+                        class: 'capitalize pl-2',
+                        icon: child.valid ? 'pi pi-check' : 'pi pi-times',
+                        command: () => {
+                          indexRouter.push(`#${child.label.toLowerCase()}-sub-fieldset`);
+                        }
+                      };
+                    })
+                  }
+                  
+                  return menuItem;
                 })
               "
             />
