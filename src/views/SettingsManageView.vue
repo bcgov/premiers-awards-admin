@@ -200,6 +200,7 @@ const create = async () => {
 // edit item dialog
 const edit = (data) => {
   selected.value = Object.assign({}, data);
+  selected.value.value = JSON.stringify(selected.value.value);
   setDialog({
     header: "Edit Record",
     visible: true,
@@ -212,6 +213,7 @@ const update = async () => {
   // check if form is valid
   const valid = await v$.value.$validate();
   if (!valid) return;
+  selected.value.value = JSON.parse(selected.value.value);
 
   // update collection + reload data
   await store.update();
