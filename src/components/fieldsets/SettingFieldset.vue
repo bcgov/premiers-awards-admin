@@ -57,7 +57,7 @@
 
 import {storeToRefs} from "pinia/dist/pinia";
 import {authDataStore} from "@/stores/auth.store";
-import { required } from "@vuelidate/validators";
+import {required, helpers} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {settingsStore} from "@/stores/settings.store";
 
@@ -76,7 +76,34 @@ const { selected, error } = storeToRefs(settingsStore());
 const v$ = useVuelidate({
   type: { required },
   label: { required },
-  value: { required },
+  value: { 
+        required, 
+        parse: helpers.withMessage(
+          ({}) => `Input is not a number, plain string nor valid JSON`,
+          (v) => {
+          
+            /* Added some validation to ensure that the input is either:
+            - Plain number
+            - String in the format "a bc c"
+            - Valid JSON
+            */
+          
+            if ( !isNaN(v) ) return true;
+
+            if ( /^"[^"]+"$/.test(v) ) return true;
+
+            try {
+              JSON.parse(v);
+              return true;
+            }
+            catch (e) {
+              console.log(e);
+              return false;
+            }
+
+            return false;
+          }
+      ) },
 }, selected);
 
 </script>
