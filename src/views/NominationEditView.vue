@@ -63,7 +63,7 @@
                         class: 'capitalize pl-2',
                         icon: child.valid ? 'pi pi-check' : 'pi pi-times',
                         command: () => {
-                          indexRouter.push(`#${child.label.toLowerCase()}-sub-fieldset`);
+                          indexRouter.push(`#${child.label.toLowerCase().replace(/\s/g, '_')}-sub-fieldset`); // Convert to lowercase and replace spaces with _ (PA-153)
                         }
                       };
                     })
