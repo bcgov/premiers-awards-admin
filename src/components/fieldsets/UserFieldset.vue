@@ -88,7 +88,7 @@
               id="user_organization"
               aria-label="User Organization"
               v-model="selected.organization"
-              :options="organizations"
+              :options="organizations.sort((a, b) => a.label.localeCompare(b.label))"
               optionLabel="label"
               optionValue="key"
               placeholder="Select an organization"
