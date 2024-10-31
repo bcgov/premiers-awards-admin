@@ -126,7 +126,13 @@
                   icon="pi pi-sign-out"
                   @click="exportCSV($event)"
                 />
-                <Button label="Nominate" icon="pi pi-bookmark" @click="add" />
+                <!-- PA-149 Disable nominations button if nominations are closed. -->
+                <Button
+                  :label="nominationsOpen ? 'Nominate' : 'Nominations have closed'"
+                  :icon="{'pi':true, 'pi-bookmark': nominationsOpen, 'pi-exclamation-circle': !nominationsOpen}" 
+                  @click="add" 
+                  :disabled="!nominationsOpen" 
+                />
               </span>
               <span class="p-input-icon-left ml-2">
                 <i class="pi pi-search" />
@@ -470,6 +476,14 @@ const dialog = reactive({
   callback: () => {},
 });
 
+// PA-149 Gets the nominations open boolean from server. Defaults to true
+const nominationsOpen = ref(true);
+( async () => {
+
+  const open = await store.isOpen;
+  nominationsOpen.value = open;
+})();
+
 // update dialog data
 const setDialog = (setting) => {
   dialog.header = setting.header;
@@ -566,6 +580,10 @@ const view = (data) => {
 
 // redirect to nominate page
 const add = () => {
+
+  // PA-149 Disable nominations if nominations are closed
+
+  if ( !nominationsOpen.value ) return console.log("Nominations have closed");
   reset();
   indexRouter.push({ name: "nominator-dashboard" });
 };

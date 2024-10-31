@@ -48,6 +48,8 @@
         <SettingFieldset mode="edit" />
       </Dialog>
 
+      <GlobalSettingsFieldset></GlobalSettingsFieldset>
+
       <DataTable
         :value="items"
         :paginator="false"
@@ -120,6 +122,7 @@ import { settingsStore } from "@/stores/settings.store";
 import { useVuelidate } from "@vuelidate/core";
 import messages from "@/services/message.services";
 import SettingFieldset from "@/components/fieldsets/SettingFieldset.vue";
+import GlobalSettingsFieldset from "@/components/fieldsets/GlobalSettingsFieldset.vue";
 
 // get current user info
 const { isSuperAdmin } = storeToRefs(authDataStore());

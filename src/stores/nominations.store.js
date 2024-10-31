@@ -150,6 +150,17 @@ export const nominationsDataStore = defineStore({
     wordCountsMax: (state) => {
       return getMaxWordCounts(state);
     },
+    // PA-149 Gets the nominations open boolean from server. Defaults to true
+    isOpen: async () => {
+
+      const [errors, resp] = await get("nominations/open");
+      
+      if ( errors ) {
+        return true;
+      }
+
+      return resp && resp.open === true;
+    }
   },
   actions: {
     // Reset selected item
