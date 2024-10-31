@@ -89,6 +89,7 @@ export const nominationsDataStore = defineStore({
     validateAttachments: (state) => {
       const settings = settingsStore();
       const maxAttachments = settings.get("maxAttachments");
+      if ( state.selected == null || state.selected.attachments == null ) return false;
       return state.selected.attachments.length >= maxAttachments;
     },
     validate: (state) => {
