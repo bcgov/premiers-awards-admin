@@ -161,7 +161,19 @@ export const nominationsDataStore = defineStore({
       }
 
       return resp && resp.open === true;
-    }
+    },
+    //PA-154 Get nomination type and check whether it's group or individual. For individual nominations, PDFs are required. 
+    isIndividualNomination: (state) => {
+
+      const settings = settingsStore(),
+        category = state.selected.category,
+        nomination = settings.lookup("categories", category, true);
+      
+      //console.log(nomination);
+
+      return nomination.type === "individual";
+    } 
+
   },
   actions: {
     // Reset selected item
