@@ -122,11 +122,18 @@ export function validateNomination(
 
   // Evaluation
   // - compare section/total word counts to limits
+  // PA-186 Check that every evaluation for the nomination has some text
   validations.evaluation =
     wordCounts.total > 0 &&
     wordCounts.total <= wordCountsMax.total &&
     wordCounts.summary <= wordCountsMax.summary &&
-    wordCounts.context <= wordCountsMax.context;
+    wordCounts.context <= wordCountsMax.context && 
+    (
+      (nomination.evaluation || []).every(value => {
+
+        return wordCounts[value] && wordCounts[value] > 0;
+      })
+    )
 
   // Attachments
   // - ensure files exists
