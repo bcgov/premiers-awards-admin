@@ -401,7 +401,7 @@
               />
               <Button
                 aria-label="Edit Nomination"
-                :disabled="data.submitted"
+                :disabled="data.submitted || !nominationsOpen"
                 v-tooltip.top="'Edit Nomination'"
                 icon="pi pi-pencil"
                 @click="edit(data)"

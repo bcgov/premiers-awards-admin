@@ -113,12 +113,13 @@
                 class="p-button-success"
                 :disabled="
                   loading ||
+                  !nominationsOpen || 
                   selected.submitted ||
                   (nominationsStore.validate || []).filter(
                     (item) => !item.valid
                   ).length > 0
                 "
-                :label="selected.submitted ? 'Submitted' : 'Click to Submit'"
+                :label="selected.submitted ? 'Submitted' : (nominationsOpen ? 'Click to Submit' : 'Nominations have closed')"
                 icon="pi pi-upload"
                 @click="submit"
               />
@@ -213,6 +214,14 @@ const nomination = ref(
 );
 const wordCountsMax = settings.lookup("wordCounts", undefined, true);
 
+// PA-149 Gets the nominations open boolean from server. Defaults to true
+const nominationsOpen = ref(true);
+( async () => {
+
+  const open = await nominationsStore.isOpen;
+  nominationsOpen.value = open;
+})();
+
 // apply validators
 const v$ = useVuelidate();
 
@@ -253,6 +262,9 @@ const submit = async () => {
   // check if form is valid
   const valid = nominationsStore.validate;
   if (!valid) return;
+
+  // PA-149 Check if nominations are still open
+  if ( !nominationsOpen ) return;
 
   // submit nomination
   await nominationsStore.update();
