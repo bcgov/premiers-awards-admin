@@ -55,6 +55,7 @@ import ToggleButton from "primevue/togglebutton";
 import TriStateCheckbox from "primevue/tristatecheckbox";
 import Toolbar from "primevue/toolbar";
 import FileUpload from "primevue/fileupload";
+import Calendar from 'primevue/calendar';
 
 // import custom components
 import Header from "@/components/common/Header.vue";
@@ -107,6 +108,7 @@ app.component("Divider", Divider);
 app.component("Menu", Menu);
 app.component("ScrollPanel", ScrollPanel);
 app.component("Toolbar", Toolbar);
+app.component("Calendar", Calendar);
 
 // register form components
 app.component("Fieldset", Fieldset);

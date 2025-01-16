@@ -89,6 +89,7 @@ export const nominationsDataStore = defineStore({
     validateAttachments: (state) => {
       const settings = settingsStore();
       const maxAttachments = settings.get("maxAttachments");
+      if ( state.selected == null || state.selected.attachments == null ) return false;
       return state.selected.attachments.length >= maxAttachments;
     },
     validate: (state) => {
@@ -150,6 +151,29 @@ export const nominationsDataStore = defineStore({
     wordCountsMax: (state) => {
       return getMaxWordCounts(state);
     },
+    // PA-149 Gets the nominations open boolean from server. Defaults to true
+    isOpen: async () => {
+
+      const [errors, resp] = await get("nominations/open");
+      
+      if ( errors ) {
+        return true;
+      }
+
+      return resp && resp.open === true;
+    },
+    //PA-154 Get nomination type and check whether it's group or individual. For individual nominations, PDFs are required. 
+    isIndividualNomination: (state) => {
+
+      const settings = settingsStore(),
+        category = state.selected.category,
+        nomination = settings.lookup("categories", category, true);
+      
+      //console.log(nomination);
+
+      return nomination.type === "individual";
+    } 
+
   },
   actions: {
     // Reset selected item

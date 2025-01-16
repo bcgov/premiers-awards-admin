@@ -42,7 +42,16 @@
           <p>
             Please submit up to <b>5</b> attachments in support of the nomination. The combined total page count of your documents cannot exceed <b>5</b> pages. 
           </p>
-          <p><b>Reminder: All individual nominations require 2 testimonials or letters of support.</b></p>
+          <!-- PA-154 Display message explaining whether PDFs are required or recommended. --> 
+
+          <template v-if="isIndividualNomination">
+
+            <p><b>Reminder: All individual nominations require 2 testimonials or letters of support.</b></p>
+          </template>
+          <template v-else>
+            
+            <p><b>Reminder: Attachments are strongly recommended.</b></p>
+          </template>
           <p>
             <b>IMPORTANT NOTES:</b>
           </p>
@@ -137,6 +146,7 @@ import {useRoute, useRouter} from 'vue-router'
 import {useVuelidate} from "@vuelidate/core";
 import {formatFileSize, scrollToAnchor} from "@/services/util.services";
 import {nominationsDataStore} from "@/stores/nominations.store";
+import { settingsStore } from "@/stores/settings.store";
 
 // validator
 const v$ = useVuelidate();
@@ -153,6 +163,10 @@ const dialog = reactive({
   visible: false,
   callback: ()=>{}
 });
+
+//PA-154 Get nomination type and check whether it's group or individual. For individual nominations, PDFs are required. 
+
+const isIndividualNomination = store.isIndividualNomination; 
 
 // update item data
 const setDialog = (setting) => {
