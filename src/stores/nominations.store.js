@@ -317,6 +317,18 @@ export const nominationsDataStore = defineStore({
             : "-",
         };
 
+        //PA-212 Fix CSV export for individual nomination titles
+        const nominationTitle = {
+          
+          nominationTitle: each.title
+            ? each.title
+            : each.nominee &&
+              each.nominee.hasOwnProperty("firstname") &&
+              each.nominee.hasOwnProperty("lastname")
+            ? `${each.nominee.firstname} ${each.nominee.lastname}`
+            : "-"
+        };
+
         each = Object.assign(
           each,
           ministry,
@@ -331,7 +343,8 @@ export const nominationsDataStore = defineStore({
           nominationContactEmail,
           nominationContactPhone,
           videoContact,
-          videoContactEmail
+          videoContactEmail,
+          nominationTitle
         );
       });
 

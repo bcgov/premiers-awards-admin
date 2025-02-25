@@ -212,16 +212,11 @@
             />
           </template>
         </Column>
-        <Column field="title" header="Title/Nominee" :sortable="true">
+        <Column field="nominationTitle" header="Title/Nominee" :sortable="true">
           <template #body="{ data }">
+            <!-- Fix CSV export for individual nomination titles -->
             {{
-              data.title
-                ? data.title
-                : data.nominee &&
-                  data.nominee.hasOwnProperty("firstname") &&
-                  data.nominee.hasOwnProperty("lastname")
-                ? `${data.nominee.firstname} ${data.nominee.lastname}`
-                : "-"
+              data.nominationTitle
             }}
           </template>
         </Column>
