@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import AcknowledgmentNomineeFieldset from "../fieldsets/AcknowledgmentNomineeFieldset.vue";
+</script>
+
 <template>
   <div id="form-sections">
     <h3 id="overview-fieldset">Overview</h3>
@@ -12,40 +16,50 @@
       <li>
         Development and management of sustained strategic partnerships with
         other government, private sector, volunteer or non-profit organizations,
-        integrating policy and/or service delivery to better serve British
-        Columbians
+        integrating policy and/or service delivery to better serve the people of
+        British Columbia
       </li>
       <li>
-        Measurable benefits to either their organization(s) and/or the citizens
-        of British Columbia through process improvements transforming business
+        Measurable benefits to either their organization(s) and/or the people in
+        British Columbia through process improvements transforming business
         practices, and/or supporting sustainable revenue generation or savings
       </li>
       <li>
-        Applying inclusive employee or citizen engagement practices with diverse
-        stakeholder groups
+        Applying inclusive employee or external group engagement practices with
+        diverse interested party groups
       </li>
       <li>
         Improvements to the quality, cost-effectiveness, or productivity of
-        services to internal stakeholders
+        services to internal partners
       </li>
       <li>
-        Improvements to government-to-business or government-to-citizen program
+        Improvements to government-to-business or government-to-resident program
         or service delivery
       </li>
+      <li>
+        Designing the policy or program framework with an evidence-based or
+        evidence-informed process
+      </li>
+      <li>
+        Inclusive engagement practices reflecting a diverse population within
+        British Columbia such as the use of GBA+ and other inclusive program
+        development tools
+      </li>
     </ul>
-    <AcknowledgmentFieldset />
+
     <OrganizationsFieldset />
     <NominationTitleFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
+    <AcknowledgmentFieldset />
     <NomineesFieldset />
     <PartnersFieldset />
     <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>
-          Briefly describe why the partnership was undertaken, to provide
-          background and perspective.
+          Describe why the partnership was undertaken (to provide background and
+          perspective for the judges).
         </p>
       </template>
       <template v-slot:complexity_overview>
@@ -61,7 +75,8 @@
             technical, financial, organizational or policy
           </li>
           <li>
-            Challenges around aligning stakeholder or partner group interests
+            Challenges around aligning interested party or partner group
+            interests
           </li>
           <li>Technical or organizational difficulties addressed</li>
         </ul>
@@ -76,19 +91,19 @@
             Development and management of sustained strategic partnerships with
             other government, private sector, volunteer or non-profit
             organizations, integrating policy and/or service delivery to better
-            serve British Columbians
+            serve the people in British Columbia
           </li>
           <li>
-            Building relationships with internal or external stakeholder(s) to
+            Building relationships with internal or external groups(s) to
             achieve mutually beneficial goals or mandates
           </li>
           <li>
-            Applying a citizen-centric or customer-centric approach to the heart
-            of the design and/or implementation of the partnership
+            Applying a customer-centric approach to the heart of the design
+            and/or implementation of the partnership
           </li>
           <li>
-            Applying inclusive employee or citizen engagement practices with
-            diverse stakeholder groups
+            Applying inclusive employee or resident engagement practices with
+            diverse partner groups
           </li>
           <li>
             Demonstrating creativity and/or use of new technology or methods
@@ -105,19 +120,19 @@
         <p>
           Describe and use metrics (if applicable) to support the effect the
           partnership has on the organization, public service or citizens of
-          British Columbia including, but not limited to:
+          British Columbia. Examples include, but are not limited to:
         </p>
         <ul>
           <li>
             Measurable benefits to either their organization(s) and/or the
-            citizens of British Columbia through process improvements
-            transforming business practices, and/or supporting sustainable
-            revenue generation or savings
+            people in British Columbia through process improvements transforming
+            business practices, and/or supporting sustainable revenue generation
+            or savings
           </li>
           <li>
-            Effect on the community, internal or external stakeholders including
-            any social, economic and environmental benefits achieved as a result
-            of the partnership
+            Effect on the community, internal or external groups including any
+            social, economic and environmental benefits achieved as a result of
+            the partnership
           </li>
           <li>
             Extent to which the outcomes and objectives of the project, program
@@ -129,18 +144,19 @@
           </li>
           <li>
             Improvement to quality, cost-effectiveness or productivity of
-            services to internal and/or external stakeholders and/or the
-            citizens of British Columbia
+            services to internal and/or external partners and/or the people of
+            British Columbia
           </li>
           <li>
             Extent to which the outcomes and objectives have significantly
-            improved government-to-business or government-to-citizen program or
+            improved government-to-business or government-to-resident program or
             service delivery
           </li>
         </ul>
       </template>
     </EvaluationsFieldset>
     <AttachmentsFieldset />
+    <AcknowledgmentNomineeFieldset />
   </div>
   <!-- end nomination form -->
 </template>

@@ -33,16 +33,25 @@
         something new resulted in a measurable outcome
       </li>
       <li>
-        Adapting and refining the approach or initiative when things have not
-        worked well and learning from the setbacks/mistakes
+        Adapting and refining the approach or initiative if/when things have not
+        worked well and learning from setbacks
+      </li>
+      <li>
+        Designing the policy or program framework with an evidence-based or
+        evidence-informed process
+      </li>
+      <li>
+        Inclusive engagement practices reflecting a diverse population within
+        British Columbia such as the use of GBA+ and other inclusive program
+        development tools
       </li>
     </ul>
 
-    <AcknowledgmentFieldset />
     <OrganizationsFieldset />
     <NominationTitleFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
+    <AcknowledgmentFieldset />
     <NomineesFieldset />
     <PartnersFieldset />
     <EvaluationsFieldset>
@@ -149,6 +158,7 @@
       </template>
     </EvaluationsFieldset>
     <AttachmentsFieldset />
+    <AcknowledgmentNomineeFieldset />
   </div>
   <!-- end nomination form -->
 </template>

@@ -16,7 +16,7 @@ export function validateNomination(
   data,
   wordCounts,
   wordCountsMax,
-  nomination
+  nomination,
 ) {
   //const wordCountsMax = await settings.lookup("wordCounts", undefined, true);
   //const nomination = await settings.lookup("categories", data.category, true);
@@ -25,6 +25,8 @@ export function validateNomination(
 
   // Nomination Acknowledgement
   validations.acknowledgment = !!data.acknowledgment;
+
+  validations.acknowledgment_nominee = !!data.acknowledgment_nominee;
 
   // Nomination Organization
   validations.organizations =
@@ -42,7 +44,8 @@ export function validateNomination(
 
   { "type": "nominations", "label": "Entry for nominations max title length, etc", "value": {"maxTitle": 7} } 
   */
-  validations.title = !!data.title &&
+  validations.title =
+    !!data.title &&
     data.title.split(/\s/).length <= nominationsSettings.maxTitle;
 
   // Single Nominee
@@ -83,7 +86,7 @@ export function validateNomination(
           location.hasOwnProperty("city") &&
           location.address !== "" &&
           location.city !== ""
-        )
+        ),
     ).length === 0;
 
   // Aggregate contact information
@@ -111,14 +114,17 @@ export function validateNomination(
     }).length === 0;
 
   // Partners
-  // - allow for zero partners (PA-151), or 
+  // - allow for zero partners (PA-151), or
   // - ensure nominee count is above zero
   // - ensure all partners have organizations
   validations.partners =
-  ( data.partners.length === 0 ) || ( data.partners.length > 0 &&
-    data.partners.filter((partner) => {
-      return !partner.organization;
-    })).length === 0;
+    data.partners.length === 0 ||
+    (
+      data.partners.length > 0 &&
+      data.partners.filter((partner) => {
+        return !partner.organization;
+      })
+    ).length === 0;
 
   // Evaluation
   // - compare section/total word counts to limits
@@ -127,13 +133,10 @@ export function validateNomination(
     wordCounts.total > 0 &&
     wordCounts.total <= wordCountsMax.total &&
     wordCounts.summary <= wordCountsMax.summary &&
-    wordCounts.context <= wordCountsMax.context && 
-    (
-      (nomination.evaluation || []).every(value => {
-
-        return wordCounts[value] && wordCounts[value] > 0;
-      })
-    )
+    wordCounts.context <= wordCountsMax.context &&
+    (nomination.evaluation || []).every((value) => {
+      return wordCounts[value] && wordCounts[value] > 0;
+    });
 
   // Attachments
   // - ensure files exists
@@ -163,7 +166,7 @@ const validateEmail = (email) => {
   return !!String(email)
     .toLowerCase()
     .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
 };
 export { validateEmail };

@@ -1,10 +1,14 @@
+<script setup lang="ts">
+import AcknowledgmentNomineeFieldset from "../fieldsets/AcknowledgmentNomineeFieldset.vue";
+</script>
+
 <template>
   <div id="form-sections">
     <h3 id="overview-fieldset">Overview</h3>
     <p>
       This award recognizes individuals who have made exceptional and lasting
-      contributions to the BC Public Service and/or the province during a public
-      service career of at least 15 years. The contributions may cover a
+      contributions to the BC Public Service and/or the province during a BC
+      Public Service career of at least 15 years. The contributions may cover a
       nominee’s entire career or portions of it, provided the contribution has a
       lasting and ongoing positive impact.
     </p>
@@ -27,10 +31,10 @@
       </li>
       <li>
         Demonstrating commitment to diversity and inclusion in both the work
-        environment and in the development of programs, policies, and services
+        environment and in the development of programs, policies and services
       </li>
       <li>
-        Advocation for meaningful engagement and learning with Indigenous
+        Advocating for meaningful engagement and learning with Indigenous
         peoples to support and facilitate reconciliation
       </li>
       <li>
@@ -47,26 +51,26 @@
         for continuous learning and mentorship
       </li>
     </ul>
-    <AcknowledgmentFieldset />
+
     <NomineeFieldset />
     <OrganizationsFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
+    <AcknowledgmentFieldset />
     <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
       <template v-slot:context_overview>
         <p>
-          Briefly describe the conditions under which the employee demonstrated
-          their lasting contribution within the BC Public Service and/or the
-          province, including career highlights, to provide background and
-          perspective.
+          Describe how the employee demonstrated their lasting contribution
+          within the BC Public Service and/or the province, including career
+          highlights (to provide background and perspective for the judges).
         </p>
       </template>
       <template v-slot:complexity_overview>
         <div>
           <p>
             Explain how the employee demonstrated exemplary leadership
-            throughout their career including, but not limited to:
+            throughout their career. Examples include, but are not limited to:
           </p>
           <ul>
             <li>
@@ -88,12 +92,11 @@
 
       <template v-slot:valuing_people_overview>
         <p>
-          Identify and describe how the employee has demonstrated their
-          leadership in supporting the workplace either by leading a team or
-          organization, or as leader of a substantial project, process or
-          initiative.
+          Describe how the employee has demonstrated their leadership in
+          supporting the workplace either by leading a team or organization, or
+          as leader of a substantial project, process or initiative. Examples
+          include, but are not limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Ability to create, communicate and implement a clear and compelling
@@ -106,7 +109,8 @@
           </li>
           <li>
             Ability to establish trust, motivate and receive high satisfaction
-            ratings from their employees and/or stakeholders
+            ratings from their employees and/or interested parties or other
+            groups
           </li>
           <li>
             Ability to involve, empower and lead staff through times of change
@@ -121,7 +125,7 @@
           </li>
           <li>
             Demonstration of the importance of respect, inclusion, ethics and
-            integrity and ensuring employees' awareness of obligations regarding
+            integrity and ensuring employees are aware of obligations regarding
             ethics and professional conduct
           </li>
         </ul>
@@ -130,7 +134,7 @@
       <template v-slot:contribution_overview>
         <p>
           Describe how the individual approached leadership, resulting in public
-          service excellence. Considerations may include but are not limited to:
+          service excellence. Examples include, but are not limited to:
         </p>
         <ul>
           <li>
@@ -162,7 +166,7 @@
           </li>
           <li>
             Displaying a strong client service orientation ensuring service
-            design needs are driven by citizens’ needs or client outcomes rather
+            design needs are driven by people’s needs or client outcomes rather
             than internally focused metrics
           </li>
           <li>
@@ -174,15 +178,15 @@
 
       <template v-slot:impact_overview>
         <p>
-          Describe and use metrics (if applicable) to support the ongoing
-          positive contributions the individual has made to the BC Public
-          Service and/or the province of British Columbia.
+          Describe, using metrics where applicable, to support the ongoing
+          positive contributions the employee has made to the BC Public Service
+          and/or the province of British Columbia. Examples include, but are not
+          limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Measurable benefits to either their organization(s) and/or the
-            citizens of British Columbia
+            people in British Columbia
           </li>
           <li>
             Impact on the community, internal operations and/or external
@@ -201,10 +205,10 @@
           </li>
           <li>
             Improvements to the quality, cost-effectiveness or productivity of
-            services to internal or external stakeholders
+            services to internal or external partner(s)
           </li>
           <li>
-            Improvements to government-to-business or government-to-citizen
+            Improvements to government-to-business or government-to-resident
             service delivery
           </li>
           <li>
@@ -215,6 +219,7 @@
       </template>
     </EvaluationsFieldset>
     <AttachmentsFieldset />
+    <AcknowledgmentNomineeFieldset />
   </div>
   <!-- end nomination form -->
 </template>

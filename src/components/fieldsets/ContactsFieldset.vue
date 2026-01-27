@@ -9,11 +9,20 @@
     >
       <template v-slot:overview>
         <p>
-          The nomination contact is responsible for managing information
-          relevant to the nomination. This may include confirming partner
-          organizations, job titles, spelling and coordinating other resources
-          or video/photo assets. The nomination contact should be someone who
-          has been directly involved in completing the nomination process.
+          The nomination contact should be someone who has been directly
+          involved in completing the nomination process. This person represents
+          the nomination and serves as the liaison between the Ministry Contact
+          and the Premier’s Awards team.
+        </p>
+        <p>
+          Responsibilities include:
+          <ul>
+          <li>Acting as the lead contact for the nomination</li>
+          <li>Distributing nomination status information to nominees</li>
+          <li>
+            Confirming nomination-related details as required (for example:
+            partner organizations, nomination titles, etc.)
+          </li></ul>
         </p>
       </template>
     </ContactFieldset>
@@ -24,12 +33,24 @@
     >
       <template v-slot:overview>
         <p>
-          The video contact acts as the nomination’s liaison between the
-          nominating ministry and the Premier’s Awards team. This person works
-          directly with the Premier’s Awards video production team to select
-          interview candidates, coordinate their video shoots and filming
-          locations. They also assist with the coordination of supporting video
-          footage and materials.
+          The video contact is an individual connected to the nomination who
+          serves as the liaison between the nominating ministry and the
+          Premier’s Awards team.
+        </p>
+        <p>
+          Responsibilities include:
+          <ul><li>
+            Collaborating with the Premier’s Awards’ video production team and
+            the finalist group to develop the video storyboard prior to the
+            start of filming
+          </li>
+          <li>
+            Obtaining final approval on video theme and concept prior to filming
+          </li>
+          <li>Being available for frequent communication</li>
+          <li>
+            Assisting in obtaining completed consent forms for all participants
+          </li></ul>
         </p>
       </template>
     </ContactFieldset>
@@ -63,7 +84,7 @@ const v$ = useVuelidate(
           selected.value.contacts.primary.lastname.length > 0 &&
           validateEmail(selected.value.contacts.primary.email)
         );
-      }
+      },
     ),
     video: helpers.withMessage("Video contact is not complete.", (value) => {
       return (
@@ -76,6 +97,6 @@ const v$ = useVuelidate(
       );
     }),
   },
-  selected.contacts
+  selected.contacts,
 );
 </script>
