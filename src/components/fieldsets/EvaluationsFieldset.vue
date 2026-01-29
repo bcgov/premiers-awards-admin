@@ -4,7 +4,7 @@
     <div class="p-fluid grid">
       <div class="field col-12">
         The combined sections below must not exceed
-        <u>{{ wordCountsMax.total }}</u> words.
+        <u>{{ wordCountsMax.total - 50 }}</u> words.
         <Message
           v-if="wordCounts.total > wordCountsMax.total"
           :closeable="false"
@@ -27,10 +27,10 @@
         >
           <slot name="summary_overview">
             <p>
-              In this section, provide a brief statement summarizing the main
-              points of the nomination. The purpose of the summary is to give
-              the adjudicators and judges a condensed and objective account of
-              the main idea(s) and accomplishment(s) of the nomination.
+              Provide a brief statement summarizing the main points of the
+              nomination. The purpose of the summary is to give the judges a
+              condensed and objective account of the main idea(s) and
+              accomplishment(s) of the nomination.
             </p>
             <p>
               <em
@@ -310,14 +310,10 @@ const { current } = storeToRefs(authDataStore());
 // load nominations state
 // PA-164 Added wordCountsMax here which used the new limits on a per category basis
 const { selected, submitted, error, wordCounts, wordCountsMax } = storeToRefs(
-  nominationsDataStore()
+  nominationsDataStore(),
 );
 
-const nomination = settings.lookup(
-  "categories",
-  selected.value.category,
-  true
-); // Added true because it was not returning the list of sections for use in hasEvaluation
+const nomination = settings.lookup("categories", selected.value.category, true); // Added true because it was not returning the list of sections for use in hasEvaluation
 
 // check if nomination includes evaluation section
 const hasEvaluation = (section) => {
@@ -342,10 +338,10 @@ const v$ = useVuelidate(
         "Total word count has exceeded limit.",
         () => {
           return wordCounts.value.total < wordCounts.value.max.total;
-        }
+        },
       ),
     },
   },
-  selected.evaluation
+  selected.evaluation,
 );
 </script>

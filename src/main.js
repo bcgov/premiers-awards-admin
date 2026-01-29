@@ -55,7 +55,7 @@ import ToggleButton from "primevue/togglebutton";
 import TriStateCheckbox from "primevue/tristatecheckbox";
 import Toolbar from "primevue/toolbar";
 import FileUpload from "primevue/fileupload";
-import Calendar from 'primevue/calendar';
+import Calendar from "primevue/calendar";
 
 // import custom components
 import Header from "@/components/common/Header.vue";
@@ -77,6 +77,7 @@ import LocationFieldset from "@/components/fieldsets/LocationFieldset.vue";
 import AttachmentFieldset from "@/components/fieldsets/AttachmentFieldset.vue";
 import AttachmentsFieldset from "@/components/fieldsets/AttachmentsFieldset.vue";
 import AcknowledgmentFieldset from "@/components/fieldsets/AcknowledgmentFieldset.vue";
+import AcknowledgmentNomineeFieldset from "@/components/fieldsets/AcknowledgmentNomineeFieldset.vue";
 
 // initialize app
 const app = createApp(App);
@@ -143,6 +144,7 @@ app.component("LocationFieldset", LocationFieldset);
 app.component("AttachmentsFieldset", AttachmentsFieldset);
 app.component("AttachmentFieldset", AttachmentFieldset);
 app.component("AcknowledgmentFieldset", AcknowledgmentFieldset);
+app.component("AcknowledgmentNomineeFieldset", AcknowledgmentNomineeFieldset);
 
 // initialize and mount app
 app.use(ConfirmationService);

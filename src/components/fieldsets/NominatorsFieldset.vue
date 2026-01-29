@@ -33,16 +33,23 @@
         </div>
         <div class="field md:col-6 col-12">
           <Button
-            :disabled="selected.submitted"
+            ref="addButtonRef"
+            :disabled="
+              selected.submitted || selected.nominators.length >= maxNominators
+            "
             label="Add Nominator"
             icon="pi pi-plus"
             @click="add"
           />
         </div>
         <div class="field col-9">
-          <!--          <Message :closable="false" v-if="selected.partners.length >= maxPartners" severity="warn">-->
-          <!--            You have reached the maximum of 12 partners.-->
-          <!--          </Message>-->
+          <Message
+            :closable="false"
+            v-if="selected.nominators.length >= maxNominators"
+            severity="warn"
+          >
+            You have reached the maximum of 2 nominators.
+          </Message>
         </div>
       </div>
     </div>
@@ -51,6 +58,7 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { storeToRefs } from "pinia/dist/pinia";
 import { authDataStore } from "@/stores/auth.store";
 import { useVuelidate } from "@vuelidate/core";
@@ -59,6 +67,9 @@ import { required } from "@vuelidate/validators";
 
 // get current user
 const { current } = storeToRefs(authDataStore());
+
+// set max nominators limit
+const maxNominators = 2;
 
 // get nominations store
 const store = nominationsDataStore();
@@ -71,11 +82,15 @@ const v$ = useVuelidate(
   {
     nominators: { required },
   },
-  selected
+  selected,
 );
 
-// add location to selected nomination
-const add = store.addNominator;
+// add nominator and blur button
+const addButtonRef = ref(null);
+const add = () => {
+  store.addNominator();
+  addButtonRef.value?.$el.blur();
+};
 
 // delete location from nomination
 const remove = store.removeNominator;
