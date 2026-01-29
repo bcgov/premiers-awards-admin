@@ -83,8 +83,8 @@ import AcknowledgmentNomineeFieldset from "../fieldsets/AcknowledgmentNomineeFie
       </template>
       <template v-slot:approach_overview>
         <p>
-          Identify key aspects of the approach and partnership including, but
-          not limited to:
+          Identify key aspects of the approach and partnership. Examples
+          include, but are not limited to:
         </p>
         <ul>
           <li>
@@ -119,7 +119,7 @@ import AcknowledgmentNomineeFieldset from "../fieldsets/AcknowledgmentNomineeFie
       <template v-slot:impact_overview>
         <p>
           Describe and use metrics (if applicable) to support the effect the
-          partnership has on the organization, public service or citizens of
+          partnership has on the organization, public service or people in
           British Columbia. Examples include, but are not limited to:
         </p>
         <ul>

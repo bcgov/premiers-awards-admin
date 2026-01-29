@@ -4,14 +4,14 @@
     <p>
       This award recognizes groups, teams or organizations within the BC Public
       Service who have developed and delivered programs, projects and
-      initiatives benefiting citizens in a specific location (town, city,
+      initiatives benefiting people in a specific location (town, city,
       municipality or region).
     </p>
     <p>Considerations may include but are not limited to:</p>
     <ul>
       <li>
-        Projects or initiatives directly benefiting citizens in the specific
-        town, city, municipality or region
+        Projects or initiatives directly benefiting those in the specific town,
+        city, municipality or region
       </li>
       <li>
         Recognizing merit regardless of the project/initiative’s size or
@@ -97,12 +97,9 @@
             new opportunities and creativity in the design
           </li>
           <li>
-            User-centric or citizen-centric approach in the development of the
-            initiative/program
+            User-centric approach in the development of the initiative/program
           </li>
-          <li>
-            Inclusive citizen engagement practices with diverse partner groups
-          </li>
+          <li>Inclusive engagement practices with diverse partner groups</li>
           <li>
             Adaptation and refinement of the approach if/when things did not
             work well and learning from the setbacks

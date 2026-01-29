@@ -49,8 +49,8 @@
 
       <template v-slot:valuing_people_overview>
         <p>
-          Identify and describe how the employee demonstrates their leadership
-          in supporting the workplace including, but not limited to:
+          Describe how the employee demonstrates their leadership in supporting
+          the workplace. Examples include, but are not limited to:
         </p>
         <ul>
           <li>

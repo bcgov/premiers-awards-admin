@@ -73,7 +73,8 @@ import AcknowledgmentNomineeFieldset from "../fieldsets/AcknowledgmentNomineeFie
             <li>Risks encountered and overcome</li>
             <li>Constraints such as time frame, financial or policy</li>
             <li>
-              Challenges around aligning stakeholder or partner group interests
+              Challenges around aligning interested parties’ or partner group
+              interests
             </li>
             <li>
               Technical or organizational difficulties identified and addressed
@@ -119,16 +120,16 @@ import AcknowledgmentNomineeFieldset from "../fieldsets/AcknowledgmentNomineeFie
           <li>Process improvements in business practices</li>
           <li>
             Extent to which the outcomes and objectives significantly improve
-            government-to-business or government-to-citizen service delivery
+            government-to-business or government-to-residents service delivery
           </li>
           <li>
             Increased client satisfaction due to high quality service delivery
           </li>
           <li>
             Measurable benefits to either their organization(s) and/or the
-            citizens of British Columbia through process improvements
-            transforming business practices and/or supporting sustainable
-            revenue generation or savings
+            people in British Columbia through process improvements transforming
+            business practices and/or supporting sustainable revenue generation
+            or savings
           </li>
           <li>
             Operational efficiencies as demonstrated by financial or other key
