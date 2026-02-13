@@ -200,7 +200,7 @@ const refresh = ref(false);
 
 // settings
 const maxUploads = 5;
-const maxFileSize = 1000000;
+const maxFileSize = 1024 * 1024 * 100;
 const acceptedFileTypes = "application/pdf";
 const maxAttachments =
   uploadedFiles.value.length + selected.value.attachments.length >= maxUploads;
