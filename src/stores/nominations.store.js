@@ -36,11 +36,11 @@ const getMaxWordCounts = (state) => {
     wordCountsMax = settings.lookup("wordCounts", undefined, true),
     category = state.selected.category.toLowerCase();
 
-  if ( typeof wordCountsMax.total == "object" ) {
-
-    wordCountsMax.total = wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
+  if (typeof wordCountsMax.total == "object") {
+    wordCountsMax.total =
+      wordCountsMax.total[category] || wordCountsMax.total.default || 1700;
   }
-  
+
   return wordCountsMax;
 };
 
@@ -67,11 +67,11 @@ export const nominationsDataStore = defineStore({
         complexity: getWordCount(state.selected.evaluation.complexity || ""),
         approach: getWordCount(state.selected.evaluation.approach || ""),
         valuing_people: getWordCount(
-          state.selected.evaluation.valuing_people || ""
+          state.selected.evaluation.valuing_people || "",
         ),
         commitment: getWordCount(state.selected.evaluation.commitment || ""),
         contribution: getWordCount(
-          state.selected.evaluation.contribution || ""
+          state.selected.evaluation.contribution || "",
         ),
         impact: getWordCount(state.selected.evaluation.impact || ""),
       };
@@ -89,7 +89,8 @@ export const nominationsDataStore = defineStore({
     validateAttachments: (state) => {
       const settings = settingsStore();
       const maxAttachments = settings.get("maxAttachments");
-      if ( state.selected == null || state.selected.attachments == null ) return false;
+      if (state.selected == null || state.selected.attachments == null)
+        return false;
       return state.selected.attachments.length >= maxAttachments;
     },
     validate: (state) => {
@@ -103,13 +104,13 @@ export const nominationsDataStore = defineStore({
       var nomination = settings.lookup(
         "categories",
         state.selected.category,
-        true
+        true,
       );
       return validateNomination(
         state.selected,
         wordCounts,
         wordCountsMax,
-        nomination
+        nomination,
       );
     },
     // New validation in order to facilitate the individual text fields for each category when editing Evaluations (PA-153)
@@ -127,7 +128,7 @@ export const nominationsDataStore = defineStore({
           nomination = settings.lookup(
             "categories",
             state.selected.category,
-            true
+            true,
           );
 
         (nomination.evaluation || []).forEach((value) => {
@@ -143,7 +144,8 @@ export const nominationsDataStore = defineStore({
         return sections;
       };
 
-      (validations.find((item) => item.id === "evaluation") || {}).items = getSections();
+      (validations.find((item) => item.id === "evaluation") || {}).items =
+        getSections();
 
       return validations;
     },
@@ -153,27 +155,24 @@ export const nominationsDataStore = defineStore({
     },
     // PA-149 Gets the nominations open boolean from server. Defaults to true
     isOpen: async () => {
-
       const [errors, resp] = await get("nominations/open");
-      
-      if ( errors ) {
+
+      if (errors) {
         return true;
       }
 
       return resp && resp.open === true;
     },
-    //PA-154 Get nomination type and check whether it's group or individual. For individual nominations, PDFs are required. 
+    //PA-154 Get nomination type and check whether it's group or individual. For individual nominations, PDFs are required.
     isIndividualNomination: (state) => {
-
       const settings = settingsStore(),
         category = state.selected.category,
         nomination = settings.lookup("categories", category, true);
-      
+
       //console.log(nomination);
 
       return nomination.type === "individual";
-    } 
-
+    },
   },
   actions: {
     // Reset selected item
@@ -213,6 +212,7 @@ export const nominationsDataStore = defineStore({
         },
         nominators: [],
         acknowledgment: false,
+        acknowledgment_nominee: false,
         evaluation: {
           summary: "",
           context: "",
@@ -258,7 +258,7 @@ export const nominationsDataStore = defineStore({
         };
         const ministry = {
           ministry: each.organizations.map((o) =>
-            JSON.stringify(lookup("organizations", o))
+            JSON.stringify(lookup("organizations", o)),
           ),
         };
         const primaryNominator = {
@@ -319,14 +319,13 @@ export const nominationsDataStore = defineStore({
 
         //PA-212 Fix CSV export for individual nomination titles
         const nominationTitle = {
-          
           nominationTitle: each.title
             ? each.title
             : each.nominee &&
-              each.nominee.hasOwnProperty("firstname") &&
-              each.nominee.hasOwnProperty("lastname")
-            ? `${each.nominee.firstname} ${each.nominee.lastname}`
-            : "-"
+                each.nominee.hasOwnProperty("firstname") &&
+                each.nominee.hasOwnProperty("lastname")
+              ? `${each.nominee.firstname} ${each.nominee.lastname}`
+              : "-",
         };
 
         each = Object.assign(
@@ -344,7 +343,7 @@ export const nominationsDataStore = defineStore({
           nominationContactPhone,
           videoContact,
           videoContactEmail,
-          nominationTitle
+          nominationTitle,
         );
       });
 
@@ -419,15 +418,15 @@ export const nominationsDataStore = defineStore({
           data.map((nomination) => {
             const { _id = "" } = nomination || {};
             return _id;
-          })
-        )
+          }),
+        ),
       );
       const currentDate = new Date();
       const timestamp = currentDate.getTime();
       const filename = `package_${timestamp}.zip`;
       const [error] = await download(
         `nominations/export/${format}?ids=${ids}`,
-        filename
+        filename,
       );
       this.error = error;
       this.downloading = false;
@@ -437,7 +436,7 @@ export const nominationsDataStore = defineStore({
         this.loading = true;
         const { _id = "" } = this.selected || {};
         const [error, attachments] = await get(
-          `nominations/attachments/view/${_id}`
+          `nominations/attachments/view/${_id}`,
         );
         this.selected.attachments = attachments;
         this.error = error;
@@ -455,7 +454,7 @@ export const nominationsDataStore = defineStore({
       formData.append(`description`, description || "");
       const [error, result] = await upload(
         `/nominations/attachments/upload/${_id}`,
-        formData
+        formData,
       );
       this.error = error;
       return result;
@@ -465,7 +464,7 @@ export const nominationsDataStore = defineStore({
       const { _id = "" } = data || {};
       const [error] = await upload(
         `/nominations/attachments/update/${_id}`,
-        data
+        data,
       );
       this.attachmentError = error;
     },
@@ -480,7 +479,7 @@ export const nominationsDataStore = defineStore({
       const { originalname = "" } = file || {};
       const [error] = await download(
         `/nominations/attachments/download/${_id}`,
-        originalname
+        originalname,
       );
       this.attachmentError = error;
     },

@@ -4,7 +4,7 @@
     <p>
       This award recognizes a BC Public Service employee who demonstrates the
       highest levels of integrity and exemplary leadership abilities either
-      leading a team or organization, or a substantial project, process or
+      leading a team, organization, or a substantial project, process or
       initiative.
     </p>
     <p>Considerations may include but are not limited to:</p>
@@ -24,46 +24,47 @@
         the development of programs, policies and services
       </li>
       <li>
-        Advocating meaningful engagement and learning with Indigenous
-        peoples to support and facilitate reconciliation
+        Advocating meaningful engagement and learning with Indigenous peoples to
+        support and facilitate reconciliation
       </li>
       <li>
-        Anticipating future trends and working with others to develop
-        strategies to meet future challenges
+        Anticipating future trends and working with others to develop strategies
+        to meet future challenges
       </li>
       <li>
         Commitment to succession management through knowledge transfer, support
         for continuous learning and mentorship
       </li>
       <li>
-        Commitment to service delivery in exceeding the needs/expectations of
-        internal or external clients
+        Commitment to service delivery in exceeding the needs and expectations
+        of internal or external clients
       </li>
       <li>
-        Demonstration of an experimental or innovative mindset whereby
-        openness to change, taking calculated risks and challenging the status
-        quo to try something new resulted in a measurable outcome
+        Demonstration of an experimental or innovative mindset whereby openness
+        to change, taking calculated risks and challenging the status quo to try
+        something new resulted in a measurable outcome
       </li>
     </ul>
-    <AcknowledgmentFieldset />
+
     <NomineeFieldset />
     <OrganizationsFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
+    <AcknowledgmentFieldset />
     <EvaluationsFieldset>
       <template v-slot:summary_overview></template>
 
       <template v-slot:context_overview>
         <p>
-          Briefly describe the conditions under which the employee demonstrates
-          exemplary leadership, to provide background and perspective.
+          Describe how the employee demonstrates exemplary leadership (to
+          provide background and perspective fo the judges).
         </p>
       </template>
 
       <template v-slot:complexity_overview>
         <p>
           Describe the employee’s ability to demonstrate exemplary leadership
-          acumen including, but not limited to:
+          acumen. Examples include, but are not limited to:
         </p>
         <ul>
           <li>
@@ -75,19 +76,19 @@
             and implement solutions
           </li>
           <li>
-            Ability to encounter and overcome constraints such as
-            time frame, technical, financial, organizational or policy
+            Ability to encounter and overcome constraints such as time frame,
+            technical, financial, organizational or policy
           </li>
         </ul>
       </template>
 
       <template v-slot:valuing_people_overview>
         <p>
-          Identify and describe how the employee demonstrates their leadership
-          to support the workplace either by leading a team or organization,
-          or as leader of a substantial project, process or initiative.
+          Describe how the employee demonstrates their leadership to support the
+          workplace either by leading a team or organization, or as leader of a
+          substantial project, process or initiative. Examples include, but are
+          not limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Ability to create, communicate and implement a clear and compelling
@@ -96,7 +97,7 @@
           </li>
           <li>
             Ability to establish trust, motivate and receive high satisfaction
-            ratings from their employees and/or stakeholders
+            ratings from their employees and/or interested parties and groups
           </li>
           <li>
             Ability to involve, empower and lead staff through times of change
@@ -114,9 +115,9 @@
             mentorship
           </li>
           <li>
-            Modeling the importance of respect,
-            inclusion, ethics and integrity and ensuring employees' awareness of
-            obligations regarding ethics and professional conduct
+            Modeling the importance of respect, inclusion, ethics and integrity
+            and ensuring employees are aware of obligations regarding ethics and
+            professional conduct
           </li>
           <li>
             Supporting those willing to try something new, recognizing their
@@ -128,23 +129,23 @@
 
       <template v-slot:commitment_overview>
         <p>
-          Identify and describe the effect the leader has on employees, clients,
-          the public service and/or citizens of British Columbia.
+          Describe the effect the leader has on employees, clients, the public
+          service and/or people in British Columbia. Examples include, but are
+          not limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
-            Ability to anticipate future trends and working with others to develop
-            strategies to meet future challenges
+            Ability to anticipate future trends and working with others to
+            develop strategies to meet future challenges
           </li>
           <li>
             Making decisions with considerations for the long-term impacts and
             context, anticipating emerging priorities as well as current needs
           </li>
           <li>
-            Having an experimental or innovative mindset whereby
-            openness to change, taking calculated risks and challenging the
-            status quo to try something new resulted in a measurable outcome
+            Having an experimental or innovative mindset whereby openness to
+            change, taking calculated risks and challenging the status quo to
+            try something new resulted in a measurable outcome
           </li>
           <li>
             Enabling innovation by visibly and actively inviting and advancing
@@ -153,7 +154,7 @@
           </li>
           <li>
             Displaying a strong client service orientation ensuring service
-            design needs are driven by citizens’ needs or client outcomes rather
+            design needs are driven by residents needs or client outcomes rather
             than internally focused metrics
           </li>
         </ul>
@@ -161,11 +162,10 @@
 
       <template v-slot:impact_overview>
         <p>
-          Describe and use metrics (if applicable) to support the effect the
-          leader has on employees, clients, the public service and/or citizens
-          of British Columbia.
+          Describe, using metrics where applicable, the effect the leader has on
+          employees, clients, the public service and/or people in British
+          Columbia. Examples include, but are not limited to:
         </p>
-        <p>Considerations may include but are not limited to:</p>
         <ul>
           <li>
             Improving the quality of the workplace for employees by contributing
@@ -179,26 +179,26 @@
           </li>
           <li>
             Improving the quality, cost-effectiveness or productivity of
-            services to internal or external stakeholders
+            services to internal or external parties
           </li>
           <li>
-            Improving government-to-business or government-to-citizen
-            service delivery
+            Improving government-to-business or government-to-resident service
+            delivery
           </li>
           <li>
             Creating measurable benefits to their organization(s) and/or the
-            citizens of British Columbia through process improvements to
-            transform business practices and/or sustainable revenue generation
-            or savings
+            people in British Columbia through process improvements to transform
+            business practices and/or sustainable revenue generation or savings
           </li>
           <li>
-            Demonstrating improved organizational performance as indicated by Work Environment
-            Survey scores
+            Demonstrating improved organizational performance as indicated by
+            Work Environment Survey (WES) scores
           </li>
         </ul>
       </template>
     </EvaluationsFieldset>
     <AttachmentsFieldset />
+    <AcknowledgmentNomineeFieldset />
   </div>
   <!-- end nomination form -->
 </template>

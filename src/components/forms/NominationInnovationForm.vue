@@ -4,10 +4,9 @@
     <p>
       This award recognizes groups, teams or organizations in the BC Public
       Service who have developed and transformed new ideas into tangible
-      initiatives, programs or projects. By applying a user-centric or
-      citizen-centric approach, innovations streamline business processes,
-      leverage technology or pursue creative solutions to fulfill organizational
-      mandates.
+      initiatives, programs or projects. By applying a user-centric approach,
+      innovations streamline business processes, leverage technology or pursue
+      creative solutions to fulfill organizational mandates.
     </p>
     <p>Considerations may include but are not limited to:</p>
     <ul>
@@ -33,16 +32,25 @@
         something new resulted in a measurable outcome
       </li>
       <li>
-        Adapting and refining the approach or initiative when things have not
-        worked well and learning from the setbacks/mistakes
+        Adapting and refining the approach or initiative if/when things have not
+        worked well and learning from setbacks
+      </li>
+      <li>
+        Designing the policy or program framework with an evidence-based or
+        evidence-informed process
+      </li>
+      <li>
+        Inclusive engagement practices reflecting a diverse population within
+        British Columbia such as the use of GBA+ and other inclusive program
+        development tools
       </li>
     </ul>
 
-    <AcknowledgmentFieldset />
     <OrganizationsFieldset />
     <NominationTitleFieldset />
     <NominatorsFieldset />
     <ContactsFieldset />
+    <AcknowledgmentFieldset />
     <NomineesFieldset />
     <PartnersFieldset />
     <EvaluationsFieldset>
@@ -50,8 +58,8 @@
 
       <template v-slot:context_overview>
         <p>
-          Briefly describe why the new innovative approach was undertaken, to
-          provide background and perspective.
+          Describe why the new innovative approach was undertaken (to provide
+          background and perspective for the judges).
         </p>
       </template>
 
@@ -59,8 +67,8 @@
         <div>
           <p>
             Describe the scope and scale of the new initiative, streamlined
-            business processes, technology or creative solution developed
-            including, but not limited to:
+            business processes, technology or creative solution developed.
+            Examples include, but are not limited to:
           </p>
           <ul>
             <li>Size of the project, process and technology solution</li>
@@ -80,7 +88,7 @@
         <p>
           Describe how the new initiative, product or service was developed from
           inception to delivery and transformed new ideas into tangible
-          initiatives including, but not limited to:
+          initiatives. Examples include, but are not limited to:
         </p>
         <ul>
           <li>
@@ -94,8 +102,8 @@
             methodology
           </li>
           <li>
-            Applying user-centric or citizen-centric approach in the development
-            of the initiative/program
+            Applying user-centric approach in the development of the
+            initiative/program
           </li>
           <li>
             Adapting and refining the approach or initiative when things did not
@@ -114,9 +122,9 @@
 
       <template v-slot:impact_overview>
         <p>
-          Describe and use metrics (if applicable) to support the impact of the
-          innovative approach to programs and services as demonstrated by, but
-          not limited to:
+          Describe the impact(s) of the innovative approach on programs and
+          services, supported by metrics where possible. Examples include, but
+          are not limited to:
         </p>
         <ul>
           <li>
@@ -134,7 +142,7 @@
           </li>
           <li>
             The effect of the innovative approach to the programs or services on
-            its intended internal or external stakeholders
+            its intended internal or external partner(s)
           </li>
           <li>
             The effect of the innovative approach to the programs or services on
@@ -149,6 +157,7 @@
       </template>
     </EvaluationsFieldset>
     <AttachmentsFieldset />
+    <AcknowledgmentNomineeFieldset />
   </div>
   <!-- end nomination form -->
 </template>

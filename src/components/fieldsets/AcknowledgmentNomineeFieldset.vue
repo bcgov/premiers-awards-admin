@@ -1,13 +1,7 @@
 <template>
-  <div id="acknowledgment-fieldset">
-    <Fieldset legend="Time Commitment">
-      <p class="mb-0">
-        There is approximately 20 hours of time required of the contacts and
-        groups involved with the nomination, if this nomination is selected as a
-        finalist. This includes working with the Premier’s Awards team to
-        coordinate video filming, including scheduling shoots for footage and
-        interviewees.
-      </p>
+  <!-- id -->
+  <div id="acknowledgment_nominee-fieldset">
+    <Fieldset legend="Nominee Acknowledgment">
       <!-- <div class="card">
         <div class="p-fluid grid">
           <div class="field col-12 md:col-6">
@@ -35,19 +29,30 @@
       <div class="card">
         <div class="p-fluid grid">
           <div class="field col-12 md:col-12">
-            <h4>Acknowledgment</h4>
             <div class="field-checkbox mb-0">
-              <Checkbox v-model="selected.acknowledgment" :binary="true" />
+              <Checkbox
+                v-model="selected.acknowledgment_nominee"
+                :binary="true"
+              />
               <p class="ml-2">
-                I confirm the contacts listed on this form can make the required
-                time commitment if this nomination is selected as a finalist.
+                I confirm the
+                {{
+                  selected.category === "regional-impact" ||
+                  selected.category === "partnership" ||
+                  selected.category === "innovation" ||
+                  selected.category === "organizational-excellence"
+                    ? "group"
+                    : "individual"
+                }}
+                nominated is aware they are being nominated and can make the
+                required time commitment if they are selected as a finalist.
               </p>
             </div>
             <div
               class="field col-6"
               v-if="
                 (validate || []).filter(
-                  (item) => item.id === 'acknowledgment' && item.valid,
+                  (item) => item.id === 'acknowledgment_nominee' && item.valid,
                 ).length === 0
               "
             >
@@ -79,5 +84,5 @@ const { selected, submitted, error, validate } = storeToRefs(
 );
 
 // apply validators
-const v$ = useVuelidate({ acknowledgment: { required } }, selected);
+const v$ = useVuelidate({ acknowledgment_nominee: { required } }, selected);
 </script>

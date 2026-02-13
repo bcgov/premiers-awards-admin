@@ -15,11 +15,11 @@
             <p>
               <b
                 >Note: Please confirm the accuracy of your partner
-                organizations’ names</b
+                organizations’ names.</b
               >
-              – what is entered here will be used to populate the Premier’s
-              Awards website and will be displayed in print at the Premier’s
-              Awards ceremony, should your nomination be selected as a finalist.
+              What is entered here will be used to populate the Premier’s Awards
+              website and will be displayed in print at the Premier’s Awards
+              ceremony, should your nomination be selected as a finalist.
             </p>
             <p>
               <b>Note:</b> If there is interest to submit more than 12, please
@@ -43,15 +43,15 @@
         <div
           v-for="(partner, index) in selected.partners"
           v-bind:key="index"
-          class="field col-12"
+          class="col-12"
         >
           <div class="card">
             <div class="p-fluid grid">
-              <div class="field col-11">
+              <div class="col-11">
                 <PartnerFieldset :partner="partner" :index="index" />
               </div>
-              <div class="field col-1">
-                <Button
+              <div class="col-1 flex">
+                <Button                                                                                 
                   aria-label="Delete Partner"
                   icon="pi pi-trash"
                   @click="remove(index)"
@@ -61,12 +61,7 @@
             </div>
           </div>
         </div>
-        <div class="field md:col-9 col-12">
-          <p>
-            <b>Number of partners:</b> {{ selected.partners.length }} /
-            {{ maxPartners }} Maximum
-          </p>
-        </div>
+
         <div class="field md:col-3 col-12">
           <Button
             :disabled="
@@ -76,6 +71,13 @@
             icon="pi pi-plus"
             @click="add"
           />
+        </div>
+        <div class="field md:col-6 col-12"></div>
+        <div class="field md:col-3 col-12">
+          <p>
+            <b>Number of partners:</b> {{ selected.partners.length }} /
+            {{ maxPartners }} Maximum
+          </p>
         </div>
       </div>
     </div>
